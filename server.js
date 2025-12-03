@@ -1,0 +1,693 @@
+/*******************************************************
+ * server.js — 8-ball version with stats + forfeits
+ *******************************************************/
+
+const express = require("express");
+const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+
+const bcrypt = require("bcryptjs");
+const fs = require("fs");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+
+/* ------------ MIDDLEWARE ------------ */
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+
+/* ------------ DATABASE (JSON) ------------ */
+const DB_FILE = path.join(__dirname, "database.json");
+
+let db = { users: {}, chat: [], games: {} };
+
+if (fs.existsSync(DB_FILE)) {
+  db = JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
+} else {
+  fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
+}
+
+function saveDB() {
+  fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
+}
+
+/* ------------ HELPERS ------------ */
+
+function sendGameList() {
+  const list = Object.values(db.games).filter(g => g.p2 && !g.finished);
+  io.emit("games", list);
+}
+
+function ballGroup(n) {
+  if (n >= 1 && n <= 7) return "solids";
+  if (n >= 9 && n <= 15) return "stripes";
+  return null;
+}
+
+/**
+ * Apply final result of a game:
+ * - winnerName: username of winner
+ * - reason: "8-ball win", "8-ball foul", "8-ball early", "forfeit", etc.
+ */
+function applyGameResult(game, winnerName, reason) {
+  if (!game || game.finished) return;
+  if (!winnerName) return;
+
+  const loserName = winnerName === game.p1 ? game.p2 : game.p1;
+  if (!db.users[winnerName] || !db.users[loserName]) return;
+
+  const w = db.users[winnerName];
+  const l = db.users[loserName];
+
+  w.gamesPlayed = (w.gamesPlayed || 0) + 1;
+  w.gamesWon = (w.gamesWon || 0) + 1;
+  l.gamesPlayed = (l.gamesPlayed || 0) + 1;
+
+  game.finished = true;
+  saveDB();
+
+  io.to(game.id).emit("game_over", {
+    winner: winnerName,
+    reason
+  });
+
+  delete db.games[game.id];
+  sendGameList();
+}
+
+/* ------------ EXPRESS ROUTES ------------ */
+
+app.get("/", (req, res) => {
+  const u = req.cookies.user;
+  if (!u || !db.users[u]) {
+    return res.redirect("/login.html");
+  }
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/login.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
+/* ------------ SOCKET.IO ------------ */
+
+io.on("connection", socket => {
+  const getUser = () => socket.user && db.users[socket.user];
+
+  // Game windows identify themselves explicitly
+  socket.on("identify_game_client", ({ user, role }) => {
+    if (user && db.users[user]) {
+      socket.user = user;
+      socket.role = db.users[user].role;
+    } else {
+      socket.user = user || "Player";
+      socket.role = role || "player";
+    }
+  });
+
+  /***********************
+   * REGISTER
+   ***********************/
+  socket.on("register", (data, cb) => {
+    const username = (data.username || "").trim();
+    const password = (data.password || "").trim();
+
+    if (!username || !password)
+      return cb && cb({ ok: false, error: "Missing fields" });
+
+    if (db.users[username])
+      return cb && cb({ ok: false, error: "Username already exists" });
+
+    const hash = bcrypt.hashSync(password, 10);
+
+    const role =
+      Object.keys(db.users).length === 0 ? "admin" : "player";
+
+    db.users[username] = {
+      username,
+      password: hash,
+      role,
+      gamesPlayed: 0,
+      gamesWon: 0,
+      mutedUntil: 0,
+      bannedUntil: 0,   // timed/permanent bans
+      realName: "",
+      country: "",
+      age: null
+    };
+
+    saveDB();
+    cb && cb({ ok: true });
+  });
+
+  /***********************
+   * LOGIN
+   ***********************/
+  socket.on("login", (data, cb) => {
+    const username = (data.username || "").trim();
+    const password = (data.password || "").trim();
+
+    const u = db.users[username];
+    if (!u) return cb && cb({ ok: false, error: "User not found" });
+
+    // ---- AUTO-EXPIRE TIMED BANS ----
+    if (u.bannedUntil && u.bannedUntil > Date.now()) {
+      const minsLeft = Math.ceil((u.bannedUntil - Date.now()) / 60000);
+      return cb && cb({
+        ok: false,
+        error: `You are banned. Time left: ${minsLeft} min`
+      });
+    }
+
+    // Ban expired → clear
+    if (u.bannedUntil && u.bannedUntil !== 0 && u.bannedUntil <= Date.now()) {
+      u.bannedUntil = 0;
+      saveDB();
+    }
+
+    const ok = bcrypt.compareSync(password, u.password);
+    if (!ok) return cb && cb({ ok: false, error: "Incorrect password" });
+
+    socket.user = username;
+    socket.role = u.role;
+
+    socket.emit("do_set_cookie", { user: username });
+
+    cb && cb({ ok: true });
+  });
+
+  /***********************
+   * AUTH CHECK (LOBBY)
+   ***********************/
+  socket.on("auth_check", (data, cb) => {
+    let cookieHeader = socket.handshake.headers.cookie || "";
+    let username = null;
+
+    cookieHeader.split("; ").forEach(c => {
+      if (c.startsWith("user=")) {
+        username = decodeURIComponent(c.split("=")[1]);
+      }
+    });
+
+    if (!username || !db.users[username]) {
+      return cb && cb({ ok: false });
+    }
+
+    socket.user = username;
+    socket.role = db.users[username].role;
+
+    cb && cb({ ok: true, user: username, role: socket.role });
+
+    sendPlayerList();
+    sendGameList();
+
+    // send lobby chat history
+    db.chat.forEach(m => socket.emit("chat", m));
+  });
+
+  /***********************
+   * LOGOUT
+   ***********************/
+  socket.on("logout", (data, cb) => {
+    socket.user = null;
+    socket.role = null;
+    cb && cb({ ok: true });
+    socket.disconnect(true);
+  });
+
+  /***********************
+   * LOBBY CHAT
+   ***********************/
+  socket.on("chat", msg => {
+    const u = getUser();
+    if (!u) return;
+    if (u.mutedUntil && u.mutedUntil > Date.now()) return;
+
+    const packet = {
+      user: socket.user,
+      msg: String(msg).slice(0, 300),
+      role: socket.role
+    };
+
+    db.chat.push(packet);
+    if (db.chat.length > 500) db.chat.shift();
+    saveDB();
+
+    io.emit("chat", packet);
+  });
+
+  socket.emit("chat", {
+    user: "SYSTEM",
+    msg: "Welcome to the lobby.",
+    role: "system"
+  });
+
+  /***********************
+   * PLAYER INFO
+   ***********************/
+  socket.on("get_info", (username, cb) => {
+    const u = db.users[username];
+    if (!u) return;
+
+    const winPercent =
+      u.gamesPlayed === 0
+        ? 0
+        : Math.round((u.gamesWon / u.gamesPlayed) * 100);
+
+    cb && cb({
+      username,
+      role: u.role,
+      gamesPlayed: u.gamesPlayed,
+      gamesWon: u.gamesWon,
+      winPercent,
+      realName: u.realName || "",
+      country: u.country || "",
+      age: u.age || ""
+    });
+  });
+
+  /***********************
+   * UPDATE PROFILE
+   ***********************/
+  socket.on("update_profile", (data, cb) => {
+    const self = getUser();
+    if (!self) return cb && cb({ ok: false, error: "Not logged in" });
+
+    const u = db.users[socket.user];
+    if (!u) return cb && cb({ ok: false, error: "User not found" });
+
+    const realName = (data.realName || "").trim();
+    const country  = (data.country  || "").trim();
+    let age        = (data.age || "").toString().trim();
+
+    if (age === "") {
+      age = null;
+    } else {
+      const n = Number(age);
+      age = Number.isFinite(n) && n > 0 && n < 150 ? n : null;
+    }
+
+    u.realName = realName;
+    u.country  = country;
+    u.age      = age;
+
+    saveDB();
+    cb && cb({ ok: true });
+  });
+
+  /***********************
+   * CHANGE PASSWORD
+   ***********************/
+  socket.on("change_password", (data, cb) => {
+    const self = getUser();
+    if (!self) return cb && cb({ ok: false, error: "Not logged in" });
+
+    const u = db.users[socket.user];
+    if (!u) return cb && cb({ ok: false, error: "User not found" });
+
+    const oldPass = (data.oldPassword || "").trim();
+    const newPass = (data.newPassword || "").trim();
+
+    if (!oldPass || !newPass) {
+      return cb && cb({ ok: false, error: "Fill all fields" });
+    }
+
+    const ok = bcrypt.compareSync(oldPass, u.password);
+    if (!ok) {
+      return cb && cb({ ok: false, error: "Old password incorrect" });
+    }
+
+    if (newPass.length < 4) {
+      return cb && cb({ ok: false, error: "New password too short" });
+    }
+
+    u.password = bcrypt.hashSync(newPass, 10);
+    saveDB();
+    cb && cb({ ok: true });
+  });
+
+  /***********************
+   * ADMIN / MOD ACTIONS
+   ***********************/
+  socket.on("admin_action", (data, cb) => {
+    const self = getUser();
+    if (!self) return cb ? cb({ ok: false, error: "Not logged in" }) : null;
+
+    if (socket.role !== "admin" && socket.role !== "moderator")
+      return cb ? cb({ ok: false, error: "Not allowed" }) : null;
+
+    const { action, target, duration } = data;
+    const u = db.users[target];
+    if (!u) return cb ? cb({ ok: false, error: "User not found" }) : null;
+
+    const isMod = socket.role === "moderator";
+    if (u.role === "admin" && isMod)
+      return cb ? cb({ ok: false, error: "Cannot act on admin" }) : null;
+
+    const durationTextBase =
+      duration && String(duration).trim() !== ""
+        ? `${duration} minute(s)`
+        : "";
+
+    switch (action) {
+      case "kick": {
+        if (isMod)
+          return cb ? cb({ ok: false, error: "Mods cannot kick" }) : null;
+
+        const payload = {
+          type: "kick",
+          reason: "You have been kicked by an administrator.",
+          durationText: durationTextBase || "Session only"
+        };
+
+        for (const [id, s] of io.sockets.sockets) {
+          if (s.user === target) {
+            s.emit("admin_disconnect", payload);
+            setTimeout(() => s.disconnect(true), 100);
+          }
+        }
+        break;
+      }
+
+      case "ban": {
+        if (isMod)
+          return cb ? cb({ ok: false, error: "Mods cannot ban" }) : null;
+
+        const mins = Number(duration);
+
+        // UNBAN
+        if (!isNaN(mins) && mins === 0) {
+          u.bannedUntil = 0;
+          saveDB();
+          return cb && cb({ ok: true });
+        }
+
+        // PERMANENT BAN
+        if (isNaN(mins) || String(duration).trim() === "") {
+          u.bannedUntil = Infinity;
+        }
+        // TIMED BAN
+        else if (mins > 0) {
+          u.bannedUntil = Date.now() + mins * 60000;
+        }
+
+        saveDB();
+
+        const payload = {
+          type: "ban",
+          reason: "You have been banned from Orbit 8 Pool.",
+          durationText:
+            u.bannedUntil === Infinity
+              ? "Permanent"
+              : `${mins} minute(s)`
+        };
+
+        for (const [id, s] of io.sockets.sockets) {
+          if (s.user === target) {
+            s.emit("admin_disconnect", payload);
+            setTimeout(() => s.disconnect(true), 100);
+          }
+        }
+        break;
+      }
+
+      case "mute": {
+        if (duration === undefined || duration === "") {
+          u.mutedUntil = Infinity;
+        } else {
+          const mins = Number(duration) || 0;
+          u.mutedUntil = mins > 0 ? Date.now() + mins * 60000 : 0;
+        }
+        saveDB();
+        break;
+      }
+
+      case "clear_chat":
+        db.chat = [];
+        saveDB();
+        io.emit("chat_cleared");
+        break;
+
+      case "del_user_msgs":
+        db.chat = db.chat.filter(m => m.user !== target);
+        saveDB();
+        io.emit("chat_filter", { user: target });
+        break;
+
+      default:
+        return cb ? cb({ ok: false, error: "Unknown action" }) : null;
+    }
+
+    cb && cb({ ok: true });
+  });
+
+  /***********************
+   * GAME MANAGEMENT
+   ***********************/
+  function newGameObject(id, p1) {
+    return {
+      id,
+      p1,
+      p2: null,
+      spectators: [],
+      state: null,
+      chat: [],
+      currentTurn: "p1",
+      groups: { p1: null, p2: null }, // solids/stripes
+      finished: false
+    };
+  }
+
+  socket.on("create_game", () => {
+    const u = getUser();
+    if (!u) return;
+
+    const id = "g" + Math.random().toString(36).slice(2, 8);
+    db.games[id] = newGameObject(id, socket.user);
+    saveDB();
+    sendGameList();
+  });
+
+  // Invite: create game & send ID
+  socket.on("invite", target => {
+    const u = getUser();
+    if (!u) return;
+    if (!db.users[target]) return;
+
+    const id = "g" + Math.random().toString(36).slice(2, 8);
+
+    db.games[id] = newGameObject(id, socket.user);
+    saveDB();
+    sendGameList();
+
+    for (const [sid, s] of io.sockets.sockets) {
+      if (s.user === target) {
+        s.emit("invited", { from: socket.user, id });
+      }
+    }
+  });
+
+  // Accept invite by game ID
+  socket.on("accept_invite", gameId => {
+    const u = getUser();
+    if (!u) return;
+
+    const game = db.games[gameId];
+    if (!game || game.p2) return;
+
+    game.p2 = socket.user;
+    game.currentTurn = "p1"; // p1 breaks
+    saveDB();
+    sendGameList();
+
+    for (const [sid, s] of io.sockets.sockets) {
+      if (s.user === game.p1 || s.user === game.p2) {
+        s.emit("start_game", game.id);
+      }
+    }
+
+    io.to(game.id).emit("turn", {
+      current: game.currentTurn,
+      player: game.p1
+    });
+  });
+
+  /***********************
+   * GAME WINDOW EVENTS
+   ***********************/
+  socket.on("join_game", ({ id }) => {
+    const game = db.games[id];
+    if (!game) return;
+
+    socket.join(id);
+    socket.emit("game_sync", {
+      state: game.state,
+      chat: game.chat,
+      statusText: `${game.p1 || "?"} vs ${game.p2 || "Waiting..."}`,
+      p1: game.p1,
+      p2: game.p2,
+      currentTurn: game.currentTurn
+    });
+
+    socket.emit("turn", {
+      current: game.currentTurn,
+      player: game.currentTurn === "p1" ? game.p1 : game.p2
+    });
+  });
+
+  // Game chat
+  socket.on("game_msg", ({ id, message }) => {
+    const game = db.games[id];
+    if (!game) return;
+
+    const packet = {
+      user: socket.user || "Player",
+      msg: String(message).slice(0, 300),
+      role: socket.role || "player"
+    };
+    game.chat.push(packet);
+    saveDB();
+    io.to(id).emit("game_msg", packet);
+  });
+
+  // Live state streaming
+  socket.on("shot_frame", ({ id, state }) => {
+    const game = db.games[id];
+    if (!game || game.finished) return;
+
+    game.state = state;
+    socket.to(id).emit("shot_frame", { state });
+  });
+
+  // Final state + rules + turn enforcement
+  socket.on("shot_end", ({ id, state, pocketed }) => {
+    const game = db.games[id];
+    if (!game || game.finished) return;
+
+    const shooter = socket.user;
+    if (!shooter) return;
+
+    if (game.currentTurn === "p1" && shooter !== game.p1) return;
+    if (game.currentTurn === "p2" && shooter !== game.p2) return;
+
+    const shooterSide = shooter === game.p1 ? "p1" : "p2";
+    const otherSide = shooterSide === "p1" ? "p2" : "p1";
+
+    game.state = state;
+
+    const groups = game.groups || { p1: null, p2: null };
+    game.groups = groups;
+
+    const pocketedSet = new Set(pocketed || []);
+    const eightPotted = pocketedSet.has(8);
+    const nonEight = [...pocketedSet].filter(n => n !== 0 && n !== 8);
+
+    if (!groups.p1 && !groups.p2) {
+      const assignNum = nonEight.find(n => ballGroup(n));
+      if (assignNum) {
+        const g = ballGroup(assignNum);
+        groups[shooterSide] = g;
+        groups[otherSide] = g === "solids" ? "stripes" : "solids";
+      }
+    }
+
+    let solidsLeft = false;
+    let stripesLeft = false;
+    (state.balls || []).forEach(b => {
+      if (!b.inPocket) {
+        const g = ballGroup(b.number);
+        if (g === "solids") solidsLeft = true;
+        if (g === "stripes") stripesLeft = true;
+      }
+    });
+
+    if (eightPotted) {
+      const shooterGroup = groups[shooterSide];
+
+      if (!shooterGroup) {
+        const winnerName = game[otherSide];
+        applyGameResult(game, winnerName, "8-ball foul (no group)");
+        return;
+      }
+
+      const groupLeft =
+        shooterGroup === "solids" ? solidsLeft : stripesLeft;
+
+      if (groupLeft) {
+        const winnerName = game[otherSide];
+        applyGameResult(game, winnerName, "8-ball early");
+        return;
+      } else {
+        applyGameResult(game, shooter, "8-ball win");
+        return;
+      }
+    }
+
+    if (game.p1 && game.p2) {
+      game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
+    }
+
+    saveDB();
+
+    socket.to(id).emit("shot_end", { state });
+
+    io.to(id).emit("turn", {
+      current: game.currentTurn,
+      player: game.currentTurn === "p1" ? game.p1 : game.p2
+    });
+  });
+
+  // End game / forfeit
+  socket.on("end_game", id => {
+    const game = db.games[id];
+    if (!game || game.finished) return;
+
+    const forfeiter = socket.user;
+    if (!forfeiter) return;
+
+    let winnerName = null;
+    if (forfeiter === game.p1 && game.p2) winnerName = game.p2;
+    else if (forfeiter === game.p2 && game.p1) winnerName = game.p1;
+
+    if (winnerName) {
+      applyGameResult(game, winnerName, "forfeit");
+    } else {
+      game.finished = true;
+      saveDB();
+      io.to(game.id).emit("game_over", {
+        winner: null,
+        reason: "terminated"
+      });
+      delete db.games[game.id];
+      sendGameList();
+    }
+  });
+
+  /***********************
+   * DISCONNECT
+   ***********************/
+  socket.on("disconnect", () => {
+    sendPlayerList();
+  });
+
+  /***********************
+   * LOBBY PLAYER LIST
+   ***********************/
+  function sendPlayerList() {
+    const list = [];
+    for (const [id, s] of io.sockets.sockets) {
+      if (!s.user) continue;
+      list.push({ username: s.user, role: s.role });
+    }
+    io.emit("players", list);
+  }
+});
+
+/* ------------ START SERVER ------------ */
+
+const PORT = process.env.PORT || 3000;
+http.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});

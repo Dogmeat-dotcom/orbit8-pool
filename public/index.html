@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Orbit 8 Pool Lobby</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* Layout / scroll fixes */
+#layout {
+  min-height: 0;
+}
+
+.panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#players, #games, #chat {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Theme */
+:root {
+  --green: #00CC00;
+  --green-light: #33FF33;
+  --green-dark: #003300;
+  --bg: #000000;
+  --panel: #001900;
+  --border: #006600;
+  --text: #CCFFCC;
+  --gold: #FCB001;
+  --pink: #FF62E6;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER + LOGO + USER AREA */
+header {
+  background: #000;
+  border-bottom: 2px solid var(--green);
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#logo-wrap {
+  display: flex;
+  align-items: center;
+}
+
+#logo-img {
+  height: 70px;
+  display: block;
+}
+
+#user-header {
+  color: var(--green-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#logout-btn {
+  padding: 3px 8px;
+  font-size: 12px;
+  background: transparent;
+  border: 1px solid var(--green-light);
+  color: var(--green-light);
+  cursor: pointer;
+}
+
+#logout-btn:hover {
+  background: var(--green-light);
+  color: #000;
+}
+
+/* User menu dropdown (top-right) */
+.user-menu {
+  position: relative;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.user-menu-label {
+  color: var(--green-light);
+  padding: 4px 6px;
+}
+
+.user-menu-label .user-role {
+  color: #aaaaaa;
+  font-size: 12px;
+}
+
+.user-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: #000;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 8px #002200;
+  padding: 6px;
+  display: none;
+  z-index: 50;
+  min-width: 180px;
+  border-radius: 4px;
+}
+
+.user-menu-dropdown.open {
+  display: block;
+}
+
+.user-menu-dropdown button {
+  width: 100%;
+  text-align: left;
+  padding: 6px 8px;
+  margin: 4px 0;
+  background: #001800;
+  border: 1px solid #004400;
+  color: var(--green-light);
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.user-menu-dropdown button:hover {
+  background: #003000;
+}
+
+.menu-separator {
+  height: 1px;
+  background: #003300;
+  margin: 6px 0;
+}
+
+.logout-btn {
+  border-color: #880000;
+  background: #200000;
+  color: #ff5555;
+}
+
+.logout-btn:hover {
+  background: #400000;
+}
+
+
+.user-menu-dropdown.open {
+  display: block;
+}
+
+.user-menu-dropdown button {
+  width: 100%;
+  text-align: left;
+  padding: 4px 6px;
+  margin: 2px 0;
+  background: #001800;
+  border: 1px solid #004400;
+  color: var(--green-light);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* MAIN LAYOUT */
+#layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr 320px;
+  gap: 8px;
+  padding: 8px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 0 12px var(--green-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-title {
+  padding: 6px 8px;
+  border-bottom: 2px solid var(--green-dark);
+  font-weight: bold;
+  color: var(--green-light);
+}
+
+/* PLAYER LIST */
+.player-entry {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin: 4px 4px;
+  padding: 4px 6px;
+  background: #000900;
+  box-shadow: 0 0 6px #001f00;
+}
+
+.player-name {
+  font-weight: bold;
+}
+
+.p-admin { color: var(--gold); }
+.p-mod   { color: var(--pink); }
+.p-player{ color: var(--green-light); }
+
+.star {
+  color: var(--gold);
+  margin-right: 3px;
+}
+
+.player-buttons {
+  margin-top: 4px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.small-btn {
+  padding: 2px 6px;
+  font-size: 11px;
+  background: #002400;
+  color: var(--green-light);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+/* GAMES LIST */
+.game-entry {
+  padding: 6px 8px;
+  border-bottom: 1px solid #002200;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+/* ACTIVE GAMES — CARD LAYOUT */
+#games {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Main card box */
+.game-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  margin: 2px 4px;
+  background: #000900;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 0 8px #001f00;
+  font-size: 13px;
+}
+
+/* New game card styling */
+.game-card.new-game-card {
+  cursor: pointer;
+  border-style: dashed;
+  border-color: #00cc00;
+}
+
+.game-card.new-game-card:hover {
+  background: #001500;
+}
+
+/* Small pool icon (8-ball style) */
+.game-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+  position: relative;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0, #ffffff 35%, #000000 36%, #000000 100%);
+  box-shadow: 0 0 6px #00cc00;
+}
+
+.game-icon::after {
+  content: "8";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #000000;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Text area */
+.game-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.game-players {
+  font-weight: bold;
+  color: var(--green-light);
+}
+
+.game-meta {
+  font-size: 11px;
+  color: #88aa88;
+}
+
+/* Right-hand button area */
+.game-actions {
+  margin-left: 10px;
+}
+
+
+/* CHAT */
+#chat {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.chat-line { margin-bottom: 4px; }
+.chat-admin { color: var(--gold); }
+.chat-mod   { color: var(--pink); }
+.chat-player{ color: var(--green-light); }
+.chat-system{ color: #888; }
+
+#chat-input-row {
+  display: flex;
+}
+
+#chat-input {
+  flex: 1;
+  padding: 8px;
+  background: #000;
+  border: none;
+  color: var(--green-light);
+}
+
+#chat-send {
+  width: 80px;
+  background: var(--green);
+  border: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* MODALS COMMON */
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-inner {
+  background: #001500;
+  border: 2px solid var(--border);
+  padding: 20px 18px;
+  width: 320px;
+  box-sizing: border-box;
+  color: var(--text);
+  border-radius: 4px;
+  box-shadow: 0 0 12px #004400;
+  font-size: 13px;
+}
+
+
+
+.modal-inner h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: var(--green-light);
+}
+
+.modal-inner button {
+  margin-top: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  background: #002400;
+  color: var(--green-light);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 6px;
+  margin: 0 0 12px 0;
+  background: #000;
+  border: 1px solid var(--border);
+  color: var(--green-light);
+  box-sizing: border-box;   /* CRUCIAL */
+}
+
+#profileModal label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+
+
+/* ===== ORBIT-8 THIN NEON SCROLLBARS (WebKit) ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+  border: 1px solid #004400;
+  box-shadow: inset 0 0 4px #001800;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#00CC00, #006600);
+  border-radius: 6px;
+  border: 1px solid #008800;
+  box-shadow: 0 0 4px #00CC00;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#33FF33, #009900);
+  box-shadow: 0 0 6px #33FF33;
+}
+
+/* ===== FIREFOX SCROLLBARS ===== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00CC00 #000000;
+}
+</style>
+</head>
+<body>
+<header>
+  <div id="logo-wrap">
+    <img src="orbit8-logo.jpg" id="logo-img" alt="Orbit 8 Pool">
+  </div>
+  <div id="user-header">
+    <span id="user-label"></span>
+    <button id="logout-btn">Logout</button>
+  </div>
+</header>
+
+<div id="layout">
+  <div class="panel">
+    <div class="panel-title">Players</div>
+    <div id="players" style="flex:1; overflow-y:auto; padding:4px;"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Active Games</div>
+    <div id="games" style="flex:1; overflow-y:auto; padding:4px;"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Lobby Chat</div>
+    <div id="chat"></div>
+    <div id="chat-input-row">
+      <input id="chat-input" placeholder="Message...">
+      <button id="chat-send">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- Info Modal -->
+<div id="infoModal" class="modal">
+  <div class="modal-inner">
+    <h3>Player Info</h3>
+    <div id="infoContent"></div>
+    <button onclick="closeInfo()">Close</button>
+  </div>
+</div>
+
+<!-- Admin Modal -->
+<div id="adminModal" class="modal">
+  <div class="modal-inner">
+    <h3>Admin Tools</h3>
+    <div>
+      Target username:<br>
+      <input id="adm_user" style="width:100%; padding:4px; margin-bottom:4px;">
+    </div>
+    <div>
+      Duration (minutes, blank = permanent, 0 = remove mute/ban):<br>
+      <input id="adm_time" style="width:100%; padding:4px; margin-bottom:4px;">
+    </div>
+    <div style="margin-top:4px;">
+      <button onclick="admSend('mute')">Mute</button>
+      <button onclick="admSend('kick')">Kick</button>
+      <button onclick="admSend('ban')">Ban</button>
+    </div>
+    <div style="margin-top:6px; border-top:1px solid #003300; padding-top:6px;">
+      <button onclick="admSend('clear_chat')">Clear Chat</button>
+      <button onclick="admSend('del_user_msgs')">Delete User Messages</button>
+    </div>
+    <button style="margin-top:8px;" onclick="closeAdmin()">Close</button>
+  </div>
+</div>
+
+<!-- Invite Modal -->
+<div id="inviteModal" class="modal">
+  <div class="modal-inner">
+    <h3>Game Invite</h3>
+    <div id="inviteText"></div>
+    <button id="inviteAccept">Accept</button>
+    <button onclick="closeInvite()">Decline</button>
+  </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="profileModal" class="modal">
+  <div class="modal-inner">
+    <h3>Edit Profile</h3>
+
+    <label>Real Name</label>
+    <input id="profileRealName" class="profile-input">
+
+    <label>Country</label>
+    <input id="profileCountry" class="profile-input">
+
+    <label>Age</label>
+    <input id="profileAge" class="profile-input">
+
+    <div style="margin-top:10px; display:flex; gap:8px;">
+      <button onclick="submitProfile()">Save</button>
+      <button onclick="closeProfileModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Change Password Modal -->
+<div id="passwordModal" class="modal">
+  <div class="modal-inner">
+    <h3>Change Password</h3>
+
+    <label>Current Password</label>
+    <input id="pwOld" type="password" class="profile-input">
+
+    <label>New Password</label>
+    <input id="pwNew1" type="password" class="profile-input">
+
+    <label>Confirm New Password</label>
+    <input id="pwNew2" type="password" class="profile-input">
+
+    <div style="margin-top:10px; display:flex; gap:8px;">
+      <button onclick="submitPasswordChange()">Change</button>
+      <button onclick="closePasswordModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Chat message sound -->
+<audio id="lobby-chat-sound" src="sounds/chat.mp3" preload="auto"></audio>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+</body>
+</html>

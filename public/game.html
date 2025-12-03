@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pool Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+#layout {
+  min-height: 0;
+}
+
+.panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#game-chat {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+
+#game-chat {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+:root {
+  --green: #00CC00;
+  --green-light: #33FF33;
+  --green-dark: #003300;
+  --bg: #000000;
+  --panel: #001900;
+  --border: #006600;
+  --text: #CCFFCC;
+  --gold: #FCB001;
+  --pink: #FF62E6;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- TOP BANNER (same as lobby) ---------- */
+header {
+  background: #000;
+  border-bottom: 2px solid var(--green);
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#logo-wrap {
+  display: flex;
+  align-items: center;
+}
+
+#logo-img {
+  height: 70px;   /* slightly smaller for game screen */
+  display: block;
+}
+
+#gameTitle {
+  color: var(--green-light);
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* ---------- RETURN BUTTON ---------- */
+#backBtn {
+  background: var(--green);
+  padding: 6px 12px;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* ---------- STATUS BAR ---------- */
+#status {
+  padding: 6px;
+  font-size: 14px;
+  text-align: center;
+  background: #000A00;
+  border-bottom: 2px solid var(--green-dark);
+  color: var(--green-light);
+}
+
+/* ---------- LAYOUT ---------- */
+#layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 8px;
+  padding: 8px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 0 12px var(--green-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- POOL TABLE ---------- */
+#poolCanvas {
+  width: 100%;
+  border: 10px solid #003300;
+  background: #002900;
+  border-radius: 12px;
+}
+
+/* ---------- CHAT ---------- */
+#game-chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.chat-line { margin-bottom: 4px; }
+.chat-admin { color: var(--gold); }
+.chat-mod   { color: var(--pink); }
+.chat-player{ color: var(--green-light); }
+.chat-system{ color: #888; }
+
+#chat-input-row {
+  display: flex;
+}
+
+#chat-input {
+  flex: 1;
+  padding: 8px;
+  background: #000;
+  border: none;
+  color: var(--green-light);
+}
+
+#chat-send {
+  background: var(--green);
+  border: none;
+  color: #000;
+  width: 80px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ===== ORBIT-8 THIN NEON SCROLLBARS ===== */
+
+::-webkit-scrollbar {
+  width: 6px;     /* thinner */
+  height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #000;
+  border: 1px solid #004400;
+  box-shadow: inset 0 0 4px #001800;
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#00CC00, #006600);
+  border-radius: 6px;
+  border: 1px solid #008800;
+  box-shadow: 0 0 4px #00CC00;
+}
+
+/* Hover */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#33FF33, #009900);
+  box-shadow: 0 0 6px #33FF33;
+}
+
+/* ===== ORBIT-8 SCROLLBARS — FIREFOX ===== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00CC00 #000000;
+}
+
+*::-moz-scrollbar-thumb:hover {
+  background: #33FF33 !important;
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- ========== TOP BANNER (MATCHES LOBBY EXACTLY) ========== -->
+<header>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <div id="logo-wrap">
+      <img src="orbit8-logo.jpg" id="logo-img" alt="Orbit 8 Pool">
+    </div>
+    <div id="gameTitle">Game</div>
+  </div>
+
+  <button id="backBtn">Return to Lobby</button>
+</header>
+
+<div id="status">Loading game…</div>
+
+<div id="layout">
+  <div class="panel">
+    <canvas id="poolCanvas" width="820" height="410"></canvas>
+  </div>
+
+  <div class="panel">
+    <div style="padding:8px;border-bottom:2px solid var(--green-dark);color:var(--green-light);font-weight:bold;">
+      Game Chat
+    </div>
+    <div id="game-chat"></div>
+    <div id="chat-input-row">
+      <input id="chat-input" placeholder="Message...">
+      <button id="chat-send">Send</button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="pool.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
