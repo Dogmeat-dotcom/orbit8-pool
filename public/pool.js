@@ -1,23 +1,16 @@
 /************************************************************
- * pool.js — CLEAN STABLE BUILD (FULLY REPAIRED)
- * Includes:
- * - Sidebar UI (spin + power)
- * - Aim system (ghostball, contact point, reflection)
- * - 8-ball rack
- * - Spin physics
- * - All sounds (.mp3)
- * - NO nested/malformed functions
+ * pool.js — CLEAN STABLE BUILD (UK rules + ball-in-hand)
  ************************************************************/
 
 class PoolGame {
   constructor(canvas, onShotEnd, onFrame) {
     this.canvas = canvas;
-    this.ctx = canvas.getContext("2d");
+    this.ctx    = canvas.getContext("2d");
 
     this.onShotEnd = onShotEnd;
-    this.onFrame = onFrame;
+    this.onFrame   = onFrame;
 
-    this.width = canvas.width;
+    this.width  = canvas.width;
     this.height = canvas.height;
 
     this.inputEnabled = true;
@@ -45,49 +38,67 @@ class PoolGame {
     this.snd_rack.volume    = 0.6;
     this.snd_cushion.volume = 0.35;
 
-    // Cushion sound timing control
     this.lastCushionSoundTime = 0;
     this.cushionMinSpeed      = 0.4;
     this.cushionCooldownMs    = 80;
 
-    // Unlock audio after first click
     document.body.addEventListener("click", () => {
-      this.snd_power.muted = false;
-      this.snd_shot.muted = false;
-      this.snd_hit.muted = false;
-      this.snd_pocket.muted = false;
+      this.snd_power.muted   = false;
+      this.snd_shot.muted    = false;
+      this.snd_hit.muted     = false;
+      this.snd_pocket.muted  = false;
       this.snd_cushion.muted = false;
-      this.snd_rack.muted = false;
+      this.snd_rack.muted    = false;
     }, { once: true });
 
     /*******************
      * TABLE LAYOUT
      *******************/
-    this.sidebarWidth = 100;
-    this.tableScale = 0.90;
-    this.tableInset = 40;
-    this.ballRadius = 10;
-    this.pocketRadius = 22;
+    this.sidebarWidth  = 100;
+    this.tableScale    = 0.90;
+    this.tableInset    = 40;
+    this.ballRadius    = 10;
+    this.pocketRadius  = 22;
 
     /*******************
      * SPIN WIDGET
      *******************/
     this.spinBallSize = 60;
     this.spinDot = { x: 0, y: 0 };
-    this.spinX = 0;
-    this.spinY = 0;
+    this.spinX   = 0;
+    this.spinY   = 0;
     this.draggingSpin = false;
 
     /*******************
      * SHOT STATE
      *******************/
-    this.aiming = false;
-    this.aimAngle = 0;
-    this.lastMouse = null;
-    this.animating = false;
-    this.power = 0;
-    this.maxPower = 90;
+    this.aiming      = false;
+    this.aimAngle    = 0;
+    this.lastMouse   = null;
+    this.animating   = false;
+    this.power       = 0;
+    this.maxPower    = 90;
     this.pocketedThisShot = [];
+
+    /*******************
+     * UK POOL RULE STATE
+     *******************/
+    this.rules = {
+      breakDone: false,
+      playerColours: { 1: null, 2: null }, // "red" or "yellow"
+      currentPlayer: 1,
+      openTable: true,
+      foul: false,
+      turnContinues: false,
+      gameOver: false,
+      winner: null
+    };
+
+    /*******************
+     * BALL-IN-HAND STATE
+     *******************/
+    this.ballInHand      = false;
+    this.ballInHandGhost = { x: 0, y: 0 };
 
     /*******************
      * AIM FREEZE VECTORS
@@ -106,7 +117,7 @@ class PoolGame {
   }
 
   /***************************************************
-   * Cushion Sound Function (Option A – Correct Place)
+   * Cushion Sound
    ***************************************************/
   playCushionSound(speedBefore) {
     if (!this.snd_cushion) return;
@@ -120,9 +131,7 @@ class PoolGame {
     try {
       this.snd_cushion.currentTime = 0;
       this.snd_cushion.play();
-    } catch (e) {
-      console.warn("cushion sound failed:", e);
-    }
+    } catch (e) {}
   }
 
   /***************************************************
@@ -145,13 +154,13 @@ class PoolGame {
       inPocket: false
     });
 
-    // Rack layout
+    // UK 8-ball triangular rack (reds/yellows mixed)
     const layout = [
       1,
-      10, 15,
-      2, 8, 11,
-      13, 3, 9, 6,
-      5, 14, 7, 12, 4
+      10, 2,
+      3, 8, 11,
+      9, 4, 12, 5,
+      6, 13, 7, 14, 15
     ];
 
     const startX = this.sidebarWidth +
@@ -177,31 +186,35 @@ class PoolGame {
       }
     }
 
-    this.aimAngle = 0;
+    this.aimAngle  = 0;
     this.lastMouse = { x: cueX + 100, y: cueY };
 
-    // Rack sound
+    this.rules.breakDone     = false;
+    this.rules.playerColours = { 1: null, 2: null };
+    this.rules.currentPlayer = 1;
+    this.rules.openTable     = true;
+    this.rules.foul          = false;
+    this.rules.turnContinues = false;
+    this.rules.gameOver      = false;
+    this.rules.winner        = null;
+
     try {
       this.snd_rack.currentTime = 0;
       this.snd_rack.play();
-    } catch (e) {
-      console.warn("rack sound failed:", e);
-    }
+    } catch (e) {}
   }
 
   /***************************************************/
   getBallColor(n) {
-    const c = {
-      1:"#FFCC00", 2:"#0000FF", 3:"#FF0000", 4:"#800080",
-      5:"#FF6600", 6:"#008800", 7:"#800000", 8:"#000000",
-      9:"#FFFF99",10:"#99AAFF",11:"#FF9999",12:"#C080FF",
-      13:"#FFAA66",14:"#66DD99",15:"#CC6666"
-    };
-    return c[n] || "#FFFFFF";
+    if (n === 0) return "#FFFFFF";
+    if (n === 8) return "#000000";
+    if (n >= 1 && n <= 7)  return "#CC0000";  // reds
+    if (n >= 9 && n <= 15) return "#FFDD00";  // yellows
+    return "#FFFFFF";
   }
 
   /***************************************************
-   * INPUT HANDLING (Mouse)
+   * INPUT HANDLING
    ***************************************************/
   registerEvents() {
     window.addEventListener("mousedown", e => this.onMouseDown(e));
@@ -211,16 +224,45 @@ class PoolGame {
 
   insideCanvas(e) {
     const r = this.canvas.getBoundingClientRect();
+    const style = getComputedStyle(this.canvas);
+
+    const borderL = parseFloat(style.borderLeftWidth)   || 0;
+    const borderR = parseFloat(style.borderRightWidth)  || 0;
+    const borderT = parseFloat(style.borderTopWidth)    || 0;
+    const borderB = parseFloat(style.borderBottomWidth) || 0;
+
+    const left   = r.left + borderL;
+    const right  = r.right - borderR;
+    const top    = r.top + borderT;
+    const bottom = r.bottom - borderB;
+
     return (
-      e.clientX >= r.left && e.clientX <= r.right &&
-      e.clientY >= r.top  && e.clientY <= r.bottom
+      e.clientX >= left && e.clientX <= right &&
+      e.clientY >= top  && e.clientY <= bottom
     );
   }
 
   mouseToCanvas(e) {
     const r = this.canvas.getBoundingClientRect();
-    return { x: e.clientX - r.left, y: e.clientY - r.top };
+    const style = getComputedStyle(this.canvas);
+
+    const borderL = parseFloat(style.borderLeftWidth)   || 0;
+    const borderR = parseFloat(style.borderRightWidth)  || 0;
+    const borderT = parseFloat(style.borderTopWidth)    || 0;
+    const borderB = parseFloat(style.borderBottomWidth) || 0;
+
+    const displayWidth  = r.width  - borderL - borderR;
+    const displayHeight = r.height - borderT - borderB;
+
+    const scaleX = this.canvas.width  / displayWidth;
+    const scaleY = this.canvas.height / displayHeight;
+
+    const x = (e.clientX - (r.left + borderL)) * scaleX;
+    const y = (e.clientY - (r.top  + borderT)) * scaleY;
+
+    return { x, y };
   }
+
 
   /***************************************************
    * MOUSEDOWN — SIDEBAR OR TABLE?
@@ -228,6 +270,9 @@ class PoolGame {
   onMouseDown(e) {
     if (!this.insideCanvas(e)) return;
     const m = this.mouseToCanvas(e);
+
+    // If ball-in-hand, shooting is disabled; click is handled in game.js
+    if (this.ballInHand) return;
 
     if (m.x < this.sidebarWidth) {
       this.sidebarClick(m);
@@ -239,13 +284,13 @@ class PoolGame {
     const cue = this.balls[0];
     if (!cue || cue.inPocket) return;
 
-    this.aiming = true;
-    this.power = 0;
+    this.aiming  = true;
+    this.power   = 0;
     this.pocketedThisShot = [];
 
     const dx = m.x - cue.x;
     const dy = m.y - cue.y;
-    const d = Math.hypot(dx, dy) || 1;
+    const d  = Math.hypot(dx, dy) || 1;
 
     this.storedAimDX = dx / d;
     this.storedAimDY = dy / d;
@@ -257,15 +302,12 @@ class PoolGame {
    * SIDEBAR CLICK — SPIN + POWER
    ***************************************************/
   sidebarClick(m) {
-    // SPIN
     if (this.updateSpinFromPoint(m)) {
       this.draggingSpin = true;
       return;
     }
 
-    // POWER BAR
     const barX = 36, barY = 200, barW = 28, barH = 140;
-
     if (
       m.x >= barX && m.x <= barX + barW &&
       m.y >= barY && m.y <= barY + barH
@@ -276,7 +318,6 @@ class PoolGame {
     }
   }
 
-  /***************************************************/
   updatePowerDrag(m) {
     const cue = this.balls[0];
     if (!cue) return;
@@ -338,6 +379,9 @@ class PoolGame {
     if (!this.insideCanvas(e)) return;
     const m = this.mouseToCanvas(e);
 
+    // Ball-in-hand ghost is managed in game.js via updateBallInHandGhost
+    if (this.ballInHand) return;
+
     if (m.x < this.sidebarWidth) {
       if (this.draggingSpin) {
         this.updateSpinFromPoint(m);
@@ -372,6 +416,12 @@ class PoolGame {
 
     if (!this.inputEnabled || this.animating) {
       this.power = 0;
+      return;
+    }
+
+    if (this.ballInHand) {
+      this.power = 0;
+      this.render();
       return;
     }
 
@@ -458,9 +508,7 @@ class PoolGame {
     const T = this.tableInset + this.ballRadius;
     const B = this.height - this.tableInset - this.ballRadius;
 
-    /***********************
-     * MOVE + WALL COLLISION
-     ***********************/
+    // MOVE + WALL COLLISION
     for (const b of this.balls) {
       if (b.inPocket) continue;
 
@@ -486,10 +534,8 @@ class PoolGame {
       if (Math.abs(b.vy) < this.minSpeed) b.vy = 0;
     }
 
-    /***********************
-     * BALL–BALL COLLISIONS
-     ***********************/
-    const dist = this.ballRadius * 2;
+    // BALL–BALL COLLISIONS
+    const dist  = this.ballRadius * 2;
     const dist2 = dist * dist;
 
     for (let i = 0; i < this.balls.length; i++) {
@@ -540,9 +586,7 @@ class PoolGame {
       }
     }
 
-    /***********************
-     * POCKETING
-     ***********************/
+    // POCKETING
     const pockets = [
       { x: this.sidebarWidth + this.tableInset, y: this.tableInset },
       { x: this.sidebarWidth + (this.width - this.sidebarWidth) / 2, y: this.tableInset },
@@ -577,7 +621,7 @@ class PoolGame {
   }
 
   /***************************************************
-   * SPIN MODELS
+   * SPIN MODEL
    ***************************************************/
   applyPostImpactSpin() {
     const cue = this.balls[0];
@@ -623,7 +667,7 @@ class PoolGame {
       };
     }
 
-    if (first.type === "ball") return this.buildBallImpactData(ray, first);
+    if (first.type === "ball")    return this.buildBallImpactData(ray, first);
     if (first.type === "cushion") return this.buildCushionImpactData(ray, first);
     return null;
   }
@@ -651,7 +695,7 @@ class PoolGame {
 
       if (d2 <= R*R) {
         const offset = Math.sqrt(R*R - d2);
-        const tHit = tProj - offset;
+        const tHit   = tProj - offset;
         if (tHit > 0) {
           if (!closest || tHit < closest.dist) {
             closest = {
@@ -717,7 +761,7 @@ class PoolGame {
 
     const dx = b.x - impact.hitX;
     const dy = b.y - impact.hitY;
-    const d = Math.hypot(dx, dy) || 1;
+    const d  = Math.hypot(dx, dy) || 1;
 
     const cx = b.x - (dx / d) * this.ballRadius;
     const cy = b.y - (dy / d) * this.ballRadius;
@@ -748,8 +792,8 @@ class PoolGame {
     else ny = -1;
 
     const dot = ray.dx * nx + ray.dy * ny;
-    const rx = ray.dx - 2 * dot * nx;
-    const ry = ray.dy - 2 * dot * ny;
+    const rx  = ray.dx - 2 * dot * nx;
+    const ry  = ray.dy - 2 * dot * ny;
 
     return {
       type: "cushion",
@@ -772,7 +816,7 @@ class PoolGame {
   }
 
   /***************************************************
-   * RENDER ENGINE (SIDEBAR + TABLE + BALLS + AIM)
+   * RENDER ENGINE
    ***************************************************/
   render() {
     const ctx = this.ctx;
@@ -786,36 +830,47 @@ class PoolGame {
     if (
       cue && !cue.inPocket &&
       this.inputEnabled &&
-      !this.animating
+      !this.animating &&
+      !this.ballInHand
     ) {
       this.drawAimSystem(ctx, cue);
+    }
+
+    // Draw ball-in-hand ghost
+    if (this.ballInHand) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(this.ballInHandGhost.x, this.ballInHandGhost.y, this.ballRadius, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.85)";
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgba(0,255,0,0.8)";
+      ctx.setLineDash([4, 4]);
+      ctx.stroke();
+      ctx.restore();
     }
   }
 
   /***************************************************
-   * SIDEBAR — (THE GOOD ONE)
+   * SIDEBAR
    ***************************************************/
   renderSidebar(ctx) {
     ctx.save();
 
-    // Background gradient
     const bg = ctx.createLinearGradient(0, 0, 0, this.height);
     bg.addColorStop(0, "#001900");
     bg.addColorStop(1, "#000F00");
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, this.sidebarWidth, this.height);
 
-    // Edge highlight
     ctx.fillStyle = "rgba(0,255,100,0.25)";
     ctx.fillRect(this.sidebarWidth - 2, 0, 2, this.height);
 
-    // "SPIN"
     ctx.fillStyle = "#00FF66";
     ctx.font = "16px Arial";
     ctx.textAlign = "center";
     ctx.fillText("SPIN", 50, 28);
 
-    // --- Spin Ball ---
     const cx = 50, cy = 90, r = this.spinBallSize / 2;
 
     ctx.strokeStyle = "rgba(0,255,100,0.35)";
@@ -841,18 +896,16 @@ class PoolGame {
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Spin dot
     const dotX = cx + this.spinDot.x * r;
     const dotY = cy + this.spinDot.y * r;
     ctx.shadowColor = "rgba(255,50,50,0.9)";
-    ctx.shadowBlur = 10;
-    ctx.fillStyle = "#FF3333";
+    ctx.shadowBlur  = 10;
+    ctx.fillStyle   = "#FF3333";
     ctx.beginPath();
     ctx.arc(dotX, dotY, 6, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // Arrows
     ctx.fillStyle = "#00FF66";
     ctx.font = "13px Arial";
     ctx.fillText("↑", cx, cy - r - 10);
@@ -860,7 +913,6 @@ class PoolGame {
     ctx.fillText("←", cx - r - 15, cy + 5);
     ctx.fillText("→", cx + r + 16, cy + 5);
 
-    // ----- POWER -----
     ctx.fillStyle = "#00FF66";
     ctx.font = "16px Arial";
     ctx.fillText("POWER", 50, 180);
@@ -868,11 +920,11 @@ class PoolGame {
     const barX = 36, barY = 200, barW = 28, barH = 140;
 
     ctx.strokeStyle = "#00FF66";
-    ctx.lineWidth = 2;
+    ctx.lineWidth   = 2;
     ctx.strokeRect(barX, barY, barW, barH);
 
-    const amt = (this.power / this.maxPower) * barH;
-    const topY = barY + (barH - amt);
+    const amt   = (this.power / this.maxPower) * barH;
+    const topY  = barY + (barH - amt);
 
     const grad = ctx.createLinearGradient(0, barY + barH, 0, barY);
     grad.addColorStop(0, "#007700");
@@ -909,16 +961,16 @@ class PoolGame {
    * DRAW TABLE + POCKETS
    ***************************************************/
   drawTable(ctx) {
-    const left = this.sidebarWidth + this.tableInset;
-    const top  = this.tableInset;
-    const width = (this.width - this.sidebarWidth) - this.tableInset * 2;
+    const left   = this.sidebarWidth + this.tableInset;
+    const top    = this.tableInset;
+    const width  = (this.width - this.sidebarWidth) - this.tableInset * 2;
     const height = this.height - this.tableInset * 2;
 
     ctx.fillStyle = "#003300";
     ctx.fillRect(left, top, width, height);
 
     ctx.strokeStyle = "#00FF00";
-    ctx.lineWidth = 4;
+    ctx.lineWidth   = 4;
     ctx.strokeRect(left, top, width, height);
 
     const pockets = [
@@ -944,6 +996,7 @@ class PoolGame {
   drawBalls(ctx) {
     for (const b of this.balls) {
       if (b.inPocket) continue;
+      if (this.ballInHand && b.number === 0) continue; // cue is drawn as ghost
 
       ctx.beginPath();
       ctx.arc(b.x + 2, b.y + 2, this.ballRadius, 0, Math.PI * 2);
@@ -985,7 +1038,7 @@ class PoolGame {
   drawNoImpactGuide(ctx, cue, data) {
     ctx.save();
     ctx.strokeStyle = "rgba(0,255,0,0.9)";
-    ctx.lineWidth = 2;
+    ctx.lineWidth   = 2;
     ctx.beginPath();
     ctx.moveTo(cue.x, cue.y);
     ctx.lineTo(data.endX, data.endY);
@@ -997,7 +1050,7 @@ class PoolGame {
     ctx.save();
 
     ctx.strokeStyle = "rgba(0,255,0,0.9)";
-    ctx.lineWidth = 2;
+    ctx.lineWidth   = 2;
     ctx.beginPath();
     ctx.moveTo(cue.x, cue.y);
     ctx.lineTo(data.endX, data.endY);
@@ -1046,7 +1099,7 @@ class PoolGame {
     ctx.save();
 
     ctx.strokeStyle = "rgba(0,255,0,0.9)";
-    ctx.lineWidth = 2;
+    ctx.lineWidth   = 2;
     ctx.beginPath();
     ctx.moveTo(cue.x, cue.y);
     ctx.lineTo(data.endX, data.endY);
@@ -1069,18 +1122,18 @@ class PoolGame {
    * CUE DRAWING
    ***************************************************/
   drawCue(ctx, cue) {
-    const dx = Math.cos(this.aimAngle);
-    const dy = Math.sin(this.aimAngle);
+    const dx  = Math.cos(this.aimAngle);
+    const dy  = Math.sin(this.aimAngle);
     const len = 220;
 
     const tipX = cue.x - dx * this.ballRadius;
     const tipY = cue.y - dy * this.ballRadius;
-    const bx = tipX - dx * len;
-    const by = tipY - dy * len;
+    const bx   = tipX - dx * len;
+    const by   = tipY - dy * len;
 
     ctx.save();
     ctx.strokeStyle = "#C89650";
-    ctx.lineWidth = 5;
+    ctx.lineWidth   = 5;
     ctx.beginPath();
     ctx.moveTo(bx, by);
     ctx.lineTo(tipX, tipY);
@@ -1113,5 +1166,149 @@ class PoolGame {
 
   setInputEnabled(f) {
     this.inputEnabled = !!f;
+  }
+
+  /***************************************************
+   * UK RULES — PURE FLAGS (no turn flip here)
+   ***************************************************/
+  processUKRules(pocketed, currentPlayerNum) {
+    const r = this.rules;
+
+    r.currentPlayer = currentPlayerNum;
+    r.foul          = false;
+    r.turnContinues = false;
+    r.gameOver      = false;
+    r.winner        = null;
+
+    const reds    = pocketed.filter(n => n >= 1 && n <= 7);
+    const yellows = pocketed.filter(n => n >= 9 && n <= 15);
+    const black   = pocketed.includes(8);
+    const cueBall = pocketed.includes(0);
+
+    // FIRST LEGAL POT ASSIGNS COLOURS
+    if (r.openTable && !black) {
+      if (reds.length > 0 && yellows.length === 0) {
+        r.playerColours[currentPlayerNum] = "red";
+        r.playerColours[currentPlayerNum === 1 ? 2 : 1] = "yellow";
+        r.openTable = false;
+      }
+      if (yellows.length > 0 && reds.length === 0) {
+        r.playerColours[currentPlayerNum] = "yellow";
+        r.playerColours[currentPlayerNum === 1 ? 2 : 1] = "red";
+        r.openTable = false;
+      }
+    }
+
+    // BLACK BALL
+    if (black) {
+      if (r.openTable) {
+        r.gameOver = true;
+        r.winner   = currentPlayerNum === 1 ? 2 : 1;
+        return { ...r };
+      }
+
+      const target = r.playerColours[currentPlayerNum];
+      const allTargetLeft = this.balls.some(b => !b.inPocket && (
+        (target === "red"    && b.number >= 1 && b.number <= 7) ||
+        (target === "yellow" && b.number >= 9 && b.number <= 15)
+      ));
+
+      if (allTargetLeft) {
+        r.gameOver = true;
+        r.winner   = currentPlayerNum === 1 ? 2 : 1;
+      } else {
+        r.gameOver = true;
+        r.winner   = currentPlayerNum;
+      }
+
+      return { ...r };
+    }
+
+    // FOUL CHECKS
+    if (cueBall) r.foul = true;
+
+    if (!r.openTable) {
+      const playerColour = r.playerColours[currentPlayerNum];
+      if (playerColour === "red" && yellows.length > 0)  r.foul = true;
+      if (playerColour === "yellow" && reds.length > 0)  r.foul = true;
+    }
+
+    const playerColour = r.playerColours[currentPlayerNum];
+
+    if (playerColour === "red" && reds.length > 0) {
+      r.turnContinues = true;
+    } else if (playerColour === "yellow" && yellows.length > 0) {
+      r.turnContinues = true;
+    } else {
+      r.turnContinues = false;
+    }
+
+    if (r.openTable) {
+      if (reds.length + yellows.length > 0) r.turnContinues = true;
+    }
+
+    if (r.foul) {
+      r.turnContinues = false;
+    }
+
+    return { ...r };
+  }
+
+  /***************************************************
+   * BALL-IN-HAND HELPERS
+   ***************************************************/
+  enterBallInHandMode() {
+    const cue = this.balls.find(b => b.number === 0);
+    if (!cue) return;
+    cue.inPocket = true;
+    cue.vx = 0;
+    cue.vy = 0;
+    this.ballInHand = true;
+    this.ballInHandGhost = { x: cue.x, y: cue.y };
+    this.render();
+  }
+
+  updateBallInHandGhost(x, y) {
+    this.ballInHandGhost.x = x;
+    this.ballInHandGhost.y = y;
+    this.render();
+  }
+
+  flashIllegalPlacement() {
+    const ctx = this.ctx;
+    const { x, y } = this.ballInHandGhost;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, this.ballRadius + 4, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(255,0,0,0.9)";
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  exitBallInHandMode() {
+    let cue = this.balls.find(b => b.number === 0);
+    if (!cue) {
+      cue = {
+        number: 0,
+        x: this.ballInHandGhost.x,
+        y: this.ballInHandGhost.y,
+        vx: 0,
+        vy: 0,
+        color: "#FFFFFF",
+        inPocket: false
+      };
+      this.balls.unshift(cue);
+    } else {
+      cue.x = this.ballInHandGhost.x;
+      cue.y = this.ballInHandGhost.y;
+      cue.vx = 0;
+      cue.vy = 0;
+      cue.inPocket = false;
+    }
+
+    this.ballInHand = false;
+    this.render();
   }
 }

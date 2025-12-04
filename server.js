@@ -40,12 +40,6 @@ function sendGameList() {
   io.emit("games", list);
 }
 
-function ballGroup(n) {
-  if (n >= 1 && n <= 7) return "solids";
-  if (n >= 9 && n <= 15) return "stripes";
-  return null;
-}
-
 /**
  * Apply final result of a game:
  * - winnerName: username of winner
@@ -454,8 +448,8 @@ io.on("connection", socket => {
       spectators: [],
       state: null,
       chat: [],
-      currentTurn: "p1",
-      groups: { p1: null, p2: null }, // solids/stripes
+      currentTurn: "p1",          // p1 breaks
+      groups: { p1: null, p2: null }, // legacy (solids/stripes)
       finished: false
     };
   }
@@ -522,6 +516,7 @@ io.on("connection", socket => {
     if (!game) return;
 
     socket.join(id);
+
     socket.emit("game_sync", {
       state: game.state,
       chat: game.chat,
@@ -561,82 +556,67 @@ io.on("connection", socket => {
     socket.to(id).emit("shot_frame", { state });
   });
 
-  // Final state + rules + turn enforcement
-  socket.on("shot_end", ({ id, state, pocketed }) => {
-    const game = db.games[id];
+  // Shot finished (UK rules coming from client)
+  socket.on("shot_end", msg => {
+    const game = db.games[msg.id];
     if (!game || game.finished) return;
 
-    const shooter = socket.user;
-    if (!shooter) return;
+    // Update server-side state
+    game.state = msg.state;
 
-    if (game.currentTurn === "p1" && shooter !== game.p1) return;
-    if (game.currentTurn === "p2" && shooter !== game.p2) return;
-
-    const shooterSide = shooter === game.p1 ? "p1" : "p2";
-    const otherSide = shooterSide === "p1" ? "p2" : "p1";
-
-    game.state = state;
-
-    const groups = game.groups || { p1: null, p2: null };
-    game.groups = groups;
-
-    const pocketedSet = new Set(pocketed || []);
-    const eightPotted = pocketedSet.has(8);
-    const nonEight = [...pocketedSet].filter(n => n !== 0 && n !== 8);
-
-    if (!groups.p1 && !groups.p2) {
-      const assignNum = nonEight.find(n => ballGroup(n));
-      if (assignNum) {
-        const g = ballGroup(assignNum);
-        groups[shooterSide] = g;
-        groups[otherSide] = g === "solids" ? "stripes" : "solids";
-      }
-    }
-
-    let solidsLeft = false;
-    let stripesLeft = false;
-    (state.balls || []).forEach(b => {
-      if (!b.inPocket) {
-        const g = ballGroup(b.number);
-        if (g === "solids") solidsLeft = true;
-        if (g === "stripes") stripesLeft = true;
-      }
+    // Relay latest table state (and rules info) to everyone in the room
+    io.to(msg.id).emit("shot_end", {
+      state: game.state,
+      pocketed: msg.pocketed,
+      rules: msg.rules
     });
 
-    if (eightPotted) {
-      const shooterGroup = groups[shooterSide];
+    const rules = msg.rules || {};
 
-      if (!shooterGroup) {
-        const winnerName = game[otherSide];
-        applyGameResult(game, winnerName, "8-ball foul (no group)");
-        return;
-      }
+    // ---------- GAME OVER (rules-based win) ----------
+    if (rules.gameOver) {
+      let winnerName = null;
+      if (rules.winner === 1) winnerName = game.p1;
+      else if (rules.winner === 2) winnerName = game.p2;
 
-      const groupLeft =
-        shooterGroup === "solids" ? solidsLeft : stripesLeft;
-
-      if (groupLeft) {
-        const winnerName = game[otherSide];
-        applyGameResult(game, winnerName, "8-ball early");
-        return;
+      if (winnerName) {
+        // Updates stats, deletes game, emits `game_over` and updates spectate list
+        applyGameResult(game, winnerName, "8-ball win");
       } else {
-        applyGameResult(game, shooter, "8-ball win");
-        return;
+        // Fallback: no winner resolved
+        game.finished = true;
+        saveDB();
+        io.to(msg.id).emit("game_over", {
+          winner: null,
+          reason: "game over"
+        });
+        delete db.games[msg.id];
+        sendGameList();
       }
+      return;
     }
 
-    if (game.p1 && game.p2) {
+    // ---------- PLAYER KEEPS TURN (legal pot) ----------
+    if (rules.turnContinues) {
+      io.to(msg.id).emit("turn", { current: game.currentTurn });
+      return;
+    }
+
+    // ---------- FOUL → SWITCH TURN + BALL IN HAND ----------
+    if (rules.foul) {
       game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
+
+      io.to(msg.id).emit("ball_in_hand", {
+        player: game.currentTurn    // "p1" or "p2"
+      });
+
+      io.to(msg.id).emit("turn", { current: game.currentTurn });
+      return;
     }
 
-    saveDB();
-
-    socket.to(id).emit("shot_end", { state });
-
-    io.to(id).emit("turn", {
-      current: game.currentTurn,
-      player: game.currentTurn === "p1" ? game.p1 : game.p2
-    });
+    // ---------- NORMAL TURN SWITCH ----------
+    game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
+    io.to(msg.id).emit("turn", { current: game.currentTurn });
   });
 
   // End game / forfeit
@@ -647,13 +627,23 @@ io.on("connection", socket => {
     const forfeiter = socket.user;
     if (!forfeiter) return;
 
+    // ---- SPECTATOR LEAVING ----
+    if (forfeiter !== game.p1 && forfeiter !== game.p2) {
+      // Just leave the room; do NOT end the game or touch spectate list
+      socket.leave(id);
+      return;
+    }
+
+    // ---- REAL PLAYER FORFEIT ----
     let winnerName = null;
     if (forfeiter === game.p1 && game.p2) winnerName = game.p2;
     else if (forfeiter === game.p2 && game.p1) winnerName = game.p1;
 
     if (winnerName) {
+      // Forfeit loss for leaver, win for the other player
       applyGameResult(game, winnerName, "forfeit");
     } else {
+      // Only one player in the game or no opponent – just terminate
       game.finished = true;
       saveDB();
       io.to(game.id).emit("game_over", {

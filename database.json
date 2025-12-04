@@ -4,8 +4,8 @@
       "username": "Dogmeat",
       "password": "$2a$10$gSeY1AkhoLiED2xSY6ZXo.CL.9ofl7sWPro0dpQlwBkuY5g7mR6CC",
       "role": "admin",
-      "gamesPlayed": 63,
-      "gamesWon": 31,
+      "gamesPlayed": 124,
+      "gamesWon": 59,
       "mutedUntil": 0,
       "banned": false,
       "realName": "Zack",
@@ -16,8 +16,8 @@
       "username": "Hog",
       "password": "$2a$10$BEEixN9/SXQBNjnp/MDRUuVui90yxVi7VtW6aOsWSX.w2pd4JF8t2",
       "role": "player",
-      "gamesPlayed": 3,
-      "gamesWon": 2,
+      "gamesPlayed": 24,
+      "gamesWon": 15,
       "mutedUntil": 0,
       "banned": false,
       "bannedUntil": 0
@@ -59,7 +59,38 @@
       "bannedUntil": 0
     }
   },
-  "chat": [],
+  "chat": [
+    {
+      "user": "Hog",
+      "msg": "hi",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": "hi",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "sound",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "sound",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "hi",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "hi",
+      "role": "admin"
+    }
+  ],
   "games": {
     "gjtu31g": {
       "id": "gjtu31g",
@@ -682,194 +713,6 @@
       },
       "finished": true
     },
-    "gtcb1s2": {
-      "id": "gtcb1s2",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": {
-        "state": {
-          "balls": [
-            {
-              "number": 0,
-              "x": 554.8703523454184,
-              "y": 254.4394044503958,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFFFFF",
-              "inPocket": false
-            },
-            {
-              "number": 1,
-              "x": 619.9890277815908,
-              "y": 204.98866268895011,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFCC00",
-              "inPocket": false
-            },
-            {
-              "number": 10,
-              "x": 639.8,
-              "y": 194,
-              "vx": 0,
-              "vy": 0,
-              "color": "#99AAFF",
-              "inPocket": false
-            },
-            {
-              "number": 15,
-              "x": 631.7896066187079,
-              "y": 221.38009266789265,
-              "vx": 0,
-              "vy": 0,
-              "color": "#CC6666",
-              "inPocket": false
-            },
-            {
-              "number": 2,
-              "x": 658.628168073152,
-              "y": 182.84882902017006,
-              "vx": 0,
-              "vy": 0,
-              "color": "#0000FF",
-              "inPocket": false
-            },
-            {
-              "number": 8,
-              "x": 657.1272627881608,
-              "y": 206.0970718552457,
-              "vx": 0,
-              "vy": 0,
-              "color": "#000000",
-              "inPocket": false
-            },
-            {
-              "number": 11,
-              "x": 659.6,
-              "y": 227,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF9999",
-              "inPocket": false
-            },
-            {
-              "number": 13,
-              "x": 670.3426245581013,
-              "y": 153.6380616605751,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFAA66",
-              "inPocket": false
-            },
-            {
-              "number": 3,
-              "x": 676.4531880876538,
-              "y": 193.58921304987015,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF0000",
-              "inPocket": false
-            },
-            {
-              "number": 9,
-              "x": 679.2855142162236,
-              "y": 220.0914921374086,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFFF99",
-              "inPocket": false
-            },
-            {
-              "number": 6,
-              "x": 257.7294536241172,
-              "y": 51.5172723980377,
-              "vx": 0,
-              "vy": 0,
-              "color": "#008800",
-              "inPocket": false
-            },
-            {
-              "number": 5,
-              "x": 735.2201115144319,
-              "y": 136.56576177699898,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF6600",
-              "inPocket": false
-            },
-            {
-              "number": 14,
-              "x": 721.4793010995381,
-              "y": 221.85085832994986,
-              "vx": 0,
-              "vy": 0,
-              "color": "#66DD99",
-              "inPocket": false
-            },
-            {
-              "number": 7,
-              "x": 697.0628009568178,
-              "y": 205.20190005668096,
-              "vx": 0,
-              "vy": 0,
-              "color": "#800000",
-              "inPocket": false
-            },
-            {
-              "number": 12,
-              "x": 698.5148343996335,
-              "y": 235.81009647891804,
-              "vx": 0,
-              "vy": 0,
-              "color": "#C080FF",
-              "inPocket": false
-            },
-            {
-              "number": 4,
-              "x": 719.9948168794559,
-              "y": 257.11166437267394,
-              "vx": 0,
-              "vy": 0,
-              "color": "#800080",
-              "inPocket": false
-            }
-          ]
-        },
-        "pocketed": []
-      },
-      "chat": [],
-      "currentTurn": "p2",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "visits": {
-        "p1": 2,
-        "p2": 1
-      },
-      "ballInHandFor": null,
-      "finished": false
-    },
-    "gafggbe": {
-      "id": "gafggbe",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "visits": {
-        "p1": 2,
-        "p2": 1
-      },
-      "ballInHandFor": null,
-      "finished": false
-    },
     "gjbo4p2": {
       "id": "gjbo4p2",
       "p1": "Dogmeat",
@@ -884,120 +727,6 @@
       },
       "visits": {
         "p1": 1,
-        "p2": 1
-      },
-      "ballInHandFor": null,
-      "finished": false
-    },
-    "gkdp5c0": {
-      "id": "gkdp5c0",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "visits": {
-        "p1": 2,
-        "p2": 1
-      },
-      "ballInHandFor": null,
-      "finished": false
-    },
-    "grul2vr": {
-      "id": "grul2vr",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "visits": {
-        "p1": 2,
-        "p2": 1
-      },
-      "ballInHandFor": null,
-      "finished": false
-    },
-    "giku80y": {
-      "id": "giku80y",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "visits": {
-        "p1": 2,
-        "p2": 1
-      },
-      "ballInHandFor": null,
-      "finished": false
-    },
-    "g86ez90": {
-      "id": "g86ez90",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "visits": {
-        "p1": 2,
-        "p2": 1
-      },
-      "ballInHandFor": null,
-      "finished": false
-    },
-    "gk7omal": {
-      "id": "gk7omal",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "visits": {
-        "p1": 2,
-        "p2": 1
-      },
-      "ballInHandFor": null,
-      "finished": false
-    },
-    "gnjed1n": {
-      "id": "gnjed1n",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "visits": {
-        "p1": 2,
         "p2": 1
       },
       "ballInHandFor": null,
@@ -1167,645 +896,6 @@
       },
       "finished": true
     },
-    "g3al1o7": {
-      "id": "g3al1o7",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": {
-        "balls": [
-          {
-            "number": 0,
-            "x": 591.3442384901006,
-            "y": 99.1264488273793,
-            "vx": -0.15444355721695624,
-            "vy": 0.28438141473816575,
-            "color": "#FFFFFF",
-            "inPocket": false
-          },
-          {
-            "number": 1,
-            "x": 564.844513046113,
-            "y": 298.01611306547363,
-            "vx": -0.09189923954343805,
-            "vy": 0.14250472990798851,
-            "color": "#FFCC00",
-            "inPocket": false
-          },
-          {
-            "number": 10,
-            "x": 634.1539395521995,
-            "y": 126.82242200013945,
-            "vx": 0,
-            "vy": -0.09449192568973835,
-            "color": "#99AAFF",
-            "inPocket": false
-          },
-          {
-            "number": 15,
-            "x": 627.636486230666,
-            "y": 248.31526790587458,
-            "vx": 0,
-            "vy": 0.04686473964191464,
-            "color": "#CC6666",
-            "inPocket": false
-          },
-          {
-            "number": 2,
-            "x": 660.5303585709514,
-            "y": 185.07412725956473,
-            "vx": 0,
-            "vy": 0,
-            "color": "#0000FF",
-            "inPocket": false
-          },
-          {
-            "number": 8,
-            "x": 659.5926568102152,
-            "y": 206.2976970893969,
-            "vx": 0,
-            "vy": 0,
-            "color": "#000000",
-            "inPocket": false
-          },
-          {
-            "number": 11,
-            "x": 662.2778552733048,
-            "y": 227.05503531976922,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FF9999",
-            "inPocket": false
-          },
-          {
-            "number": 13,
-            "x": 681.703429554455,
-            "y": 168.63902886052793,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFAA66",
-            "inPocket": false
-          },
-          {
-            "number": 3,
-            "x": 681.777393888605,
-            "y": 192.21055317600027,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FF0000",
-            "inPocket": false
-          },
-          {
-            "number": 9,
-            "x": 682.0082252122805,
-            "y": 217.45339915997502,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFFF99",
-            "inPocket": false
-          },
-          {
-            "number": 6,
-            "x": 682.3652361156985,
-            "y": 242.10470817014385,
-            "vx": 0,
-            "vy": 0,
-            "color": "#008800",
-            "inPocket": false
-          },
-          {
-            "number": 5,
-            "x": 592.9699370896508,
-            "y": 66.83907421732272,
-            "vx": -0.2861241202054218,
-            "vy": -0.24283513225820139,
-            "color": "#FF6600",
-            "inPocket": false
-          },
-          {
-            "number": 14,
-            "x": 704.2254421626071,
-            "y": 180.12381547494704,
-            "vx": 0,
-            "vy": 0,
-            "color": "#66DD99",
-            "inPocket": false
-          },
-          {
-            "number": 7,
-            "x": 703.1665485137263,
-            "y": 206.8945617434852,
-            "vx": 0,
-            "vy": 0,
-            "color": "#800000",
-            "inPocket": false
-          },
-          {
-            "number": 12,
-            "x": 704.0908251722033,
-            "y": 229.39979391068098,
-            "vx": 0,
-            "vy": 0,
-            "color": "#C080FF",
-            "inPocket": false
-          },
-          {
-            "number": 4,
-            "x": 508.8689289709208,
-            "y": 288.17977609850425,
-            "vx": -0.5292288227260274,
-            "vy": -0.2924250445481576,
-            "color": "#800080",
-            "inPocket": false
-          }
-        ]
-      },
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
-    "g2n5uwr": {
-      "id": "g2n5uwr",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": {
-        "balls": [
-          {
-            "number": 0,
-            "x": 270.1282235252575,
-            "y": 115.55275532214456,
-            "vx": -0.03487121123200427,
-            "vy": 0,
-            "color": "#FFFFFF",
-            "inPocket": false
-          },
-          {
-            "number": 1,
-            "x": 556.9118942942973,
-            "y": 247.69024856603266,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFCC00",
-            "inPocket": false
-          },
-          {
-            "number": 10,
-            "x": 679.1727741044637,
-            "y": 151.4505140020322,
-            "vx": 0,
-            "vy": 0,
-            "color": "#99AAFF",
-            "inPocket": false
-          },
-          {
-            "number": 15,
-            "x": 733.3146089736057,
-            "y": 319.0966075790053,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC6666",
-            "inPocket": false
-          },
-          {
-            "number": 2,
-            "x": 649.4658328984245,
-            "y": 185.55821887220924,
-            "vx": 0,
-            "vy": 0,
-            "color": "#0000FF",
-            "inPocket": false
-          },
-          {
-            "number": 8,
-            "x": 712.1482283649752,
-            "y": 244.22796792063664,
-            "vx": 0,
-            "vy": 0,
-            "color": "#000000",
-            "inPocket": false
-          },
-          {
-            "number": 11,
-            "x": 636.2477896450393,
-            "y": 285.6100193408298,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FF9999",
-            "inPocket": false
-          },
-          {
-            "number": 13,
-            "x": 668.0701890201173,
-            "y": 263.21281434934417,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFAA66",
-            "inPocket": false
-          },
-          {
-            "number": 3,
-            "x": 590.7597355075361,
-            "y": 137.66234891260544,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FF0000",
-            "inPocket": false
-          },
-          {
-            "number": 9,
-            "x": 224.34543017503051,
-            "y": 329.84570567161194,
-            "vx": -0.15777454234824842,
-            "vy": -0.05418477738080758,
-            "color": "#FFFF99",
-            "inPocket": false
-          },
-          {
-            "number": 6,
-            "x": 717.3521271929086,
-            "y": 348.25268642521394,
-            "vx": 0,
-            "vy": 0,
-            "color": "#008800",
-            "inPocket": false
-          },
-          {
-            "number": 5,
-            "x": 318.0870292475643,
-            "y": 62.40763929070102,
-            "vx": 0.03487121123200427,
-            "vy": -0.06780899558390557,
-            "color": "#FF6600",
-            "inPocket": false
-          },
-          {
-            "number": 14,
-            "x": 768.0878622246473,
-            "y": 97.191323580018,
-            "vx": 0,
-            "vy": 0,
-            "color": "#66DD99",
-            "inPocket": false
-          },
-          {
-            "number": 7,
-            "x": 694.0734914458052,
-            "y": 193.67148237834652,
-            "vx": 0,
-            "vy": 0,
-            "color": "#800000",
-            "inPocket": false
-          },
-          {
-            "number": 12,
-            "x": 678.8482218863135,
-            "y": 246.36544044314755,
-            "vx": 0,
-            "vy": 0,
-            "color": "#C080FF",
-            "inPocket": false
-          },
-          {
-            "number": 4,
-            "x": 595.2709508825641,
-            "y": 73.9898567832891,
-            "vx": 0,
-            "vy": 0,
-            "color": "#800080",
-            "inPocket": false
-          }
-        ]
-      },
-      "chat": [],
-      "currentTurn": "p2",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
-    "gl2d9hr": {
-      "id": "gl2d9hr",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": {
-        "balls": [
-          {
-            "number": 0,
-            "x": 444.43690788903507,
-            "y": 240.45593658362407,
-            "vx": 0,
-            "vy": 0.04138356235961378,
-            "color": "#FFFFFF",
-            "inPocket": false
-          },
-          {
-            "number": 1,
-            "x": 654.4547455400963,
-            "y": 298.7481535582726,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFCC00",
-            "inPocket": false
-          },
-          {
-            "number": 10,
-            "x": 663.5446463929434,
-            "y": 197.13241415088476,
-            "vx": 0,
-            "vy": 0,
-            "color": "#99AAFF",
-            "inPocket": false
-          },
-          {
-            "number": 15,
-            "x": 599.2678524123137,
-            "y": 199.70317147532,
-            "vx": 0,
-            "vy": -0.06734328355790199,
-            "color": "#CC6666",
-            "inPocket": false
-          },
-          {
-            "number": 2,
-            "x": 583.3348060255036,
-            "y": 167.21963202061258,
-            "vx": 0,
-            "vy": 0,
-            "color": "#0000FF",
-            "inPocket": false
-          },
-          {
-            "number": 8,
-            "x": 502.71097994491157,
-            "y": 250.46803826508085,
-            "vx": -0.12111152294609395,
-            "vy": 0,
-            "color": "#000000",
-            "inPocket": false
-          },
-          {
-            "number": 11,
-            "x": 698.7609620876889,
-            "y": 301.9612130721572,
-            "vx": 0,
-            "vy": -0.14039374810141894,
-            "color": "#FF9999",
-            "inPocket": false
-          },
-          {
-            "number": 13,
-            "x": 642.5537612767271,
-            "y": 110.67721823370464,
-            "vx": -0.0381272785237663,
-            "vy": -0.05468665797587819,
-            "color": "#FFAA66",
-            "inPocket": false
-          },
-          {
-            "number": 3,
-            "x": 618.00729391799,
-            "y": 228.20273268559842,
-            "vx": -0.05522713130154916,
-            "vy": 0,
-            "color": "#FF0000",
-            "inPocket": false
-          },
-          {
-            "number": 9,
-            "x": 713.2855898283201,
-            "y": 161.3176613340131,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFFF99",
-            "inPocket": false
-          },
-          {
-            "number": 6,
-            "x": 700.6330189803541,
-            "y": 266.2439498149202,
-            "vx": 0,
-            "vy": 0,
-            "color": "#008800",
-            "inPocket": false
-          },
-          {
-            "number": 5,
-            "x": 761.6382953419248,
-            "y": 220.26604175152622,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FF6600",
-            "inPocket": false
-          },
-          {
-            "number": 14,
-            "x": 629.0793645397636,
-            "y": 67.82408865509333,
-            "vx": 0,
-            "vy": 0,
-            "color": "#66DD99",
-            "inPocket": false
-          },
-          {
-            "number": 7,
-            "x": 727.8727334997814,
-            "y": 292.7831448477672,
-            "vx": 0,
-            "vy": 0,
-            "color": "#800000",
-            "inPocket": false
-          },
-          {
-            "number": 12,
-            "x": 609.3437957695198,
-            "y": 334.71407572285494,
-            "vx": -0.039795318169083334,
-            "vy": 0.08678015905699586,
-            "color": "#C080FF",
-            "inPocket": false
-          },
-          {
-            "number": 4,
-            "x": 539.430765937934,
-            "y": 303.8254381372398,
-            "vx": 0,
-            "vy": 0,
-            "color": "#800080",
-            "inPocket": false
-          }
-        ]
-      },
-      "chat": [
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        },
-        {
-          "user": "Dogmeat",
-          "msg": "j",
-          "role": "admin"
-        }
-      ],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
     "gj3hjyg": {
       "id": "gj3hjyg",
       "p1": "Dogmeat",
@@ -1848,170 +938,6 @@
       },
       "finished": false
     },
-    "gq8bx59": {
-      "id": "gq8bx59",
-      "p1": "Hog",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": {
-        "state": {
-          "balls": [
-            {
-              "number": 0,
-              "x": 285.7117573763114,
-              "y": 352.33129722842534,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFFFFF",
-              "inPocket": false
-            },
-            {
-              "number": 1,
-              "x": 764.8153256525052,
-              "y": 357.7700461933813,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFCC00",
-              "inPocket": true
-            },
-            {
-              "number": 10,
-              "x": 765.6865868272578,
-              "y": 52.479685226543026,
-              "vx": 0,
-              "vy": 0,
-              "color": "#99AAFF",
-              "inPocket": true
-            },
-            {
-              "number": 15,
-              "x": 671.404531964994,
-              "y": 269.66371176403817,
-              "vx": 0,
-              "vy": 0,
-              "color": "#CC6666",
-              "inPocket": false
-            },
-            {
-              "number": 2,
-              "x": 359.4296766956322,
-              "y": 313.21054884019867,
-              "vx": 0,
-              "vy": 0,
-              "color": "#0000FF",
-              "inPocket": false
-            },
-            {
-              "number": 8,
-              "x": 664.9270250568883,
-              "y": 229.7611450496587,
-              "vx": 0,
-              "vy": 0,
-              "color": "#000000",
-              "inPocket": false
-            },
-            {
-              "number": 11,
-              "x": 669.0806829404753,
-              "y": 331.6291505843362,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF9999",
-              "inPocket": false
-            },
-            {
-              "number": 13,
-              "x": 639.1213975994289,
-              "y": 247.9804436758998,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFAA66",
-              "inPocket": false
-            },
-            {
-              "number": 3,
-              "x": 525.6921968412778,
-              "y": 304.93081230701966,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF0000",
-              "inPocket": false
-            },
-            {
-              "number": 9,
-              "x": 693.5109995287689,
-              "y": 178.06674394702125,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFFF99",
-              "inPocket": false
-            },
-            {
-              "number": 6,
-              "x": 429.87021570383376,
-              "y": 192.66325673784743,
-              "vx": 0,
-              "vy": 0,
-              "color": "#008800",
-              "inPocket": false
-            },
-            {
-              "number": 5,
-              "x": 470.0173028358869,
-              "y": 51.95593770550201,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF6600",
-              "inPocket": true
-            },
-            {
-              "number": 14,
-              "x": 735.4059828917907,
-              "y": 90.29085117593925,
-              "vx": 0,
-              "vy": 0,
-              "color": "#66DD99",
-              "inPocket": false
-            },
-            {
-              "number": 7,
-              "x": 399.924412436813,
-              "y": 269.5664281637364,
-              "vx": 0,
-              "vy": 0,
-              "color": "#800000",
-              "inPocket": false
-            },
-            {
-              "number": 12,
-              "x": 767.7140429362473,
-              "y": 53.92852395938383,
-              "vx": 0,
-              "vy": 0,
-              "color": "#C080FF",
-              "inPocket": true
-            },
-            {
-              "number": 4,
-              "x": 550.5976460159006,
-              "y": 276.6741009320618,
-              "vx": 0,
-              "vy": 0,
-              "color": "#800080",
-              "inPocket": false
-            }
-          ]
-        },
-        "pocketed": []
-      },
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
     "g3fgqpr": {
       "id": "g3fgqpr",
       "p1": "Dogmeat",
@@ -2026,161 +952,783 @@
       },
       "finished": false
     },
-    "geahr31": {
-      "id": "geahr31",
-      "p1": "Dogmeat",
+    "gi4cg7t": {
+      "id": "gi4cg7t",
+      "p1": "Hog",
       "p2": "Dogmeat",
       "spectators": [],
       "state": {
-        "state": {
-          "balls": [
-            {
-              "number": 0,
-              "x": 571.1538784259864,
-              "y": 153.38455736536292,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFFFFF",
-              "inPocket": false
-            },
-            {
-              "number": 1,
-              "x": 455.5146735345231,
-              "y": 59.861517320542674,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFCC00",
-              "inPocket": true
-            },
-            {
-              "number": 10,
-              "x": 447.8585129181432,
-              "y": 354.81113631030667,
-              "vx": 0,
-              "vy": 0,
-              "color": "#99AAFF",
-              "inPocket": true
-            },
-            {
-              "number": 15,
-              "x": 176.40052788160983,
-              "y": 210.0223602160055,
-              "vx": 0,
-              "vy": 0,
-              "color": "#CC6666",
-              "inPocket": false
-            },
-            {
-              "number": 2,
-              "x": 631.5377361833391,
-              "y": 135.46570705192644,
-              "vx": 0,
-              "vy": 0,
-              "color": "#0000FF",
-              "inPocket": false
-            },
-            {
-              "number": 8,
-              "x": 656.7711537025062,
-              "y": 176.85171443524396,
-              "vx": 0,
-              "vy": 0,
-              "color": "#000000",
-              "inPocket": false
-            },
-            {
-              "number": 11,
-              "x": 665.9575523502994,
-              "y": 238.8392937585628,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF9999",
-              "inPocket": false
-            },
-            {
-              "number": 13,
-              "x": 661.0663484996363,
-              "y": 136.93084926970747,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFAA66",
-              "inPocket": false
-            },
-            {
-              "number": 3,
-              "x": 708.1730751440399,
-              "y": 151.6227659355601,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF0000",
-              "inPocket": false
-            },
-            {
-              "number": 9,
-              "x": 681.1587613603267,
-              "y": 161.20973681105363,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFFF99",
-              "inPocket": false
-            },
-            {
-              "number": 6,
-              "x": 723.3978404390277,
-              "y": 256.8349615191035,
-              "vx": 0,
-              "vy": 0,
-              "color": "#008800",
-              "inPocket": false
-            },
-            {
-              "number": 5,
-              "x": 706.597437272295,
-              "y": 118.73733570056207,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF6600",
-              "inPocket": false
-            },
-            {
-              "number": 14,
-              "x": 741.276404855958,
-              "y": 171.84335972316939,
-              "vx": 0,
-              "vy": 0,
-              "color": "#66DD99",
-              "inPocket": false
-            },
-            {
-              "number": 7,
-              "x": 706.3699932415946,
-              "y": 199.71177949918476,
-              "vx": 0,
-              "vy": 0,
-              "color": "#800000",
-              "inPocket": false
-            },
-            {
-              "number": 12,
-              "x": 726.6986388841494,
-              "y": 228.36809119266425,
-              "vx": 0,
-              "vy": 0,
-              "color": "#C080FF",
-              "inPocket": false
-            },
-            {
-              "number": 4,
-              "x": 463.3639455599918,
-              "y": 351.8567961076207,
-              "vx": 0,
-              "vy": 0,
-              "color": "#800080",
-              "inPocket": true
-            }
-          ]
-        },
-        "pocketed": []
+        "balls": [
+          {
+            "number": 0,
+            "x": 761.0511785963764,
+            "y": 50.55615791903736,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": true
+          },
+          {
+            "number": 1,
+            "x": 588.4673987011412,
+            "y": 288.93059890317977,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 455.9635132388842,
+            "y": 350.88861828263146,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 611.817585611161,
+            "y": 266.90750090683593,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 176.84561558869623,
+            "y": 55.228929934544446,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 659.9634320165143,
+            "y": 206.37143065010693,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 635.7165394859966,
+            "y": 239.3354735597202,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 767.9330849963445,
+            "y": 58.075996520575565,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 4,
+            "x": 719.700523191265,
+            "y": 167.0591001154303,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 681.2458110902736,
+            "y": 209.43372982076727,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 681.2172337963976,
+            "y": 302.8203922823029,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 458.11655084661686,
+            "y": 58.17156473998442,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 649.4362228293415,
+            "y": 81.04807716638594,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 680.283864613526,
+            "y": 240.25083875450824,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 700.034746009319,
+            "y": 231.22593541905334,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 558.9972954798793,
+            "y": 314.6091510568752,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": "stripes",
+        "p2": "solids"
+      },
+      "finished": true
+    },
+    "gyi3jjf": {
+      "id": "gyi3jjf",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "finished": false
+    },
+    "gp2k923": {
+      "id": "gp2k923",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 506.6055681430486,
+            "y": 214.25066317278376,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 531.1495598230277,
+            "y": 258.7097184189058,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 767.430054520246,
+            "y": 57.963546448146964,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 174.12091009852503,
+            "y": 255.52396037792258,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 171.38830640294023,
+            "y": 152.10821360305405,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 458.46876605176504,
+            "y": 348.2538858667665,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": true
+          },
+          {
+            "number": 11,
+            "x": 606.3352926938055,
+            "y": 313.9362176850353,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 671.7996221885455,
+            "y": 328.1528394603231,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 624.6985562572486,
+            "y": 68.47194510058408,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 684.244801176988,
+            "y": 214.024131689411,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 695.9305758265599,
+            "y": 347.64217667873294,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 765.8967158541044,
+            "y": 56.625225764164206,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 637.5092326311818,
+            "y": 318.41242963326243,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 700.117649923791,
+            "y": 306.22498527401893,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 587.6683626703854,
+            "y": 52.78353405854867,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 456.0336899860627,
+            "y": 350.6551913842247,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "finished": true
+    },
+    "gbhuc3o": {
+      "id": "gbhuc3o",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 271.28451010968564,
+            "y": 67.14906045941251,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 467.5765197399528,
+            "y": 353.4380057997386,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 10,
+            "x": 458.1051675085847,
+            "y": 61.22249376222908,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 473.2571655539273,
+            "y": 53.32010772969896,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 3,
+            "x": 766.3887649662638,
+            "y": 355.6921500394949,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 8,
+            "x": 152.78178319362115,
+            "y": 57.07377344161621,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": true
+          },
+          {
+            "number": 11,
+            "x": 236.88960117976646,
+            "y": 148.54956842941962,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 452.35770285089865,
+            "y": 57.03846469524989,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 4,
+            "x": 454.79751748557396,
+            "y": 350.6632403609448,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 12,
+            "x": 701.1064184873533,
+            "y": 339.7912247514978,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 767.1573773540189,
+            "y": 354.83507786308417,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 6,
+            "x": 461.1756971432305,
+            "y": 55.72986969542482,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 543.1122367966536,
+            "y": 55.48882976446945,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 152.4715690615224,
+            "y": 353.56112733567005,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 14,
+            "x": 763.681146398819,
+            "y": 358.3593189375381,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 15,
+            "x": 465.44942454616336,
+            "y": 59.32596910634741,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p2",
+      "finished": true
+    },
+    "gi103jn": {
+      "id": "gi103jn",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "g7favi4": {
+      "id": "g7favi4",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gngk94v": {
+      "id": "gngk94v",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gbco4il": {
+      "id": "gbco4il",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gru7azl": {
+      "id": "gru7azl",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gpn141q": {
+      "id": "gpn141q",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gf79iz6": {
+      "id": "gf79iz6",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gnyfo8d": {
+      "id": "gnyfo8d",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gfk511p": {
+      "id": "gfk511p",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
+    },
+    "gud8wlr": {
+      "id": "gud8wlr",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gp006ux": {
+      "id": "gp006ux",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 191.8700066557638,
+            "y": 318.757660247424,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 810.5926198870934,
+            "y": 434.7773452399315,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 910.6825320701274,
+            "y": 207.15164535881556,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 2,
+            "x": 687.3499928866408,
+            "y": 436.47461229347874,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 830.9567301812667,
+            "y": 186.42685614510793,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 786.3917032636901,
+            "y": 358.11742647308756,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 806.5604250715735,
+            "y": 383.01984607135046,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 930,
+            "y": 212.33193808976634,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 925.6975551324861,
+            "y": 332.64388128015054,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 782.201345726219,
+            "y": 308.27032877151197,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 862.7591057070109,
+            "y": 432.5897618824831,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 150,
+            "y": 490.956221990534,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 929.92927439689,
+            "y": 232.33181303660197,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 816.6761244242028,
+            "y": 293.85086172767507,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 883.1671895272949,
+            "y": 448.7132544589731,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 151.98090159462376,
+            "y": 131.45743170943638,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          }
+        ]
       },
       "chat": [],
       "currentTurn": "p1",
@@ -2190,162 +1738,171 @@
       },
       "finished": false
     },
-    "g7htey7": {
-      "id": "g7htey7",
+    "gmgemhl": {
+      "id": "gmgemhl",
       "p1": "Dogmeat",
       "p2": "Dogmeat",
       "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gtaix1i": {
+      "id": "gtaix1i",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
       "state": {
-        "state": {
-          "balls": [
-            {
-              "number": 0,
-              "x": 446.6336081987214,
-              "y": 360,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFFFFF",
-              "inPocket": true
-            },
-            {
-              "number": 1,
-              "x": 153.70278319999807,
-              "y": 230.62583560014997,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFCC00",
-              "inPocket": false
-            },
-            {
-              "number": 10,
-              "x": 178.61884906696454,
-              "y": 106.07448279752917,
-              "vx": 0,
-              "vy": 0,
-              "color": "#99AAFF",
-              "inPocket": false
-            },
-            {
-              "number": 15,
-              "x": 665.250138067779,
-              "y": 238.72288613524606,
-              "vx": 0,
-              "vy": 0,
-              "color": "#CC6666",
-              "inPocket": false
-            },
-            {
-              "number": 2,
-              "x": 526.3753906683206,
-              "y": 246.87191979654844,
-              "vx": 0,
-              "vy": 0,
-              "color": "#0000FF",
-              "inPocket": false
-            },
-            {
-              "number": 8,
-              "x": 647.0970940355261,
-              "y": 223.34028748643965,
-              "vx": 0,
-              "vy": 0,
-              "color": "#000000",
-              "inPocket": false
-            },
-            {
-              "number": 11,
-              "x": 475.9210194569542,
-              "y": 354.8402572311462,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF9999",
-              "inPocket": true
-            },
-            {
-              "number": 13,
-              "x": 677.723651285211,
-              "y": 150.15069689821817,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFAA66",
-              "inPocket": false
-            },
-            {
-              "number": 3,
-              "x": 665.7445339266028,
-              "y": 209.88473207069177,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF0000",
-              "inPocket": false
-            },
-            {
-              "number": 9,
-              "x": 713.410842289307,
-              "y": 88.99058577953343,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FFFF99",
-              "inPocket": false
-            },
-            {
-              "number": 6,
-              "x": 184.48737344921176,
-              "y": 306.26904598173894,
-              "vx": 0,
-              "vy": 0,
-              "color": "#008800",
-              "inPocket": false
-            },
-            {
-              "number": 5,
-              "x": 569.6995060318803,
-              "y": 64.67930216874063,
-              "vx": 0,
-              "vy": 0,
-              "color": "#FF6600",
-              "inPocket": false
-            },
-            {
-              "number": 14,
-              "x": 557.2532127378342,
-              "y": 183.28706301364872,
-              "vx": 0,
-              "vy": 0,
-              "color": "#66DD99",
-              "inPocket": false
-            },
-            {
-              "number": 7,
-              "x": 693.6798412659875,
-              "y": 172.91455210596789,
-              "vx": 0,
-              "vy": 0,
-              "color": "#800000",
-              "inPocket": false
-            },
-            {
-              "number": 12,
-              "x": 634.6202669019694,
-              "y": 150.4027840605517,
-              "vx": 0,
-              "vy": 0,
-              "color": "#C080FF",
-              "inPocket": false
-            },
-            {
-              "number": 4,
-              "x": 470.2428559266751,
-              "y": 355.07271123844527,
-              "vx": 0,
-              "vy": 0,
-              "color": "#800080",
-              "inPocket": true
-            }
-          ]
-        },
-        "pocketed": [
-          0
+        "balls": [
+          {
+            "number": 0,
+            "x": 596.9751292087759,
+            "y": 351.2284008521747,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 447.47423923752774,
+            "y": 360,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 10,
+            "x": 294.44692635126387,
+            "y": 54.945541538429715,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 2,
+            "x": 627.9454544786848,
+            "y": 358.57458560939614,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 658.6158579240972,
+            "y": 185.05369071960902,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 659.5940210139822,
+            "y": 207.89387976093252,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 661.230212336803,
+            "y": 228.55993291128618,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 678.4371610207978,
+            "y": 159.34425610481392,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 680.7024053458738,
+            "y": 196.11034888297317,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 683.5166254821983,
+            "y": 216.11040570492278,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 681.8606174751786,
+            "y": 239.41904353130894,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 150,
+            "y": 360,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 699.2,
+            "y": 183,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 768.8626174516962,
+            "y": 211.5327445664721,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 699.2046723092211,
+            "y": 229.44641782622406,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 150,
+            "y": 360,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          }
         ]
       },
       "chat": [],
@@ -2355,6 +1912,62 @@
         "p2": null
       },
       "finished": false
+    },
+    "gmwwl1a": {
+      "id": "gmwwl1a",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gxlffgh": {
+      "id": "gxlffgh",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gojn9e7": {
+      "id": "gojn9e7",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "g6qxnlb": {
+      "id": "g6qxnlb",
+      "p1": "Dogmeat",
+      "p2": "Hog",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
     }
   }
 }

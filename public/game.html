@@ -23,13 +23,6 @@
   min-height: 0;
 }
 
-
-#game-chat {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
-}
-
 :root {
   --green: #00CC00;
   --green-light: #33FF33;
@@ -118,6 +111,54 @@ header {
   flex-direction: column;
 }
 
+/* ---------- SCOREBOARD (NEW) ---------- */
+#scoreboard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  border-bottom: 2px solid var(--green-dark);
+  color: var(--green-light);
+  font-family: Arial, sans-serif;
+}
+
+.player-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(0, 20, 0, 0.7);
+}
+
+.player-panel.active-turn {
+  box-shadow: 0 0 8px rgba(0,255,90,0.8);
+  border: 1px solid var(--green);
+}
+
+.player-name {
+  font-weight: bold;
+  min-width: 80px;
+  font-size: 13px;
+}
+
+.player-balls {
+  display: flex;
+  gap: 4px;
+}
+
+.score-ball {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.6);
+}
+
+.score-ball.potted {
+  opacity: 0.15;
+}
+
 /* ---------- POOL TABLE ---------- */
 #poolCanvas {
   width: 100%;
@@ -164,7 +205,7 @@ header {
 /* ===== ORBIT-8 THIN NEON SCROLLBARS ===== */
 
 ::-webkit-scrollbar {
-  width: 6px;     /* thinner */
+  width: 6px;
   height: 6px;
 }
 
@@ -199,7 +240,6 @@ header {
   background: #33FF33 !important;
 }
 
-
 </style>
 </head>
 <body>
@@ -220,6 +260,18 @@ header {
 
 <div id="layout">
   <div class="panel">
+    <!-- SCOREBOARD (NEW) -->
+    <div id="scoreboard">
+      <div id="p1Panel" class="player-panel">
+        <div id="p1NameLabel" class="player-name">Player 1</div>
+        <div id="p1Balls" class="player-balls"></div>
+      </div>
+      <div id="p2Panel" class="player-panel">
+        <div id="p2NameLabel" class="player-name">Player 2</div>
+        <div id="p2Balls" class="player-balls"></div>
+      </div>
+    </div>
+
     <canvas id="poolCanvas" width="820" height="410"></canvas>
   </div>
 
