@@ -184,23 +184,79 @@ socket.on("game_msg", addChat);
 /*******************************************
  * RECEIVE SHOTS FROM OTHER PLAYER
  *******************************************/
-socket.on("shot_frame", ({ state }) => {
-  if (!poolGame || placingCueBall) return;
-  poolGame.importState(state);
+// Shot finished (UK rules coming from client)
+socket.on("shot_end", msg => {
+  const game = db.games[msg.id];
+  if (!game || game.finished) return;
+
+  // Save latest state from the player who shot
+  game.state = msg.state;
+  saveDB();
+
+  const rules    = msg.rules   || {};
+  const pocketed = msg.pocketed || [];
+
+  // Broadcast final state + rules to everyone in the room
+  io.to(msg.id).emit("shot_end", {
+    state: game.state,
+    pocketed,
+    rules
+  });
+
+  // --- GAME OVER ---
+  if (rules.gameOver) {
+    const winnerName =
+      rules.winner === 1 ? game.p1 :
+      rules.winner === 2 ? game.p2 :
+      null;
+
+    if (winnerName) {
+      applyGameResult(game, winnerName, "8-ball result");
+    } else {
+      game.finished = true;
+      saveDB();
+      io.to(game.id).emit("game_over", {
+        winner: null,
+        reason: "terminated"
+      });
+      delete db.games[game.id];
+      sendGameList();
+    }
+    return;
+  }
+
+  // --- SAME PLAYER CONTINUES (legal pot, no foul) ---
+  if (rules.turnContinues && !rules.foul) {
+    io.to(msg.id).emit("turn", {
+      current: game.currentTurn
+    });
+    return;
+  }
+
+  // --- FOUL → SWITCH TURN + BALL IN HAND FOR OPPONENT ---
+  if (rules.foul) {
+    game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
+    saveDB();
+
+    io.to(msg.id).emit("ball_in_hand", {
+      player: game.currentTurn   // "p1" or "p2"
+    });
+
+    io.to(msg.id).emit("turn", {
+      current: game.currentTurn
+    });
+    return;
+  }
+
+  // --- NORMAL TURN SWITCH (no foul, no continuation) ---
+  game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
+  saveDB();
+
+  io.to(msg.id).emit("turn", {
+    current: game.currentTurn
+  });
 });
 
-socket.on("shot_end", ({ state, pocketed, rules }) => {
-  if (!poolGame || placingCueBall) return;
-  if (state) poolGame.importState(state);
-  if (rules) {
-    // Keep client rules object roughly in sync for scoreboard
-    poolGame.rules = {
-      ...poolGame.rules,
-      ...rules
-    };
-  }
-  updateScoreboard(rules);
-});
 
 /*******************************************
  * TURN CONTROL
