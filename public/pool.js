@@ -80,6 +80,9 @@ class PoolGame {
     this.maxPower    = 90;
     this.pocketedThisShot = [];
 
+    // Track first ball the cue hits this shot
+    this.firstContactBallNumber = null;
+
     /*******************
      * UK POOL RULE STATE
      *******************/
@@ -463,6 +466,7 @@ class PoolGame {
 
     this.lastTime = performance.now();
     this.pocketedThisShot = [];
+    this.firstContactBallNumber = null; // reset first-contact tracking
 
     requestAnimationFrame(t => this.step(t));
   }
@@ -483,7 +487,8 @@ class PoolGame {
       if (this.onShotEnd) {
         this.onShotEnd({
           state: this.exportState(),
-          pocketed: this.pocketedThisShot.slice()
+          pocketed: this.pocketedThisShot.slice(),
+          firstContact: this.firstContactBallNumber
         });
       }
     }
@@ -573,6 +578,15 @@ class PoolGame {
           a.vy -= iy;
           b.vx += ix;
           b.vy += iy;
+
+          // Track FIRST ball hit by the cue this shot
+          if (this.firstContactBallNumber === null) {
+            if (a.number === 0 && b.number !== 0) {
+              this.firstContactBallNumber = b.number;
+            } else if (b.number === 0 && a.number !== 0) {
+              this.firstContactBallNumber = a.number;
+            }
+          }
 
           try {
             this.snd_hit.currentTime = 0;
@@ -1171,7 +1185,7 @@ class PoolGame {
   /***************************************************
    * UK RULES — PURE FLAGS (no turn flip here)
    ***************************************************/
-  processUKRules(pocketed, currentPlayerNum) {
+  processUKRules(pocketed, currentPlayerNum, firstContactNumber = null) {
     const r = this.rules;
 
     r.currentPlayer = currentPlayerNum;
@@ -1197,6 +1211,20 @@ class PoolGame {
         r.playerColours[currentPlayerNum === 1 ? 2 : 1] = "red";
         r.openTable = false;
       }
+    }
+
+    const playerColour = r.playerColours[currentPlayerNum];
+
+    // FIRST CONTACT COLOUR (for foul on wrong ball first)
+    let firstHitColour = null;
+    if (firstContactNumber !== null && firstContactNumber !== 0 && firstContactNumber !== 8) {
+      if (firstContactNumber >= 1 && firstContactNumber <= 7)  firstHitColour = "red";
+      else if (firstContactNumber >= 9 && firstContactNumber <= 15) firstHitColour = "yellow";
+    }
+
+    // If colours are assigned and you hit the opponent's colour first → foul
+    if (!r.openTable && playerColour && firstHitColour && firstHitColour !== playerColour) {
+      r.foul = true;
     }
 
     // BLACK BALL
@@ -1227,13 +1255,10 @@ class PoolGame {
     // FOUL CHECKS
     if (cueBall) r.foul = true;
 
-    if (!r.openTable) {
-      const playerColour = r.playerColours[currentPlayerNum];
+    if (!r.openTable && playerColour) {
       if (playerColour === "red" && yellows.length > 0)  r.foul = true;
       if (playerColour === "yellow" && reds.length > 0)  r.foul = true;
     }
-
-    const playerColour = r.playerColours[currentPlayerNum];
 
     if (playerColour === "red" && reds.length > 0) {
       r.turnContinues = true;

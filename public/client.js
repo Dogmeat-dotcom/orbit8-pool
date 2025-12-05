@@ -161,14 +161,17 @@ socket.on("players", list => {
       p.role === "admin" ? "p-admin" :
       p.role === "moderator" ? "p-mod" : "p-player";
 
-    const star = p.role === "admin" ? "<span class='star'>★</span>" : "";
+    const adminIcon =
+      p.role === "admin"
+        ? `<img src="images/adpip.png" class="admin-icon" alt="admin">`
+        : "";
 
     const div = document.createElement("div");
     div.className = "player-entry";
 
     div.innerHTML = `
       <div class="player-name ${roleClass}">
-        ${star}${p.username}
+        ${adminIcon}${p.username}
       </div>
       <div class="player-buttons">
         <button class="small-btn" onclick="openInfo('${p.username}')">Info</button>
@@ -280,9 +283,13 @@ socket.on("chat", packet => {
   else if (packet.role === "system") cls = "chat-system";
   else cls = "chat-player";
 
-  const star = packet.role === "admin" ? "★ " : "";
+  const adminIcon =
+    packet.role === "admin"
+      ? `<img src="images/adpip.png" class="admin-icon" alt="admin"> `
+      : "";
+
   const name =
-    packet.role === "system" ? "" : `${star}${packet.user}: `;
+    packet.role === "system" ? "" : `${adminIcon}${packet.user}: `;
 
   div.innerHTML = `<span class="${cls}">${name}</span>${packet.msg}`;
 
@@ -460,20 +467,20 @@ function closeInvite() {
 }
 
 /****************************************************
- * GAME OPEN / SPECTATE
+ * GAME OPEN / SPECTATE — SAME TAB
  ****************************************************/
 socket.on("start_game", gameID => {
-  window.open(
-    `/game.html?game=${gameID}&user=${encodeURIComponent(USER)}&role=${encodeURIComponent(ROLE)}`,
-    "_blank"
-  );
+  const url = `/game.html?game=${encodeURIComponent(gameID)}&user=${encodeURIComponent(
+    USER
+  )}&role=${encodeURIComponent(ROLE)}`;
+  window.location = url; // same window
 });
 
 function spectate(gameID) {
-  window.open(
-    `/game.html?game=${gameID}&user=${encodeURIComponent(USER)}&role=${encodeURIComponent(ROLE)}`,
-    "_blank"
-  );
+  const url = `/game.html?game=${encodeURIComponent(gameID)}&user=${encodeURIComponent(
+    USER
+  )}&role=${encodeURIComponent(ROLE)}`;
+  window.location = url; // same window
 }
 
 /****************************************************

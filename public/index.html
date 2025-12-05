@@ -87,6 +87,8 @@ header {
   color: #000;
 }
 
+
+
 /* User menu dropdown (top-right) */
 .user-menu {
   position: relative;
@@ -135,7 +137,7 @@ header {
   border-radius: 3px;
 }
 
-.user-menu-dropdown button:hover {
+.user-menu-dropdown.button:hover {
   background: #003000;
 }
 
@@ -218,6 +220,16 @@ header {
 .star {
   color: var(--gold);
   margin-right: 3px;
+}
+
+/* NEW: small neon admin badge icon */
+.admin-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  margin-right: 4px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #00ff5a;
 }
 
 .player-buttons {
@@ -393,8 +405,6 @@ header {
   font-size: 13px;
 }
 
-
-
 .modal-inner h3 {
   margin-top: 0;
   margin-bottom: 8px;
@@ -418,15 +428,13 @@ header {
   background: #000;
   border: 1px solid var(--border);
   color: var(--green-light);
-  box-sizing: border-box;   /* CRUCIAL */
+  box-sizing: border-box;
 }
 
 #profileModal label {
   display: block;
   margin-bottom: 4px;
 }
-
-
 
 /* ===== ORBIT-8 THIN NEON SCROLLBARS (WebKit) ===== */
 ::-webkit-scrollbar {
@@ -526,9 +534,11 @@ header {
 <div id="inviteModal" class="modal">
   <div class="modal-inner">
     <h3>Game Invite</h3>
-    <div id="inviteText"></div>
-    <button id="inviteAccept">Accept</button>
-    <button onclick="closeInvite()">Decline</button>
+    <div id="inviteText" style="margin-bottom:10px;"></div>
+    <div style="margin-top:8px; display:flex; gap:8px; justify-content:center;">
+      <button id="inviteAccept">Accept</button>
+      <button onclick="closeInvite()">Decline</button>
+    </div>
   </div>
 </div>
 
@@ -553,8 +563,6 @@ header {
   </div>
 </div>
 
-
-
 <!-- Change Password Modal -->
 <div id="passwordModal" class="modal">
   <div class="modal-inner">
@@ -576,10 +584,8 @@ header {
   </div>
 </div>
 
-
 <!-- Chat message sound -->
 <audio id="lobby-chat-sound" src="sounds/chat.mp3" preload="auto"></audio>
-
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>

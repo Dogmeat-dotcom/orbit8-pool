@@ -450,7 +450,8 @@ io.on("connection", socket => {
       chat: [],
       currentTurn: "p1",          // p1 breaks
       groups: { p1: null, p2: null }, // legacy (solids/stripes)
-      finished: false
+      finished: false,
+      ballInHandFor: null        // which side currently has ball-in-hand: "p1" | "p2" | null
     };
   }
 
@@ -563,15 +564,17 @@ io.on("connection", socket => {
 
     // Update server-side state
     game.state = msg.state;
+    const rules = msg.rules || {};
+
+    // reset ball-in-hand flag each shot; may be set again below
+    game.ballInHandFor = null;
 
     // Relay latest table state (and rules info) to everyone in the room
     io.to(msg.id).emit("shot_end", {
       state: game.state,
       pocketed: msg.pocketed,
-      rules: msg.rules
+      rules
     });
-
-    const rules = msg.rules || {};
 
     // ---------- GAME OVER (rules-based win) ----------
     if (rules.gameOver) {
@@ -580,10 +583,8 @@ io.on("connection", socket => {
       else if (rules.winner === 2) winnerName = game.p2;
 
       if (winnerName) {
-        // Updates stats, deletes game, emits `game_over` and updates spectate list
         applyGameResult(game, winnerName, "8-ball win");
       } else {
-        // Fallback: no winner resolved
         game.finished = true;
         saveDB();
         io.to(msg.id).emit("game_over", {
@@ -596,27 +597,83 @@ io.on("connection", socket => {
       return;
     }
 
-    // ---------- PLAYER KEEPS TURN (legal pot) ----------
-    if (rules.turnContinues) {
-      io.to(msg.id).emit("turn", { current: game.currentTurn });
-      return;
-    }
-
     // ---------- FOUL → SWITCH TURN + BALL IN HAND ----------
     if (rules.foul) {
       game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
+      game.ballInHandFor = game.currentTurn;
 
       io.to(msg.id).emit("ball_in_hand", {
-        player: game.currentTurn    // "p1" or "p2"
+        player: game.ballInHandFor   // "p1" or "p2"
       });
 
       io.to(msg.id).emit("turn", { current: game.currentTurn });
+      saveDB();
+      return;
+    }
+
+    // ---------- PLAYER KEEPS TURN (legal pot) ----------
+    if (rules.turnContinues) {
+      io.to(msg.id).emit("turn", { current: game.currentTurn });
+      saveDB();
       return;
     }
 
     // ---------- NORMAL TURN SWITCH ----------
     game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
     io.to(msg.id).emit("turn", { current: game.currentTurn });
+    saveDB();
+  });
+
+  /***********************
+   * BALL-IN-HAND SERVER SIDE
+   ***********************/
+
+  // Live ghost tracking – relay to the other clients only
+  socket.on("cue_follow", ({ id, x, y }) => {
+    const game = db.games[id];
+    if (!game || game.finished) return;
+    socket.to(id).emit("cue_follow", { x, y });
+  });
+
+  // Final cue-ball placement – always accept from in-game players
+  socket.on("attempt_place_cueball", ({ id, pos }) => {
+    const game = db.games[id];
+    if (!game || game.finished) return;
+
+    // Ensure state and balls array exist
+    if (!game.state || !Array.isArray(game.state.balls)) {
+      game.state = game.state || {};
+      game.state.balls = game.state.balls || [];
+    }
+
+    const balls = game.state.balls;
+
+    // Ensure cue ball exists
+    let cue = balls.find(b => b.number === 0);
+    if (!cue) {
+      cue = {
+        number: 0,
+        x: pos.x,
+        y: pos.y,
+        vx: 0,
+        vy: 0,
+        color: "#FFFFFF",
+        inPocket: false
+      };
+      balls.unshift(cue);
+    } else {
+      cue.x = pos.x;
+      cue.y = pos.y;
+      cue.vx = 0;
+      cue.vy = 0;
+      cue.inPocket = false;
+    }
+
+    // Clear ball-in-hand flag now that the ball is placed
+    game.ballInHandFor = null;
+    saveDB();
+
+    io.to(id).emit("cue_placed", game.state);
   });
 
   // End game / forfeit
@@ -629,7 +686,6 @@ io.on("connection", socket => {
 
     // ---- SPECTATOR LEAVING ----
     if (forfeiter !== game.p1 && forfeiter !== game.p2) {
-      // Just leave the room; do NOT end the game or touch spectate list
       socket.leave(id);
       return;
     }
@@ -640,10 +696,8 @@ io.on("connection", socket => {
     else if (forfeiter === game.p2 && game.p1) winnerName = game.p1;
 
     if (winnerName) {
-      // Forfeit loss for leaver, win for the other player
       applyGameResult(game, winnerName, "forfeit");
     } else {
-      // Only one player in the game or no opponent – just terminate
       game.finished = true;
       saveDB();
       io.to(game.id).emit("game_over", {

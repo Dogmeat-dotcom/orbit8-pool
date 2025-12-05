@@ -1,6 +1,4 @@
 node_modules/
-public/sounds/*.mp3
-public/sounds/*.wav
 public/images/cache/
 *.log
 Thumbs.db

@@ -4,8 +4,8 @@
       "username": "Dogmeat",
       "password": "$2a$10$gSeY1AkhoLiED2xSY6ZXo.CL.9ofl7sWPro0dpQlwBkuY5g7mR6CC",
       "role": "admin",
-      "gamesPlayed": 124,
-      "gamesWon": 59,
+      "gamesPlayed": 139,
+      "gamesWon": 65,
       "mutedUntil": 0,
       "banned": false,
       "realName": "Zack",
@@ -16,8 +16,8 @@
       "username": "Hog",
       "password": "$2a$10$BEEixN9/SXQBNjnp/MDRUuVui90yxVi7VtW6aOsWSX.w2pd4JF8t2",
       "role": "player",
-      "gamesPlayed": 24,
-      "gamesWon": 15,
+      "gamesPlayed": 51,
+      "gamesWon": 30,
       "mutedUntil": 0,
       "banned": false,
       "bannedUntil": 0
@@ -88,6 +88,96 @@
     {
       "user": "Dogmeat",
       "msg": "hi",
+      "role": "admin"
+    },
+    {
+      "user": "Hog",
+      "msg": "hi",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "g",
       "role": "admin"
     }
   ],
@@ -1563,388 +1653,10 @@
       },
       "finished": true
     },
-    "gud8wlr": {
-      "id": "gud8wlr",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
-    "gp006ux": {
-      "id": "gp006ux",
-      "p1": "Hog",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": {
-        "balls": [
-          {
-            "number": 0,
-            "x": 191.8700066557638,
-            "y": 318.757660247424,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFFFFF",
-            "inPocket": false
-          },
-          {
-            "number": 1,
-            "x": 810.5926198870934,
-            "y": 434.7773452399315,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 10,
-            "x": 910.6825320701274,
-            "y": 207.15164535881556,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 2,
-            "x": 687.3499928866408,
-            "y": 436.47461229347874,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 3,
-            "x": 830.9567301812667,
-            "y": 186.42685614510793,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 8,
-            "x": 786.3917032636901,
-            "y": 358.11742647308756,
-            "vx": 0,
-            "vy": 0,
-            "color": "#000000",
-            "inPocket": false
-          },
-          {
-            "number": 11,
-            "x": 806.5604250715735,
-            "y": 383.01984607135046,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 9,
-            "x": 930,
-            "y": 212.33193808976634,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 4,
-            "x": 925.6975551324861,
-            "y": 332.64388128015054,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 12,
-            "x": 782.201345726219,
-            "y": 308.27032877151197,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 5,
-            "x": 862.7591057070109,
-            "y": 432.5897618824831,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 6,
-            "x": 150,
-            "y": 490.956221990534,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": true
-          },
-          {
-            "number": 13,
-            "x": 929.92927439689,
-            "y": 232.33181303660197,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 7,
-            "x": 816.6761244242028,
-            "y": 293.85086172767507,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 14,
-            "x": 883.1671895272949,
-            "y": 448.7132544589731,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 15,
-            "x": 151.98090159462376,
-            "y": 131.45743170943638,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          }
-        ]
-      },
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
-    "gmgemhl": {
-      "id": "gmgemhl",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
-    "gtaix1i": {
-      "id": "gtaix1i",
-      "p1": "Hog",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": {
-        "balls": [
-          {
-            "number": 0,
-            "x": 596.9751292087759,
-            "y": 351.2284008521747,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFFFFF",
-            "inPocket": false
-          },
-          {
-            "number": 1,
-            "x": 447.47423923752774,
-            "y": 360,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": true
-          },
-          {
-            "number": 10,
-            "x": 294.44692635126387,
-            "y": 54.945541538429715,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 2,
-            "x": 627.9454544786848,
-            "y": 358.57458560939614,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 3,
-            "x": 658.6158579240972,
-            "y": 185.05369071960902,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 8,
-            "x": 659.5940210139822,
-            "y": 207.89387976093252,
-            "vx": 0,
-            "vy": 0,
-            "color": "#000000",
-            "inPocket": false
-          },
-          {
-            "number": 11,
-            "x": 661.230212336803,
-            "y": 228.55993291128618,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 9,
-            "x": 678.4371610207978,
-            "y": 159.34425610481392,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 4,
-            "x": 680.7024053458738,
-            "y": 196.11034888297317,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 12,
-            "x": 683.5166254821983,
-            "y": 216.11040570492278,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 5,
-            "x": 681.8606174751786,
-            "y": 239.41904353130894,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 6,
-            "x": 150,
-            "y": 360,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": true
-          },
-          {
-            "number": 13,
-            "x": 699.2,
-            "y": 183,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 7,
-            "x": 768.8626174516962,
-            "y": 211.5327445664721,
-            "vx": 0,
-            "vy": 0,
-            "color": "#CC0000",
-            "inPocket": false
-          },
-          {
-            "number": 14,
-            "x": 699.2046723092211,
-            "y": 229.44641782622406,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": false
-          },
-          {
-            "number": 15,
-            "x": 150,
-            "y": 360,
-            "vx": 0,
-            "vy": 0,
-            "color": "#FFDD00",
-            "inPocket": true
-          }
-        ]
-      },
-      "chat": [],
-      "currentTurn": "p2",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
-    "gmwwl1a": {
-      "id": "gmwwl1a",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
     "gxlffgh": {
       "id": "gxlffgh",
       "p1": "Hog",
       "p2": null,
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false
-    },
-    "gojn9e7": {
-      "id": "gojn9e7",
-      "p1": "Hog",
-      "p2": "Dogmeat",
       "spectators": [],
       "state": null,
       "chat": [],
@@ -1968,6 +1680,171 @@
         "p2": null
       },
       "finished": true
+    },
+    "guxr65d": {
+      "id": "guxr65d",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true,
+      "ballInHandFor": null
+    },
+    "ggchs5r": {
+      "id": "ggchs5r",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g1dz8l0": {
+      "id": "g1dz8l0",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gi9k4it": {
+      "id": "gi9k4it",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g9gk9yx": {
+      "id": "g9gk9yx",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gpaafon": {
+      "id": "gpaafon",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gk8508o": {
+      "id": "gk8508o",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g48cvrl": {
+      "id": "g48cvrl",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g8i3sda": {
+      "id": "g8i3sda",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gylnirt": {
+      "id": "gylnirt",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g6su4a2": {
+      "id": "g6su4a2",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
     }
   }
 }

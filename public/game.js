@@ -1,3 +1,5 @@
+console.log("GAME.JS LOADED v7");
+
 /*******************************************
  * game.js — UK pub rules + ball-in-hand + scoreboard
  *******************************************/
@@ -34,20 +36,33 @@ document.getElementById("gameTitle").textContent = `Game #${GAME_ID}`;
 
 socket.emit("identify_game_client", { user: USER, role: ROLE });
 
+// Track whether we've already told the server we ended (forfeit)
+let hasSignalledEndGame = false;
+
+// Return to lobby button – same tab
 document.getElementById("backBtn").onclick = () => {
-  socket.emit("end_game", GAME_ID);
-  window.close();
+  // If game is still live, this is a forfeit → tell server once
+  if (!hasSignalledEndGame && !gameOver) {
+    socket.emit("end_game", GAME_ID);
+    hasSignalledEndGame = true;
+  }
+  // Always send them back to lobby UI in same tab
+  window.location = "/";
 };
 
-let poolGame     = null;
-let p1Name       = null;
-let p2Name       = null;
-let currentTurn  = null;  // "p1" | "p2"
-let placingCueBall = false;
-let IAmP1 = false;
-let IAmP2 = false;
+let poolGame        = null;
+let p1Name          = null;
+let p2Name          = null;
+let currentTurn     = null;  // "p1" | "p2"
+let IAmP1           = false;
+let IAmP2           = false;
 
-// Rematch state (you can ignore for now if you don't use it)
+// Ball-in-hand local flags
+let placingCueBall  = false;
+let ballInHandOwner = null;   // "p1" or "p2"
+let ballInHandForMe = false;
+
+// Rematch / game-over state
 let gameOver        = false;
 let rematchPopup    = null;
 let rematchChoice   = null;
@@ -61,19 +76,23 @@ const canvas = document.getElementById("poolCanvas");
 poolGame = new PoolGame(
   canvas,
 
-  // onShotEnd — gets { state, pocketed, rules } (rules are built here)
+  // onShotEnd — gets { state, pocketed, firstContact } (rules built here)
   shotResult => {
     if (placingCueBall) return;
 
-    const state    = shotResult && shotResult.state;
-    const pocketed = (shotResult && shotResult.pocketed) || [];
+    const state        = shotResult && shotResult.state;
+    const pocketed     = (shotResult && shotResult.pocketed) || [];
+    const firstContact = (shotResult && typeof shotResult.firstContact !== "undefined")
+      ? shotResult.firstContact
+      : null;
 
     // Use server's idea of whose turn it was for rules engine
     const currentPlayerNum = currentTurn === "p1" ? 1 : 2;
 
     const rules = poolGame.processUKRules(
       pocketed,
-      currentPlayerNum
+      currentPlayerNum,
+      firstContact
     );
 
     socket.emit("shot_end", {
@@ -83,19 +102,11 @@ poolGame = new PoolGame(
       rules
     });
 
-    if (rules && rules.gameOver && !gameOver) {
-      gameOver = true;
-      const winnerName =
-        rules.winner === 1 ? p1Name :
-        rules.winner === 2 ? p2Name :
-        "Unknown";
-      showEndOfGamePopup(winnerName);
-    }
-
+    // Only touch local scoreboard; game over is decided by the server
     updateScoreboard(rules);
   },
 
-  // onFrame – live state sync
+  // onFrame – live state sync (only from the active shooter)
   state => {
     if (!placingCueBall) {
       socket.emit("shot_frame", { id: GAME_ID, state });
@@ -149,6 +160,49 @@ socket.on("turn", payload => {
 });
 
 /*******************************************
+ * LIVE STATE + FINAL STATE FROM SERVER
+ *******************************************/
+// Live state from current shooter → keep spectators / waiting player in sync
+socket.on("shot_frame", msg => {
+  if (!poolGame) return;
+  if (placingCueBall) return;         // don't stomp ghost placement
+  if (!msg || !msg.state) return;
+  poolGame.importState(msg.state);
+});
+
+// Final state + rules after each shot
+socket.on("shot_end", msg => {
+  if (!poolGame) return;
+
+  if (msg.state) {
+    poolGame.importState(msg.state);
+  }
+
+  if (msg.rules) {
+    // Sync local rules with server-accepted rules
+    poolGame.rules = { ...poolGame.rules, ...msg.rules };
+    updateScoreboard(msg.rules);
+  } else {
+    updateScoreboard();
+  }
+});
+
+/*******************************************
+ * GAME OVER (authoritative from server)
+ *******************************************/
+socket.on("game_over", payload => {
+  if (gameOver) return;
+  gameOver = true;
+
+  const winnerName = payload && payload.winner
+    ? payload.winner
+    : "No winner";
+
+  showEndOfGamePopup(winnerName);
+  updateTurnStatus();
+});
+
+/*******************************************
  * CHAT LOGIC
  *******************************************/
 elSend.onclick = sendChat;
@@ -171,8 +225,13 @@ function addChat(packet) {
   else if (packet.role === "system") cls = "chat-system";
   else cls = "chat-player";
 
-  const star = packet.role === "admin" ? "★ " : "";
-  const name = packet.role === "system" ? "" : `${star}${packet.user}: `;
+  // admin badge icon (same file as lobby)
+  const adminIcon =
+    packet.role === "admin"
+      ? `<img src="images/adpip.png" class="admin-icon" alt="admin"> `
+      : "";
+
+  const name = packet.role === "system" ? "" : `${adminIcon}${packet.user}: `;
 
   div.innerHTML = `<span class="${cls}">${name}</span>${packet.msg}`;
   elChat.appendChild(div);
@@ -180,83 +239,6 @@ function addChat(packet) {
 }
 
 socket.on("game_msg", addChat);
-
-/*******************************************
- * RECEIVE SHOTS FROM OTHER PLAYER
- *******************************************/
-// Shot finished (UK rules coming from client)
-socket.on("shot_end", msg => {
-  const game = db.games[msg.id];
-  if (!game || game.finished) return;
-
-  // Save latest state from the player who shot
-  game.state = msg.state;
-  saveDB();
-
-  const rules    = msg.rules   || {};
-  const pocketed = msg.pocketed || [];
-
-  // Broadcast final state + rules to everyone in the room
-  io.to(msg.id).emit("shot_end", {
-    state: game.state,
-    pocketed,
-    rules
-  });
-
-  // --- GAME OVER ---
-  if (rules.gameOver) {
-    const winnerName =
-      rules.winner === 1 ? game.p1 :
-      rules.winner === 2 ? game.p2 :
-      null;
-
-    if (winnerName) {
-      applyGameResult(game, winnerName, "8-ball result");
-    } else {
-      game.finished = true;
-      saveDB();
-      io.to(game.id).emit("game_over", {
-        winner: null,
-        reason: "terminated"
-      });
-      delete db.games[game.id];
-      sendGameList();
-    }
-    return;
-  }
-
-  // --- SAME PLAYER CONTINUES (legal pot, no foul) ---
-  if (rules.turnContinues && !rules.foul) {
-    io.to(msg.id).emit("turn", {
-      current: game.currentTurn
-    });
-    return;
-  }
-
-  // --- FOUL → SWITCH TURN + BALL IN HAND FOR OPPONENT ---
-  if (rules.foul) {
-    game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
-    saveDB();
-
-    io.to(msg.id).emit("ball_in_hand", {
-      player: game.currentTurn   // "p1" or "p2"
-    });
-
-    io.to(msg.id).emit("turn", {
-      current: game.currentTurn
-    });
-    return;
-  }
-
-  // --- NORMAL TURN SWITCH (no foul, no continuation) ---
-  game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
-  saveDB();
-
-  io.to(msg.id).emit("turn", {
-    current: game.currentTurn
-  });
-});
-
 
 /*******************************************
  * TURN CONTROL
@@ -361,57 +343,71 @@ function updateScoreboard(rulesFromServer) {
 
 // Server: this player gets ball in hand
 socket.on("ball_in_hand", payload => {
+  if (!payload || !payload.player) return;
+
+  ballInHandOwner = payload.player; // "p1" | "p2"
+  ballInHandForMe =
+    (payload.player === "p1" && IAmP1) ||
+    (payload.player === "p2" && IAmP2);
+
   placingCueBall = true;
-  poolGame.ballInHand = true;
-  poolGame.enterBallInHandMode();
+
+  if (poolGame) {
+    poolGame.ballInHand = true;
+    poolGame.enterBallInHandMode();
+  }
   updateTurnStatus();
 });
 
-// Server sends live cue-follow from opponent
+// Server sends live cue-follow from owner
 socket.on("cue_follow", pos => {
-  if (!placingCueBall) return;
+  if (!placingCueBall || !poolGame) return;
   poolGame.updateBallInHandGhost(pos.x, pos.y);
 });
 
-// Server rejects placement (illegal)
+// Server rejects placement (illegal) – currently unused if you keep server always accepting
 socket.on("cue_place_rejected", () => {
-  if (!placingCueBall) return;
+  if (!placingCueBall || !poolGame) return;
   poolGame.flashIllegalPlacement();
 });
 
 // Server confirms final placement
 socket.on("cue_placed", state => {
-  placingCueBall = false;
-  poolGame.ballInHand = false;
-  poolGame.exitBallInHandMode();
-  if (state) poolGame.importState(state);
+  placingCueBall  = false;
+  ballInHandForMe = false;
+
+  if (poolGame) {
+    poolGame.ballInHand = false;
+    poolGame.exitBallInHandMode();
+    if (state) poolGame.importState(state);
+  }
   updateTurnStatus();
 });
 
 /*******************************************
- * Send live cue follow to server
+ * Send live cue follow (ONLY owner)
  *******************************************/
 document.addEventListener("mousemove", e => {
-  if (!placingCueBall) return;
+  if (!placingCueBall || !ballInHandForMe || !poolGame) return;
+  if (!poolGame.insideCanvas(e)) return;
 
-  const r = canvas.getBoundingClientRect();
-  const x = e.clientX - r.left;
-  const y = e.clientY - r.top;
+  const m = poolGame.mouseToCanvas(e);
 
-  poolGame.updateBallInHandGhost(x, y);
+  poolGame.updateBallInHandGhost(m.x, m.y);
 
   socket.emit("cue_follow", {
     id: GAME_ID,
-    x,
-    y
+    x: m.x,
+    y: m.y
   });
 });
 
 /*******************************************
- * Attempt cue-ball placement on click
+ * Attempt cue-ball placement (ONLY owner)
  *******************************************/
-canvas.addEventListener("mousedown", () => {
-  if (!placingCueBall) return;
+canvas.addEventListener("mousedown", e => {
+  if (!placingCueBall || !ballInHandForMe || !poolGame) return;
+  if (!poolGame.insideCanvas(e)) return;
 
   socket.emit("attempt_place_cueball", {
     id: GAME_ID,
@@ -420,7 +416,19 @@ canvas.addEventListener("mousedown", () => {
 });
 
 /*******************************************
- * SIMPLE END-OF-GAME POPUP (same as before)
+ * HANDLE TAB / WINDOW CLOSE → FORFEIT
+ *******************************************/
+window.addEventListener("beforeunload", () => {
+  // If the game is still live and we haven't told the server yet,
+  // treat closing the tab as a forfeit.
+  if (!hasSignalledEndGame && !gameOver) {
+    socket.emit("end_game", GAME_ID);
+    hasSignalledEndGame = true;
+  }
+});
+
+/*******************************************
+ * SIMPLE END-OF-GAME POPUP (server-driven)
  *******************************************/
 function showEndOfGamePopup(winnerName) {
   if (rematchPopup) return;
@@ -458,8 +466,23 @@ function showEndOfGamePopup(winnerName) {
   winnerLine.style.marginBottom = "14px";
   winnerLine.style.color = "#00FFAA";
 
+  const btn = document.createElement("button");
+  btn.textContent = "Close and return to lobby";
+  btn.style.marginTop = "10px";
+  btn.style.padding = "6px 14px";
+  btn.style.borderRadius = "6px";
+  btn.style.border = "1px solid #00FF5A";
+  btn.style.background = "#002000";
+  btn.style.color = "#00FF5A";
+  btn.style.cursor = "pointer";
+  btn.onclick = () => {
+    closeRematchPopup();
+    window.location = "/";
+  };
+
   win.appendChild(title);
   win.appendChild(winnerLine);
+  win.appendChild(btn);
   overlay.appendChild(win);
   document.body.appendChild(overlay);
 
