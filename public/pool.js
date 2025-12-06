@@ -110,6 +110,7 @@ class PoolGame {
      *******************/
     this.ballInHand      = false;
     this.ballInHandGhost = { x: 0, y: 0 };
+    this.ballInHandMode  = "any"; // "any" or "baulk"
 
     /*******************
      * AIM FREEZE VECTORS
@@ -151,10 +152,15 @@ class PoolGame {
   resetTable() {
     this.balls = [];
 
-    const cueX = this.sidebarWidth + this.tableInset + 100;
-    const cueY = this.height / 2;
+    // --- table geometry for baulk area ---
+    const left   = this.sidebarWidth + this.tableInset;
+    const width  = (this.width - this.sidebarWidth) - this.tableInset * 2;
+    const baulkOffset = width * 0.20;
+    const baulkX = left + baulkOffset;
+    const cueX   = left + baulkOffset * 0.5;     // middle of baulk area
+    const cueY   = this.height / 2;
 
-    // Cue ball
+    // Cue ball (starts behind the line)
     this.balls.push({
       number: 0,
       x: cueX,
@@ -215,6 +221,9 @@ class PoolGame {
       this.snd_rack.currentTime = 0;
       this.snd_rack.play();
     } catch (e) {}
+
+    // Opening break: ball-in-hand behind the baulk line
+    this.enterBallInHandMode("baulk");
   }
 
   /***************************************************/
@@ -237,7 +246,7 @@ class PoolGame {
 
   insideCanvas(e) {
     const r = this.canvas.getBoundingClientRect();
-    const style = getComputedStyle(this.canvas);
+       const style = getComputedStyle(this.canvas);
 
     const borderL = parseFloat(style.borderLeftWidth)   || 0;
     const borderR = parseFloat(style.borderRightWidth)  || 0;
@@ -283,8 +292,13 @@ class PoolGame {
     if (!this.insideCanvas(e)) return;
     const m = this.mouseToCanvas(e);
 
-    // If ball-in-hand, shooting is disabled; click is handled in game.js
-    if (this.ballInHand) return;
+    // If ball-in-hand: clicking on the table will place/move the ghost cue ball
+    if (this.ballInHand) {
+      if (m.x >= this.sidebarWidth) {
+        this.updateBallInHandGhost(m.x, m.y);
+      }
+      return;
+    }
 
     if (m.x < this.sidebarWidth) {
       this.sidebarClick(m);
@@ -388,8 +402,13 @@ class PoolGame {
     if (!this.insideCanvas(e)) return;
     const m = this.mouseToCanvas(e);
 
-    // Ball-in-hand ghost is managed in game.js via updateBallInHandGhost
-    if (this.ballInHand) return;
+    // Ball-in-hand: move the ghost cue ball inside allowed area
+    if (this.ballInHand) {
+      if (m.x >= this.sidebarWidth) {
+        this.updateBallInHandGhost(m.x, m.y);
+      }
+      return;
+    }
 
     if (m.x < this.sidebarWidth) {
       if (this.draggingSpin) {
@@ -415,22 +434,40 @@ class PoolGame {
   }
 
   /***************************************************
-   * MOUSEUP → SHOOT
+   * MOUSEUP → SHOOT OR PLACE BALL-IN-HAND
    ***************************************************/
   onMouseUp(e) {
     this.draggingSpin = false;
+
+    if (!this.insideCanvas(e)) return;
+    const m = this.mouseToCanvas(e);
+
+    // Commit ball-in-hand placement on mouseup
+    if (this.ballInHand) {
+      if (m.x >= this.sidebarWidth) {
+        this.updateBallInHandGhost(m.x, m.y);
+
+        // Reject illegal placements (on balls or in pockets)
+        if (!this.isBallInHandPlacementLegal()) {
+          this.flashIllegalPlacement();
+          this.power = 0;
+          return;
+        }
+
+        this.exitBallInHandMode();
+      } else {
+        // Clicked outside table – just redraw ghost
+        this.render();
+      }
+      this.power = 0;
+      return;
+    }
 
     if (!this.aiming) return;
     this.aiming = false;
 
     if (!this.inputEnabled || this.animating) {
       this.power = 0;
-      return;
-    }
-
-    if (this.ballInHand) {
-      this.power = 0;
-      this.render();
       return;
     }
 
@@ -844,13 +881,20 @@ class PoolGame {
       if (x >= L && x <= R) test(t, x, T, "horizontal");
 
       t = (B - ray.oy) / ray.dy;
-      x = ray.ox + t * ray.dx;
-      if (x >= L && x <= R) test(t, x, B, "horizontal");
+      let x2 = ray.ox + t * ray.dx;
+      if (x2 >= L && x2 <= R) test(t, x2, B, "horizontal");
     }
 
     if (hits.length === 0) return null;
     hits.sort((a, b) => a.dist - b.dist);
     return hits[0];
+  }
+
+  getBaulkX() {
+    const left  = this.sidebarWidth + this.tableInset;
+    const width = (this.width - this.sidebarWidth) - this.tableInset * 2;
+    const baulkOffset = width * 0.20;
+    return left + baulkOffset;
   }
 
   // Ray from (ox,oy) with dir (dx,dy) to table inner edge (rails)
@@ -885,8 +929,8 @@ class PoolGame {
       if (x >= L && x <= R) test(t, x, T);
 
       t = (B - oy) / dy;
-      x = ox + t * dx;
-      if (x >= L && x <= R) test(t, x, B);
+      let x2 = ox + t * dx;
+      if (x2 >= L && x2 <= R) test(t, x2, B);
     }
 
     if (!hits.length) return null;
@@ -1107,7 +1151,7 @@ class PoolGame {
   }
 
   /***************************************************
-   * DRAW TABLE + POCKETS
+   * DRAW TABLE + POCKETS + UK LINES
    ***************************************************/
   drawTable(ctx) {
     const left   = this.sidebarWidth + this.tableInset;
@@ -1115,13 +1159,72 @@ class PoolGame {
     const width  = (this.width - this.sidebarWidth) - this.tableInset * 2;
     const height = this.height - this.tableInset * 2;
 
+    const right  = left + width;
+    const bottom = top + height;
+    const midY   = top + height / 2;
+
+    // Cloth
     ctx.fillStyle = "#003300";
     ctx.fillRect(left, top, width, height);
 
+    // Cushion border
     ctx.strokeStyle = "#00FF00";
     ctx.lineWidth   = 4;
     ctx.strokeRect(left, top, width, height);
 
+    // ========= UK TABLE MARKINGS =========
+
+    // Baulk line (break line) – vertical, around 20% in from the left cushion
+    const baulkOffset = width * 0.20;
+    const baulkX      = left + baulkOffset;
+
+    ctx.save();
+    // SOLID baulk line
+    ctx.strokeStyle = "rgba(200,255,200,0.70)";
+    ctx.lineWidth   = 2;
+    ctx.beginPath();
+    ctx.moveTo(baulkX, top + 6);
+    ctx.lineTo(baulkX, bottom - 6);
+    ctx.stroke();
+
+    // "D" semicircle in the baulk area, centred on the baulk line
+    const dRadius = height * 0.18;
+    ctx.beginPath();
+    // Semicircle bulging towards the left cushion
+    ctx.arc(baulkX, midY, dRadius, Math.PI / 2, 3 * Math.PI / 2, false);
+    ctx.strokeStyle = "rgba(200,255,200,0.55)";
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+
+    // Spots:
+    // 1) Baulk spot (on the baulk line, centre)
+    const baulkSpotX = baulkX;
+    const baulkSpotY = midY;
+
+    // 2) Black spot (table centre)
+    const blackSpotX = left + width / 2;
+    const blackSpotY = midY;
+
+    const drawSpot = (x, y) => {
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(0,0,0,0.6)";
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    };
+
+    drawSpot(baulkSpotX, baulkSpotY);
+    drawSpot(blackSpotX, blackSpotY);
+
+    ctx.restore();
+    // ========= END UK TABLE MARKINGS =========
+
+    // Pockets
     const pockets = [
       { x: this.sidebarWidth + this.tableInset, y: this.tableInset },
       {
@@ -1547,21 +1650,142 @@ class PoolGame {
   /***************************************************
    * BALL-IN-HAND HELPERS
    ***************************************************/
-  enterBallInHandMode() {
+  enterBallInHandMode(mode = "any") {
+    this.ballInHandMode = mode; // "any" or "baulk"
+
     const cue = this.balls.find(b => b.number === 0);
     if (!cue) return;
+
     cue.inPocket = true;
     cue.vx = 0;
     cue.vy = 0;
+
     this.ballInHand = true;
     this.ballInHandGhost = { x: cue.x, y: cue.y };
     this.render();
   }
 
   updateBallInHandGhost(x, y) {
-    this.ballInHandGhost.x = x;
-    this.ballInHandGhost.y = y;
+    const p = this.clampBallInHandPosition(x, y);
+    this.ballInHandGhost.x = p.x;
+    this.ballInHandGhost.y = p.y;
     this.render();
+  }
+
+  clampBallInHandPosition(x, y) {
+    // 1) Clamp to inner table bounds
+    const leftInner =
+      this.sidebarWidth + this.tableInset + this.ballRadius;
+    const rightInner =
+      this.sidebarWidth +
+      (this.width - this.sidebarWidth) -
+      this.tableInset -
+      this.ballRadius;
+    const topInner    = this.tableInset + this.ballRadius;
+    const bottomInner = this.height - this.tableInset - this.ballRadius;
+
+    let cx = Math.min(Math.max(x, leftInner), rightInner);
+    let cy = Math.min(Math.max(y, topInner), bottomInner);
+
+    // 2) Baulk restriction (for opening break)
+    if (this.ballInHandMode === "baulk") {
+      const baulkX = this.getBaulkX();
+      const maxX   = baulkX - this.ballRadius;
+      cx = Math.min(cx, maxX);
+    }
+
+    // 3) Push away from balls and pockets so we can never sit on top
+    //    NOTE: large safety bubble so you can't squeeze into rack gaps.
+    const minBallDist   = this.ballRadius * 2.6;              // was ~2.0R
+    const minPocketDist = this.pocketRadius + this.ballRadius * 0.2;
+
+    for (let iter = 0; iter < 6; iter++) {                    // a few more relax steps
+      // Away from balls
+      for (const b of this.balls) {
+        if (b.inPocket) continue;
+        if (b.number === 0) continue;
+
+        let dx = cx - b.x;
+        let dy = cy - b.y;
+        let d  = Math.hypot(dx, dy);
+
+        if (d === 0) {
+          dx = 1;
+          dy = 0;
+          d  = 1;
+        }
+
+        if (d < minBallDist) {
+          const push = minBallDist - d;
+          const nx = dx / d;
+          const ny = dy / d;
+          cx += nx * push;
+          cy += ny * push;
+        }
+      }
+
+      // Away from pockets
+      const pockets = [
+        { x: this.sidebarWidth + this.tableInset, y: this.tableInset },
+        {
+          x: this.sidebarWidth + (this.width - this.sidebarWidth) / 2,
+          y: this.tableInset
+        },
+        {
+          x:
+            this.sidebarWidth +
+            (this.width - this.sidebarWidth) -
+            this.tableInset,
+          y: this.tableInset
+        },
+        {
+          x: this.sidebarWidth + this.tableInset,
+          y: this.height - this.tableInset
+        },
+        {
+          x: this.sidebarWidth + (this.width - this.sidebarWidth) / 2,
+          y: this.height - this.tableInset
+        },
+        {
+          x:
+            this.sidebarWidth +
+            (this.width - this.sidebarWidth) -
+            this.tableInset,
+          y: this.height - this.tableInset
+        }
+      ];
+
+      for (const p of pockets) {
+        let dx = cx - p.x;
+        let dy = cy - p.y;
+        let d  = Math.hypot(dx, dy);
+
+        if (d === 0) {
+          dx = 1;
+          dy = 0;
+          d  = 1;
+        }
+
+        if (d < minPocketDist) {
+          const push = minPocketDist - d;
+          const nx = dx / d;
+          const ny = dy / d;
+          cx += nx * push;
+          cy += ny * push;
+        }
+      }
+
+      // Re-clamp to table/baulk after pushing
+      cx = Math.min(Math.max(cx, leftInner), rightInner);
+      cy = Math.min(Math.max(cy, topInner), bottomInner);
+      if (this.ballInHandMode === "baulk") {
+        const baulkX = this.getBaulkX();
+        const maxX   = baulkX - this.ballRadius;
+        cx = Math.min(cx, maxX);
+      }
+    }
+
+    return { x: cx, y: cy };
   }
 
   flashIllegalPlacement() {
@@ -1575,6 +1799,74 @@ class PoolGame {
     ctx.lineWidth   = 3;
     ctx.stroke();
     ctx.restore();
+  }
+
+  // Final guard that the ghost position is not overlapping any object ball
+  // and not sitting inside a pocket mouth.
+  isBallInHandPlacementLegal() {
+    const gx = this.ballInHandGhost.x;
+    const gy = this.ballInHandGhost.y;
+
+    // Match the safety bubble used in clampBallInHandPosition
+    const minBallDist  = this.ballRadius * 2.6;
+    const minBallDist2 = minBallDist * minBallDist;
+
+    for (const b of this.balls) {
+      if (b.inPocket) continue;
+      if (b.number === 0) continue;
+
+      const dx = gx - b.x;
+      const dy = gy - b.y;
+      const d2 = dx * dx + dy * dy;
+
+      if (d2 < minBallDist2) {
+        return false;
+      }
+    }
+
+    const pockets = [
+      { x: this.sidebarWidth + this.tableInset, y: this.tableInset },
+      {
+        x: this.sidebarWidth + (this.width - this.sidebarWidth) / 2,
+        y: this.tableInset
+      },
+      {
+        x:
+          this.sidebarWidth +
+          (this.width - this.sidebarWidth) -
+          this.tableInset,
+        y: this.tableInset
+      },
+      {
+        x: this.sidebarWidth + this.tableInset,
+        y: this.height - this.tableInset
+      },
+      {
+        x: this.sidebarWidth + (this.width - this.sidebarWidth) / 2,
+        y: this.height - this.tableInset
+      },
+      {
+        x:
+          this.sidebarWidth +
+          (this.width - this.sidebarWidth) -
+          this.tableInset,
+        y: this.height - this.tableInset
+      }
+    ];
+
+    const minPocketDist  = this.pocketRadius + this.ballRadius * 0.2;
+    const minPocketDist2 = minPocketDist * minPocketDist;
+
+    for (const p of pockets) {
+      const dx = gx - p.x;
+      const dy = gy - p.y;
+      const d2 = dx * dx + dy * dy;
+      if (d2 < minPocketDist2) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   exitBallInHandMode() {
@@ -1599,6 +1891,7 @@ class PoolGame {
     }
 
     this.ballInHand = false;
+    this.ballInHandMode = "any"; // reset for later fouls
     this.render();
   }
 }
