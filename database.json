@@ -1,0 +1,2862 @@
+{
+  "users": {
+    "Dogmeat": {
+      "username": "Dogmeat",
+      "password": "$2a$10$gSeY1AkhoLiED2xSY6ZXo.CL.9ofl7sWPro0dpQlwBkuY5g7mR6CC",
+      "role": "admin",
+      "gamesPlayed": 167,
+      "gamesWon": 79,
+      "mutedUntil": 0,
+      "banned": false,
+      "realName": "Zack",
+      "country": "UK",
+      "age": 31
+    },
+    "Hog": {
+      "username": "Hog",
+      "password": "$2a$10$BEEixN9/SXQBNjnp/MDRUuVui90yxVi7VtW6aOsWSX.w2pd4JF8t2",
+      "role": "player",
+      "gamesPlayed": 51,
+      "gamesWon": 30,
+      "mutedUntil": 0,
+      "banned": false,
+      "bannedUntil": 0
+    },
+    "player": {
+      "username": "player",
+      "password": "$2a$10$ufwo3/XcyQg6vxMLBtyXxeUUtxa7wF.3ZpptXCgbPNSASTqA0fYlG",
+      "role": "player",
+      "gamesPlayed": 0,
+      "gamesWon": 0,
+      "mutedUntil": 0,
+      "banned": false
+    },
+    "Hog2": {
+      "username": "Hog2",
+      "password": "$2a$10$feb77KbE3vNOs9zw9ZApkOZn8pnM.1aklDytfEeJNiOxBd4sMt4VC",
+      "role": "player",
+      "gamesPlayed": 2,
+      "gamesWon": 1,
+      "mutedUntil": 0,
+      "banned": true
+    },
+    "Hog3": {
+      "username": "Hog3",
+      "password": "$2a$10$Cj6Hg6yRuGfbRAZqa95AcusKdjJu6b4.7VtPKfsyV1nNVmqqve9C.",
+      "role": "player",
+      "gamesPlayed": 0,
+      "gamesWon": 0,
+      "mutedUntil": 0,
+      "banned": false
+    },
+    "hog": {
+      "username": "hog",
+      "password": "$2a$10$9Ne/Xv38CQwNEPxM1EhnZeZnuPX3.7l5Sev9Bc0shbjsL60QL6mJC",
+      "role": "player",
+      "gamesPlayed": 0,
+      "gamesWon": 0,
+      "mutedUntil": 0,
+      "bannedUntil": 0
+    }
+  },
+  "chat": [
+    {
+      "user": "Hog",
+      "msg": "hi",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": "hi",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "sound",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "sound",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "hi",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "hi",
+      "role": "admin"
+    },
+    {
+      "user": "Hog",
+      "msg": "hi",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Hog",
+      "msg": ".",
+      "role": "player"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": "g",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    },
+    {
+      "user": "Dogmeat",
+      "msg": ".",
+      "role": "admin"
+    }
+  ],
+  "games": {
+    "gjtu31g": {
+      "id": "gjtu31g",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": []
+    },
+    "gg1b4q9": {
+      "id": "gg1b4q9",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": []
+    },
+    "gsnf5oe": {
+      "id": "gsnf5oe",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": []
+    },
+    "g6alhxu": {
+      "id": "g6alhxu",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": []
+    },
+    "gujn6tv": {
+      "id": "gujn6tv",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": []
+    },
+    "ggno9qa": {
+      "id": "ggno9qa",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": []
+    },
+    "g7l44wk": {
+      "id": "g7l44wk",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": []
+    },
+    "gyx6rtx": {
+      "id": "gyx6rtx",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1"
+    },
+    "gjv7cfn": {
+      "id": "gjv7cfn",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1"
+    },
+    "guv3yij": {
+      "id": "guv3yij",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "ga4245s": {
+      "id": "ga4245s",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 126.6811552659689,
+            "y": 273.1053009070005,
+            "vx": 0.0786394443770377,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 661.6937049916497,
+            "y": 317.3838347722676,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFCC00",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 619.7735221716564,
+            "y": 174.87981535372083,
+            "vx": 0,
+            "vy": 0,
+            "color": "#99AAFF",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 581.8505685000549,
+            "y": 235.7725791004684,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC6666",
+            "inPocket": false
+          },
+          {
+            "number": 2,
+            "x": 398.39290272333733,
+            "y": 353.6675836419092,
+            "vx": 0,
+            "vy": 0,
+            "color": "#0000FF",
+            "inPocket": true
+          },
+          {
+            "number": 8,
+            "x": 636.9691812476418,
+            "y": 210.70628407216526,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 653.0454574686667,
+            "y": 230.7375078668323,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FF9999",
+            "inPocket": false
+          },
+          {
+            "number": 13,
+            "x": 682.6947384988976,
+            "y": 182.70194556766498,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFAA66",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 731.3705822941226,
+            "y": 227.55832403480952,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FF0000",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 762.6277888525925,
+            "y": 360,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFF99",
+            "inPocket": true
+          },
+          {
+            "number": 6,
+            "x": 680.1315060504893,
+            "y": 354.7854435675609,
+            "vx": 0,
+            "vy": 0,
+            "color": "#008800",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 727.2012391838791,
+            "y": 350.56853256432515,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FF6600",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 57.73149451078027,
+            "y": 360,
+            "vx": 0,
+            "vy": 0,
+            "color": "#66DD99",
+            "inPocket": true
+          },
+          {
+            "number": 7,
+            "x": 713.5273157457437,
+            "y": 175.47443731487482,
+            "vx": 0,
+            "vy": 0,
+            "color": "#800000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 725.9765285165813,
+            "y": 279.52589274981864,
+            "vx": 0,
+            "vy": 0,
+            "color": "#C080FF",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 687.5564597042562,
+            "y": 327.68431044545633,
+            "vx": 0,
+            "vy": 0,
+            "color": "#800080",
+            "inPocket": false
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
+    },
+    "g2zn3kk": {
+      "id": "g2zn3kk",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "state": {
+          "balls": [
+            {
+              "number": 0,
+              "x": 415.6852375667096,
+              "y": 55.19909570746086,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFFFFF",
+              "inPocket": true
+            },
+            {
+              "number": 1,
+              "x": 513.1587844673676,
+              "y": 176.14713490924854,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFCC00",
+              "inPocket": false
+            },
+            {
+              "number": 10,
+              "x": 617.3056600212445,
+              "y": 142.1679712575374,
+              "vx": 0,
+              "vy": 0,
+              "color": "#99AAFF",
+              "inPocket": false
+            },
+            {
+              "number": 15,
+              "x": 412.70388133037915,
+              "y": 349.61795138773465,
+              "vx": 0,
+              "vy": 0,
+              "color": "#CC6666",
+              "inPocket": true
+            },
+            {
+              "number": 2,
+              "x": 607.4637357244661,
+              "y": 170.13166556706616,
+              "vx": 0,
+              "vy": 0,
+              "color": "#0000FF",
+              "inPocket": false
+            },
+            {
+              "number": 8,
+              "x": 659.8958518606629,
+              "y": 189.0533364271545,
+              "vx": 0,
+              "vy": 0,
+              "color": "#000000",
+              "inPocket": false
+            },
+            {
+              "number": 11,
+              "x": 612.3524046703917,
+              "y": 221.93495482429083,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF9999",
+              "inPocket": false
+            },
+            {
+              "number": 13,
+              "x": 684.0999855786683,
+              "y": 112.74523250115928,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFAA66",
+              "inPocket": false
+            },
+            {
+              "number": 3,
+              "x": 693.4782356465288,
+              "y": 189.43328381988778,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF0000",
+              "inPocket": false
+            },
+            {
+              "number": 9,
+              "x": 674.7700752481869,
+              "y": 214.99291729727716,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFFF99",
+              "inPocket": false
+            },
+            {
+              "number": 6,
+              "x": 670.8108398932404,
+              "y": 257.9515243299537,
+              "vx": 0,
+              "vy": 0,
+              "color": "#008800",
+              "inPocket": false
+            },
+            {
+              "number": 5,
+              "x": 559.9605423312026,
+              "y": 94.24701383481391,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF6600",
+              "inPocket": false
+            },
+            {
+              "number": 14,
+              "x": 722.6818009349192,
+              "y": 93.80562222428767,
+              "vx": 0,
+              "vy": 0,
+              "color": "#66DD99",
+              "inPocket": false
+            },
+            {
+              "number": 7,
+              "x": 740.0972274465076,
+              "y": 182.53834562840538,
+              "vx": 0,
+              "vy": 0,
+              "color": "#800000",
+              "inPocket": false
+            },
+            {
+              "number": 12,
+              "x": 740.1558872510421,
+              "y": 244.2612954079706,
+              "vx": 0,
+              "vy": 0,
+              "color": "#C080FF",
+              "inPocket": false
+            },
+            {
+              "number": 4,
+              "x": 57.208929446350304,
+              "y": 356.6232916989911,
+              "vx": 0,
+              "vy": 0,
+              "color": "#800080",
+              "inPocket": true
+            }
+          ]
+        },
+        "pocketed": [
+          0
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
+    },
+    "g94lqph": {
+      "id": "g94lqph",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gx1i7an": {
+      "id": "gx1i7an",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "g9p62k5": {
+      "id": "g9p62k5",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
+    },
+    "g4ydoi8": {
+      "id": "g4ydoi8",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "state": {
+          "balls": [
+            {
+              "number": 0,
+              "x": 606.2639635660915,
+              "y": 144.67373787103955,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFFFFF",
+              "inPocket": false
+            },
+            {
+              "number": 1,
+              "x": 571.0604659060142,
+              "y": 284.9682792027746,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFCC00",
+              "inPocket": false
+            },
+            {
+              "number": 10,
+              "x": 598.3873198597018,
+              "y": 96.98521922047607,
+              "vx": 0,
+              "vy": 0,
+              "color": "#99AAFF",
+              "inPocket": false
+            },
+            {
+              "number": 15,
+              "x": 622.6543521132343,
+              "y": 259.18856760425416,
+              "vx": 0,
+              "vy": 0,
+              "color": "#CC6666",
+              "inPocket": false
+            },
+            {
+              "number": 2,
+              "x": 658.6422690506953,
+              "y": 185.06083471669922,
+              "vx": 0,
+              "vy": 0,
+              "color": "#0000FF",
+              "inPocket": false
+            },
+            {
+              "number": 8,
+              "x": 659.5839989650086,
+              "y": 205.04875771408305,
+              "vx": 0,
+              "vy": 0,
+              "color": "#000000",
+              "inPocket": false
+            },
+            {
+              "number": 11,
+              "x": 661.9584656047136,
+              "y": 230.26338798110797,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF9999",
+              "inPocket": false
+            },
+            {
+              "number": 13,
+              "x": 680.387356160016,
+              "y": 165.46036931428054,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFAA66",
+              "inPocket": false
+            },
+            {
+              "number": 3,
+              "x": 680.3150297053216,
+              "y": 189.94031345002278,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF0000",
+              "inPocket": false
+            },
+            {
+              "number": 9,
+              "x": 680.5189699215389,
+              "y": 220.84934523205524,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFFF99",
+              "inPocket": false
+            },
+            {
+              "number": 6,
+              "x": 681.8443151385578,
+              "y": 242.72038824320347,
+              "vx": 0,
+              "vy": 0,
+              "color": "#008800",
+              "inPocket": false
+            },
+            {
+              "number": 5,
+              "x": 540.7406869407504,
+              "y": 104.00137257680842,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF6600",
+              "inPocket": false
+            },
+            {
+              "number": 14,
+              "x": 707.7219340562784,
+              "y": 177.8726206204859,
+              "vx": 0,
+              "vy": 0,
+              "color": "#66DD99",
+              "inPocket": false
+            },
+            {
+              "number": 7,
+              "x": 709.4834239496695,
+              "y": 210.08785266946714,
+              "vx": 0,
+              "vy": 0,
+              "color": "#800000",
+              "inPocket": false
+            },
+            {
+              "number": 12,
+              "x": 707.7188578352694,
+              "y": 231.0854868794659,
+              "vx": 0,
+              "vy": 0,
+              "color": "#C080FF",
+              "inPocket": false
+            },
+            {
+              "number": 4,
+              "x": 505.63535183538795,
+              "y": 285.50940031703396,
+              "vx": 0,
+              "vy": 0,
+              "color": "#800080",
+              "inPocket": false
+            }
+          ]
+        },
+        "pocketed": []
+      },
+      "chat": [],
+      "currentTurn": "p2",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
+    },
+    "gjbo4p2": {
+      "id": "gjbo4p2",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "visits": {
+        "p1": 1,
+        "p2": 1
+      },
+      "ballInHandFor": null,
+      "finished": false
+    },
+    "gn49u4h": {
+      "id": "gn49u4h",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "state": {
+          "balls": [
+            {
+              "number": 0,
+              "x": 420.986779393328,
+              "y": 268.9505090708303,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFFFFF",
+              "inPocket": false
+            },
+            {
+              "number": 1,
+              "x": 604.7630730762276,
+              "y": 206.80746531879828,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFCC00",
+              "inPocket": false
+            },
+            {
+              "number": 10,
+              "x": 644.0574864164639,
+              "y": 303.8849955284399,
+              "vx": 0,
+              "vy": 0,
+              "color": "#99AAFF",
+              "inPocket": false
+            },
+            {
+              "number": 15,
+              "x": 746.1152671342271,
+              "y": 290.5455121385379,
+              "vx": 0,
+              "vy": 0,
+              "color": "#CC6666",
+              "inPocket": false
+            },
+            {
+              "number": 2,
+              "x": 617.3473788042388,
+              "y": 189.06530547843386,
+              "vx": 0,
+              "vy": 0,
+              "color": "#0000FF",
+              "inPocket": false
+            },
+            {
+              "number": 8,
+              "x": 597.3278913424411,
+              "y": 182.9068414723918,
+              "vx": 0,
+              "vy": 0,
+              "color": "#000000",
+              "inPocket": false
+            },
+            {
+              "number": 11,
+              "x": 752.9258161827127,
+              "y": 326.974893086827,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF9999",
+              "inPocket": false
+            },
+            {
+              "number": 13,
+              "x": 770,
+              "y": 59.07101600372803,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFAA66",
+              "inPocket": true
+            },
+            {
+              "number": 3,
+              "x": 636.1532166178507,
+              "y": 200.1206267418295,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF0000",
+              "inPocket": false
+            },
+            {
+              "number": 9,
+              "x": 514.5697965950246,
+              "y": 308.05559829653464,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FFFF99",
+              "inPocket": false
+            },
+            {
+              "number": 6,
+              "x": 745.0967110902507,
+              "y": 210.05758241759625,
+              "vx": 0,
+              "vy": 0,
+              "color": "#008800",
+              "inPocket": false
+            },
+            {
+              "number": 5,
+              "x": 289.9817118341434,
+              "y": 84.8672989655303,
+              "vx": 0,
+              "vy": 0,
+              "color": "#FF6600",
+              "inPocket": false
+            },
+            {
+              "number": 14,
+              "x": 387.8875251242022,
+              "y": 97.15698447002413,
+              "vx": 0,
+              "vy": 0,
+              "color": "#66DD99",
+              "inPocket": false
+            },
+            {
+              "number": 7,
+              "x": 695.9641503136929,
+              "y": 229.52069673974975,
+              "vx": 0,
+              "vy": 0,
+              "color": "#800000",
+              "inPocket": false
+            },
+            {
+              "number": 12,
+              "x": 675.9858112971204,
+              "y": 221.52687685596723,
+              "vx": 0,
+              "vy": 0,
+              "color": "#C080FF",
+              "inPocket": false
+            },
+            {
+              "number": 4,
+              "x": 155.88216809004334,
+              "y": 257.06555341189596,
+              "vx": 0,
+              "vy": 0,
+              "color": "#800080",
+              "inPocket": false
+            }
+          ]
+        },
+        "pocketed": []
+      },
+      "chat": [],
+      "currentTurn": "p2",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
+    },
+    "gj3hjyg": {
+      "id": "gj3hjyg",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gj6kvjm": {
+      "id": "gj6kvjm",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gk8fn6f": {
+      "id": "gk8fn6f",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "g3fgqpr": {
+      "id": "g3fgqpr",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gi4cg7t": {
+      "id": "gi4cg7t",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 761.0511785963764,
+            "y": 50.55615791903736,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": true
+          },
+          {
+            "number": 1,
+            "x": 588.4673987011412,
+            "y": 288.93059890317977,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 455.9635132388842,
+            "y": 350.88861828263146,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 611.817585611161,
+            "y": 266.90750090683593,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 176.84561558869623,
+            "y": 55.228929934544446,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 659.9634320165143,
+            "y": 206.37143065010693,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 635.7165394859966,
+            "y": 239.3354735597202,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 767.9330849963445,
+            "y": 58.075996520575565,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 4,
+            "x": 719.700523191265,
+            "y": 167.0591001154303,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 681.2458110902736,
+            "y": 209.43372982076727,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 681.2172337963976,
+            "y": 302.8203922823029,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 458.11655084661686,
+            "y": 58.17156473998442,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 649.4362228293415,
+            "y": 81.04807716638594,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 680.283864613526,
+            "y": 240.25083875450824,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 700.034746009319,
+            "y": 231.22593541905334,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 558.9972954798793,
+            "y": 314.6091510568752,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": "stripes",
+        "p2": "solids"
+      },
+      "finished": true
+    },
+    "gyi3jjf": {
+      "id": "gyi3jjf",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "finished": false
+    },
+    "gp2k923": {
+      "id": "gp2k923",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 506.6055681430486,
+            "y": 214.25066317278376,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 531.1495598230277,
+            "y": 258.7097184189058,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 767.430054520246,
+            "y": 57.963546448146964,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 174.12091009852503,
+            "y": 255.52396037792258,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 171.38830640294023,
+            "y": 152.10821360305405,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 458.46876605176504,
+            "y": 348.2538858667665,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": true
+          },
+          {
+            "number": 11,
+            "x": 606.3352926938055,
+            "y": 313.9362176850353,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 671.7996221885455,
+            "y": 328.1528394603231,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 624.6985562572486,
+            "y": 68.47194510058408,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 684.244801176988,
+            "y": 214.024131689411,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 695.9305758265599,
+            "y": 347.64217667873294,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 765.8967158541044,
+            "y": 56.625225764164206,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 637.5092326311818,
+            "y": 318.41242963326243,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 700.117649923791,
+            "y": 306.22498527401893,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 587.6683626703854,
+            "y": 52.78353405854867,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 456.0336899860627,
+            "y": 350.6551913842247,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "finished": true
+    },
+    "gbhuc3o": {
+      "id": "gbhuc3o",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 271.28451010968564,
+            "y": 67.14906045941251,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 467.5765197399528,
+            "y": 353.4380057997386,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 10,
+            "x": 458.1051675085847,
+            "y": 61.22249376222908,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 473.2571655539273,
+            "y": 53.32010772969896,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 3,
+            "x": 766.3887649662638,
+            "y": 355.6921500394949,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 8,
+            "x": 152.78178319362115,
+            "y": 57.07377344161621,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": true
+          },
+          {
+            "number": 11,
+            "x": 236.88960117976646,
+            "y": 148.54956842941962,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 452.35770285089865,
+            "y": 57.03846469524989,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 4,
+            "x": 454.79751748557396,
+            "y": 350.6632403609448,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 12,
+            "x": 701.1064184873533,
+            "y": 339.7912247514978,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 767.1573773540189,
+            "y": 354.83507786308417,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 6,
+            "x": 461.1756971432305,
+            "y": 55.72986969542482,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 543.1122367966536,
+            "y": 55.48882976446945,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 152.4715690615224,
+            "y": 353.56112733567005,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 14,
+            "x": 763.681146398819,
+            "y": 358.3593189375381,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 15,
+            "x": 465.44942454616336,
+            "y": 59.32596910634741,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p2",
+      "finished": true
+    },
+    "gi103jn": {
+      "id": "gi103jn",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "g7favi4": {
+      "id": "g7favi4",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gngk94v": {
+      "id": "gngk94v",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gbco4il": {
+      "id": "gbco4il",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gru7azl": {
+      "id": "gru7azl",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gpn141q": {
+      "id": "gpn141q",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gf79iz6": {
+      "id": "gf79iz6",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gnyfo8d": {
+      "id": "gnyfo8d",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "gfk511p": {
+      "id": "gfk511p",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
+    },
+    "gxlffgh": {
+      "id": "gxlffgh",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false
+    },
+    "g6qxnlb": {
+      "id": "g6qxnlb",
+      "p1": "Dogmeat",
+      "p2": "Hog",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true
+    },
+    "guxr65d": {
+      "id": "guxr65d",
+      "p1": "Hog",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true,
+      "ballInHandFor": null
+    },
+    "ggchs5r": {
+      "id": "ggchs5r",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g1dz8l0": {
+      "id": "g1dz8l0",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gi9k4it": {
+      "id": "gi9k4it",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g9gk9yx": {
+      "id": "g9gk9yx",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gpaafon": {
+      "id": "gpaafon",
+      "p1": "Hog",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gk8508o": {
+      "id": "gk8508o",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g48cvrl": {
+      "id": "g48cvrl",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g8i3sda": {
+      "id": "g8i3sda",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gylnirt": {
+      "id": "gylnirt",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g6su4a2": {
+      "id": "g6su4a2",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gcayqm0": {
+      "id": "gcayqm0",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 197.61589139757427,
+            "y": 274.74945559613724,
+            "vx": -0.030026108865277002,
+            "vy": 0.057846360445499595,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 155.11466293329897,
+            "y": 355.17369008761267,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 10,
+            "x": 444.76342283365653,
+            "y": 52.20247283857151,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 729.9746853331752,
+            "y": 81.72035921832716,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 156.48134827901023,
+            "y": 53.86689492220098,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 8,
+            "x": 726.96276141802,
+            "y": 350.66129823213294,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 456.3633174876124,
+            "y": 348.35556358371764,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 9,
+            "x": 765.5887483198752,
+            "y": 56.14834234901193,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 4,
+            "x": 750.719481579925,
+            "y": 155.8161014419566,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 435.92564039413327,
+            "y": 255.35126380757978,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 640.3434764447426,
+            "y": 179.47718324471563,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 155.6351001632808,
+            "y": 54.719317430066525,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 765.2050491714098,
+            "y": 50.3407850867886,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 7,
+            "x": 764.1507157278014,
+            "y": 50.8848120012434,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 14,
+            "x": 770,
+            "y": 50,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 15,
+            "x": 462.05014073176505,
+            "y": 348.9974288835668,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true,
+      "ballInHandFor": null
+    },
+    "gnqqbn2": {
+      "id": "gnqqbn2",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "ggsle6y": {
+      "id": "ggsle6y",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 677.9925264191723,
+            "y": 94.56451984814335,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 246.68557049237648,
+            "y": 171.5400531155995,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 157.9919646669235,
+            "y": 52.637446178917706,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 429.28920602049044,
+            "y": 79.40697525719783,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 241.41491427456356,
+            "y": 226.6378655298552,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 464.07671004246026,
+            "y": 58.6337490029749,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": true
+          },
+          {
+            "number": 11,
+            "x": 729.5420883152269,
+            "y": 245.9360913116113,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 571.1576113008963,
+            "y": 117.48873010978608,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 602.1618493590621,
+            "y": 195.96573123846557,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 636.4851332845067,
+            "y": 176.82477976243644,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 629.8125820451769,
+            "y": 358.58143735442417,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 639.6691792094728,
+            "y": 156.7098332045312,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 13,
+            "x": 660.8563588776501,
+            "y": 163.01749459724576,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 742.949049742909,
+            "y": 75.11254112908813,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 460.51144270513225,
+            "y": 352.4275389117601,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 15,
+            "x": 620.1262287185012,
+            "y": 125.36716612957257,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true,
+      "ballInHandFor": null
+    },
+    "g34ccsz": {
+      "id": "g34ccsz",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 675.1087164647126,
+            "y": 137.3029502548837,
+            "vx": -0.04726020583285868,
+            "vy": -0.045424863514859304,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 620,
+            "y": 205,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 622.6928820941326,
+            "y": 164.81223301011255,
+            "vx": -0.040781519117494294,
+            "vy": -0.04082867589595245,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 2,
+            "x": 604.0674458286448,
+            "y": 316.04061892805294,
+            "vx": 0,
+            "vy": -0.09216559042127404,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 636.8257219363768,
+            "y": 179.9331342965794,
+            "vx": -0.04087588720307463,
+            "vy": 0.04082867589595245,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 657.830346834873,
+            "y": 200.7043661963293,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 638.5983995860151,
+            "y": 230.44427426360798,
+            "vx": -0.07780646811647178,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 678.6182394185955,
+            "y": 166.4601093912614,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 688.9049479105383,
+            "y": 195.95720982300904,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 688.1914638244153,
+            "y": 220.31972766577792,
+            "vx": 0.0451245848624486,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 675.1225010979563,
+            "y": 269.36885062714396,
+            "vx": 0,
+            "vy": 0.12109270424216,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 754.0958968640572,
+            "y": 130.87313214820855,
+            "vx": 0.030177568682080082,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 13,
+            "x": 706.022207594591,
+            "y": 178.92283865919367,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 710.5125692426259,
+            "y": 199.8466490122417,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 645.1456996691936,
+            "y": 265.31433129237433,
+            "vx": -0.05998196835604318,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 623.1384441593231,
+            "y": 349.80581982098084,
+            "vx": -0.07110750876294081,
+            "vy": -0.09480978156403659,
+            "color": "#FFDD00",
+            "inPocket": false
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true,
+      "ballInHandFor": null
+    },
+    "guz5uvl": {
+      "id": "guz5uvl",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 641.0571573148084,
+            "y": 244.65287717774615,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 453.7050290049952,
+            "y": 60.96551426220616,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 10,
+            "x": 614.9241117158343,
+            "y": 132.97392732872225,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 2,
+            "x": 585.5168087615119,
+            "y": 272.82894168415885,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 659.4185314921168,
+            "y": 163.77317501315417,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 650.8463761845023,
+            "y": 204.9561552507129,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 662.1326080288725,
+            "y": 226.84322800741523,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 678.8737116252634,
+            "y": 151.23536051690957,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 676.9038063949065,
+            "y": 179.84464007942748,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 723.4861222980074,
+            "y": 194.60228579160304,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 744.5876141053747,
+            "y": 341.1373132880885,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 420.40525357354807,
+            "y": 166.82259184420002,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 13,
+            "x": 698.7567085186284,
+            "y": 180.3294553365511,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 744.812531967413,
+            "y": 179.76838190422308,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 738.6726882070942,
+            "y": 248.98739973122053,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 708.4807665640535,
+            "y": 321.89624704174736,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true,
+      "ballInHandFor": null
+    },
+    "g9u8h7h": {
+      "id": "g9u8h7h",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "goo90sg": {
+      "id": "goo90sg",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 650.9060364966929,
+            "y": 227.8738815743393,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 547.9315090055203,
+            "y": 291.46796032706874,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 765.2411605864015,
+            "y": 53.695165630852614,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": true
+          },
+          {
+            "number": 2,
+            "x": 766.2684999644712,
+            "y": 358.19061423828765,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 3,
+            "x": 469.81157174544404,
+            "y": 58.32985642947458,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 8,
+            "x": 632.1609875024427,
+            "y": 179.93645670755825,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 632.3118512103084,
+            "y": 246.4082127313027,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 693.5195636476848,
+            "y": 80.59184817773257,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 654.945004667649,
+            "y": 178.97514079180132,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 679.7219525115405,
+            "y": 185.18534433575766,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 708.0552178862097,
+            "y": 353.0987544635751,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 471.80430643270006,
+            "y": 52.7444541427968,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": true
+          },
+          {
+            "number": 13,
+            "x": 716.0925555895614,
+            "y": 163.21806890691957,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 715.177192491147,
+            "y": 195.6054463257821,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 700.0916150693894,
+            "y": 289.5442336256659,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 441.47253825105616,
+            "y": 342.8487211640234,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p2",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gnpzv20": {
+      "id": "gnpzv20",
+      "p1": "Dogmeat",
+      "p2": "Dogmeat",
+      "spectators": [],
+      "state": {
+        "balls": [
+          {
+            "number": 0,
+            "x": 724.8596533533924,
+            "y": 177.99716507948247,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFFFFF",
+            "inPocket": false
+          },
+          {
+            "number": 1,
+            "x": 603.0208473100114,
+            "y": 247.33872302027143,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 10,
+            "x": 639.7983639715724,
+            "y": 193.94262171427798,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 2,
+            "x": 641.4973472902769,
+            "y": 213.92157726788216,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 3,
+            "x": 659.6,
+            "y": 183,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 8,
+            "x": 661.6377656913785,
+            "y": 203.01306729098275,
+            "vx": 0,
+            "vy": 0,
+            "color": "#000000",
+            "inPocket": false
+          },
+          {
+            "number": 11,
+            "x": 662.0471607797715,
+            "y": 231.95653751208306,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 9,
+            "x": 679.4,
+            "y": 172,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 4,
+            "x": 679.4709749163417,
+            "y": 193.77625994379224,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 12,
+            "x": 679.4,
+            "y": 216,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 5,
+            "x": 682.9590553258311,
+            "y": 239.88980626905496,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 6,
+            "x": 699.1978804754579,
+            "y": 160.99082190891727,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 13,
+            "x": 699.1149699232844,
+            "y": 182.827227793566,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 7,
+            "x": 699.2,
+            "y": 205,
+            "vx": 0,
+            "vy": 0,
+            "color": "#CC0000",
+            "inPocket": false
+          },
+          {
+            "number": 14,
+            "x": 699.2,
+            "y": 227,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          },
+          {
+            "number": 15,
+            "x": 493.02691347742706,
+            "y": 276.49161779405983,
+            "vx": 0,
+            "vy": 0,
+            "color": "#FFDD00",
+            "inPocket": false
+          }
+        ]
+      },
+      "chat": [],
+      "currentTurn": "p2",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": true,
+      "ballInHandFor": null
+    }
+  }
+}

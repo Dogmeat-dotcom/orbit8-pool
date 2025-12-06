@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Orbit 8 Pool – Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --green: #00CC00;
+  --bg: #000000;
+  --panel: #001900;
+  --border: #006600;
+  --gold: #FCB001;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #CCFFCC;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;        /* allow logo + box vertically */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* LOGO */
+#logo-wrap {
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+#logo-img {
+  height: 80px;                 /* adjust size if you want */
+  display: block;
+}
+
+
+/* Kick/Ban popup */
+#kickban-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;                 /* shown via JS */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#kickban-box {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  box-shadow: 0 0 20px var(--green);
+  padding: 16px;
+  width: 320px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+#kickban-title {
+  color: var(--gold);
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+#kickban-message {
+  margin-bottom: 6px;
+}
+
+#kickban-duration {
+  color: #33FF33;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+#kickban-close {
+  padding: 6px 12px;
+  background: var(--green);
+  border: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+
+/* LOGIN BOX */
+#box {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  padding: 16px;
+  width: 320px;
+  box-shadow: 0 0 12px #002200;
+  border-radius: 4px;
+}
+
+h1 {
+  margin: 0 0 12px 0;
+  text-align: center;
+  color: var(--green);
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #88FF88;
+}
+
+.tab.active {
+  background: #000;
+  border-bottom: 2px solid var(--green);
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 4px 0 8px 0;
+  background: #000;
+  border: 1px solid var(--border);
+  color: #CCFFCC;
+}
+
+button {
+  width: 100%;
+  padding: 8px;
+  background: var(--green);
+  border: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+#error-box {
+  display: none;
+  margin-top: 6px;
+  color: #FF6666;
+  font-size: 13px;
+}
+
+/* Clean, centered, even spacing for all form fields */
+.form-field {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.form-field input {
+  width: 90%; /* controls left/right spacing */
+  margin: 6px 0;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+/* Buttons match the same centered width */
+.form-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.form-button button {
+  width: 90%;
+  margin-top: 10px;
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- Orbit 8 logo -->
+<div id="logo-wrap">
+  <img src="orbit8-logo.jpg" id="logo-img" alt="Orbit 8 Pool">
+</div>
+
+<div id="box">
+  <h1>Orbit 8 Pool</h1>
+  <div class="tabs">
+    <div id="tab-login" class="tab active">Login</div>
+    <div id="tab-register" class="tab">Register</div>
+  </div>
+
+<div id="form-login">
+
+  <div class="form-field">
+    <input id="login-user" placeholder="Username">
+  </div>
+
+  <div class="form-field">
+    <input id="login-pass" type="password" placeholder="Password">
+  </div>
+
+  <div class="form-button">
+    <button id="btn-login">Login</button>
+  </div>
+
+</div>
+
+<div id="form-register" style="display:none;">
+
+  <div class="form-field">
+    <input id="reg-user" placeholder="Username">
+  </div>
+
+  <div class="form-field">
+    <input id="reg-pass" type="password" placeholder="Password">
+  </div>
+
+  <div class="form-button">
+    <button id="btn-register">Register</button>
+  </div>
+
+</div>
+
+
+  <div id="error-box"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="login.js"></script>
+
+<div id="kickban-overlay">
+  <div id="kickban-box">
+    <div id="kickban-title">Disconnected</div>
+    <div id="kickban-message"></div>
+    <div id="kickban-duration"></div>
+    <button id="kickban-close">OK</button>
+  </div>
+</div>
+
+<audio id="kickban-sound" src="sounds/kickban.mp3" preload="auto"></audio>
+
+</body>
+</html>

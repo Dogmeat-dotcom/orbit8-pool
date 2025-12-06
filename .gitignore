@@ -1,0 +1,10 @@
+node_modules/
+public/images/cache/
+*.log
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+OneDrive/
+OneDriveTemp/
+**/.sync/
+**/~$*
