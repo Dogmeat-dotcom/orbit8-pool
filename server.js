@@ -25,6 +25,16 @@ let db = { users: {}, chat: [], games: {} };
 
 if (fs.existsSync(DB_FILE)) {
   db = JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
+
+  // Ensure all existing users have a profilePic field
+  if (db.users && typeof db.users === "object") {
+    for (const uname of Object.keys(db.users)) {
+      const u = db.users[uname];
+      if (!u.profilePic) {
+        u.profilePic = "avatars/default.png";
+      }
+    }
+  }
 } else {
   fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
 }
@@ -129,7 +139,9 @@ io.on("connection", socket => {
       bannedUntil: 0,   // timed/permanent bans
       realName: "",
       country: "",
-      age: null
+      age: null,
+      // default profile picture for new users
+      profilePic: "avatars/default.png"
     };
 
     saveDB();
@@ -258,7 +270,9 @@ io.on("connection", socket => {
       winPercent,
       realName: u.realName || "",
       country: u.country || "",
-      age: u.age || ""
+      age: u.age || "",
+      // expose profilePic to clients
+      profilePic: u.profilePic || "avatars/default.png"
     });
   });
 
@@ -275,6 +289,7 @@ io.on("connection", socket => {
     const realName = (data.realName || "").trim();
     const country  = (data.country  || "").trim();
     let age        = (data.age || "").toString().trim();
+    const profilePic = (data.profilePic || "").trim(); // avatar path
 
     if (age === "") {
       age = null;
@@ -287,9 +302,19 @@ io.on("connection", socket => {
     u.country  = country;
     u.age      = age;
 
-    saveDB();
-    cb && cb({ ok: true });
-  });
+  // update profile picture if provided
+  if (profilePic) {
+    u.profilePic = profilePic.slice(0, 200);
+  }
+
+  saveDB();
+
+  // NEW: push updated avatars to everyone immediately
+  sendPlayerList();
+
+  cb && cb({ ok: true });
+});
+
 
   /***********************
    * CHANGE PASSWORD
@@ -451,7 +476,7 @@ io.on("connection", socket => {
       currentTurn: "p1",          // p1 breaks
       groups: { p1: null, p2: null }, // legacy (solids/stripes)
       finished: false,
-      ballInHandFor: null        // which side currently has ball-in-hand: "p1" | "p2" | null
+      ballInHandFor: null        // "p1" | "p2" | null
     };
   }
 
@@ -723,7 +748,12 @@ io.on("connection", socket => {
     const list = [];
     for (const [id, s] of io.sockets.sockets) {
       if (!s.user) continue;
-      list.push({ username: s.user, role: s.role });
+      const u = db.users[s.user];
+      list.push({
+        username: s.user,
+        role: s.role,
+        profilePic: u && u.profilePic ? u.profilePic : "avatars/default.png"
+      });
     }
     io.emit("players", list);
   }

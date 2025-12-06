@@ -1,16 +1,56 @@
 {
   "users": {
+    "123": {
+      "username": "123",
+      "password": "$2a$10$vm7013noek7faKx4h2a8vu.1ZYmNz.lE/bSP/fYrnse5VrQkVbmxe",
+      "role": "player",
+      "gamesPlayed": 0,
+      "gamesWon": 0,
+      "mutedUntil": 0,
+      "bannedUntil": 0,
+      "realName": "",
+      "country": "",
+      "age": null,
+      "profilePic": "avatars/default.png"
+    },
+    "1234": {
+      "username": "1234",
+      "password": "$2a$10$mb3Shf7kicmDW3vmR8JqZeeqcN2MMdJ5MtPr3KkrG8qwDNDha4oLy",
+      "role": "player",
+      "gamesPlayed": 0,
+      "gamesWon": 0,
+      "mutedUntil": 0,
+      "bannedUntil": 0,
+      "realName": "",
+      "country": "",
+      "age": null,
+      "profilePic": "avatars/avatar5.png"
+    },
+    "12345": {
+      "username": "12345",
+      "password": "$2a$10$lzti0T5wQsmJOye24gemBewE2Vnokce0cGTTLYsjd9OdbWaG937iS",
+      "role": "player",
+      "gamesPlayed": 0,
+      "gamesWon": 0,
+      "mutedUntil": 0,
+      "bannedUntil": 0,
+      "realName": "",
+      "country": "",
+      "age": null,
+      "profilePic": "avatars/default.png"
+    },
     "Dogmeat": {
       "username": "Dogmeat",
       "password": "$2a$10$gSeY1AkhoLiED2xSY6ZXo.CL.9ofl7sWPro0dpQlwBkuY5g7mR6CC",
       "role": "admin",
-      "gamesPlayed": 207,
-      "gamesWon": 99,
+      "gamesPlayed": 211,
+      "gamesWon": 101,
       "mutedUntil": 0,
       "banned": false,
       "realName": "Zack",
       "country": "UK",
-      "age": 31
+      "age": 31,
+      "profilePic": "avatars/avatar20.png"
     },
     "Hog": {
       "username": "Hog",
@@ -20,7 +60,8 @@
       "gamesWon": 30,
       "mutedUntil": 0,
       "banned": false,
-      "bannedUntil": 0
+      "bannedUntil": 0,
+      "profilePic": "avatars/default.png"
     },
     "player": {
       "username": "player",
@@ -29,7 +70,8 @@
       "gamesPlayed": 0,
       "gamesWon": 0,
       "mutedUntil": 0,
-      "banned": false
+      "banned": false,
+      "profilePic": "avatars/default.png"
     },
     "Hog2": {
       "username": "Hog2",
@@ -38,7 +80,8 @@
       "gamesPlayed": 2,
       "gamesWon": 1,
       "mutedUntil": 0,
-      "banned": true
+      "banned": true,
+      "profilePic": "avatars/default.png"
     },
     "Hog3": {
       "username": "Hog3",
@@ -47,7 +90,8 @@
       "gamesPlayed": 0,
       "gamesWon": 0,
       "mutedUntil": 0,
-      "banned": false
+      "banned": false,
+      "profilePic": "avatars/default.png"
     },
     "hog": {
       "username": "hog",
@@ -56,141 +100,24 @@
       "gamesPlayed": 0,
       "gamesWon": 0,
       "mutedUntil": 0,
-      "bannedUntil": 0
+      "bannedUntil": 0,
+      "profilePic": "avatars/default.png"
+    },
+    "Player12": {
+      "username": "Player12",
+      "password": "$2a$10$e8vZrc/GyZxOhlW6ymSOCucyIrJeC0z2BgE4Ca0gg.y4yySX/5iKm",
+      "role": "player",
+      "gamesPlayed": 2,
+      "gamesWon": 1,
+      "mutedUntil": 0,
+      "bannedUntil": 0,
+      "realName": "",
+      "country": "",
+      "age": null,
+      "profilePic": "avatars/avatar2.png"
     }
   },
-  "chat": [
-    {
-      "user": "Hog",
-      "msg": "hi",
-      "role": "player"
-    },
-    {
-      "user": "Hog",
-      "msg": "hi",
-      "role": "player"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": "sound",
-      "role": "admin"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": "sound",
-      "role": "admin"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": "hi",
-      "role": "admin"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": "hi",
-      "role": "admin"
-    },
-    {
-      "user": "Hog",
-      "msg": "hi",
-      "role": "player"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": ".",
-      "role": "admin"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": ".",
-      "role": "admin"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": ".",
-      "role": "admin"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": ".",
-      "role": "admin"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": ".",
-      "role": "admin"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": ".",
-      "role": "admin"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Hog",
-      "msg": ".",
-      "role": "player"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": "g",
-      "role": "admin"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": ".",
-      "role": "admin"
-    },
-    {
-      "user": "Dogmeat",
-      "msg": ".",
-      "role": "admin"
-    }
-  ],
+  "chat": [],
   "games": {
     "gjtu31g": {
       "id": "gjtu31g",
@@ -3005,21 +2932,6 @@
       "finished": true,
       "ballInHandFor": null
     },
-    "gwxop2q": {
-      "id": "gwxop2q",
-      "p1": "Dogmeat",
-      "p2": "Dogmeat",
-      "spectators": [],
-      "state": null,
-      "chat": [],
-      "currentTurn": "p1",
-      "groups": {
-        "p1": null,
-        "p2": null
-      },
-      "finished": false,
-      "ballInHandFor": null
-    },
     "gbk5ekf": {
       "id": "gbk5ekf",
       "p1": "Dogmeat",
@@ -4011,6 +3923,81 @@
       "id": "gp6bq7i",
       "p1": "Dogmeat",
       "p2": "Dogmeat",
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "ggra74f": {
+      "id": "ggra74f",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "g26wwes": {
+      "id": "g26wwes",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "ga8aqs1": {
+      "id": "ga8aqs1",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gxbwcuh": {
+      "id": "gxbwcuh",
+      "p1": "Dogmeat",
+      "p2": null,
+      "spectators": [],
+      "state": null,
+      "chat": [],
+      "currentTurn": "p1",
+      "groups": {
+        "p1": null,
+        "p2": null
+      },
+      "finished": false,
+      "ballInHandFor": null
+    },
+    "gxo5bgj": {
+      "id": "gxo5bgj",
+      "p1": "Dogmeat",
+      "p2": null,
       "spectators": [],
       "state": null,
       "chat": [],

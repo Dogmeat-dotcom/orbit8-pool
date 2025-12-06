@@ -87,8 +87,6 @@ header {
   color: #000;
 }
 
-
-
 /* User menu dropdown (top-right) */
 .user-menu {
   position: relative;
@@ -157,7 +155,6 @@ header {
   background: #400000;
 }
 
-
 .user-menu-dropdown.open {
   display: block;
 }
@@ -199,18 +196,41 @@ header {
   color: var(--green-light);
 }
 
-/* PLAYER LIST */
+/* PLAYER CARD: single outer card */
 .player-entry {
   border: 1px solid var(--border);
   border-radius: 4px;
   margin: 4px 4px;
-  padding: 4px 6px;
+  padding: 6px 6px 4px;
   background: #000900;
   box-shadow: 0 0 6px #001f00;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
+/* avatar on the left */
+.player-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #000;
+  flex: 0 0 60px;
+  margin-right: 8px;
+}
+
+/* name text to the right of avatar (NO inner card) */
 .player-name {
+  flex: 1 0 auto;
+  display: inline-flex;
+  align-items: top;
+  gap: 6px;
+  font-size: 18px;      /* was ~13px */
   font-weight: bold;
+  max-width: 100%;
+  /* no border/background so it isn't another card */
 }
 
 .p-admin { color: var(--gold); }
@@ -222,7 +242,25 @@ header {
   margin-right: 3px;
 }
 
-/* NEW: small neon admin badge icon */
+/* buttons line wraps BELOW and is indented under the name */
+.player-buttons {
+  flex: 1 0 100%;
+  margin-top: -18px;           /* moved up */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-left: 68px;       /* indent so they sit under the name */
+}
+
+/* optional right-hand column wrapper */
+.player-info {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* small neon admin badge icon */
 .admin-icon {
   width: 14px;
   height: 14px;
@@ -230,13 +268,6 @@ header {
   margin-right: 4px;
   border-radius: 50%;
   box-shadow: 0 0 6px #00ff5a;
-}
-
-.player-buttons {
-  margin-top: 4px;
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
 }
 
 .small-btn {
@@ -343,7 +374,6 @@ header {
   margin-left: 10px;
 }
 
-
 /* CHAT */
 #chat {
   flex: 1;
@@ -434,6 +464,46 @@ header {
 #profileModal label {
   display: block;
   margin-bottom: 4px;
+}
+
+/* AVATAR PICKER (PROFILE MODAL) */
+.profile-avatar-block {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.avatar-preview {
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid var(--green);
+  box-shadow: 0 0 8px #00aa00;
+}
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+
+.avatar-option {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.avatar-option.selected {
+  border-color: var(--green-light);
+  box-shadow: 0 0 6px var(--green-light);
 }
 
 /* ===== ORBIT-8 THIN NEON SCROLLBARS (WebKit) ===== */
@@ -555,6 +625,42 @@ header {
 
     <label>Age</label>
     <input id="profileAge" class="profile-input">
+
+    <label>Profile picture</label>
+    <div class="profile-avatar-block">
+      <!-- 160×160 preview -->
+      <img id="profileAvatarPreview"
+           src="avatars/default.png"
+           alt="Avatar preview"
+           class="avatar-preview">
+
+      <!-- hidden field that client.js uses -->
+      <input type="hidden" id="profileAvatar" value="avatars/default.png">
+
+      <!-- avatar options (put 160×160 images in /public/avatars) -->
+      <div class="avatar-grid">
+        <img src="avatars/avatar1.png" data-avatar="avatars/avatar1.png" class="avatar-option" alt="">
+        <img src="avatars/avatar2.png" data-avatar="avatars/avatar2.png" class="avatar-option" alt="">
+        <img src="avatars/avatar3.png" data-avatar="avatars/avatar3.png" class="avatar-option" alt="">
+        <img src="avatars/avatar4.png" data-avatar="avatars/avatar4.png" class="avatar-option" alt="">
+		<img src="avatars/avatar5.png" data-avatar="avatars/avatar5.png" class="avatar-option" alt="">
+		<img src="avatars/avatar6.png" data-avatar="avatars/avatar6.png" class="avatar-option" alt="">
+		<img src="avatars/avatar7.png" data-avatar="avatars/avatar7.png" class="avatar-option" alt="">
+		<img src="avatars/avatar8.png" data-avatar="avatars/avatar8.png" class="avatar-option" alt="">
+		<img src="avatars/avatar9.png" data-avatar="avatars/avatar9.png" class="avatar-option" alt="">
+		<img src="avatars/avatar10.png" data-avatar="avatars/avatar10.png" class="avatar-option" alt="">
+		<img src="avatars/avatar11.png" data-avatar="avatars/avatar11.png" class="avatar-option" alt="">
+		<img src="avatars/avatar12.jpg" data-avatar="avatars/avatar12.jpg" class="avatar-option" alt="">
+		<img src="avatars/avatar13.png" data-avatar="avatars/avatar13.png" class="avatar-option" alt="">
+		<img src="avatars/avatar14.png" data-avatar="avatars/avatar14.png" class="avatar-option" alt="">
+		<img src="avatars/avatar15.jpg" data-avatar="avatars/avatar15.jpg" class="avatar-option" alt="">
+		<img src="avatars/avatar16.jpg" data-avatar="avatars/avatar16.jpg" class="avatar-option" alt="">
+		<img src="avatars/avatar17.jpg" data-avatar="avatars/avatar17.jpg" class="avatar-option" alt="">
+		<img src="avatars/avatar18.jpg" data-avatar="avatars/avatar18.jpg" class="avatar-option" alt="">
+		<img src="avatars/avatar19.jpg" data-avatar="avatars/avatar19.jpg" class="avatar-option" alt="">
+		<img src="avatars/avatar20.png" data-avatar="avatars/avatar20.png" class="avatar-option" alt="">
+      </div>
+    </div>
 
     <div style="margin-top:10px; display:flex; gap:8px;">
       <button onclick="submitProfile()">Save</button>

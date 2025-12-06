@@ -166,12 +166,16 @@ socket.on("players", list => {
         ? `<img src="images/adpip.png" class="admin-icon" alt="admin">`
         : "";
 
+    // NEW: avatar coming from server payload
+    const avatarSrc  = p.profilePic || "avatars/default.png";
+    const avatarHTML = `<img src="${avatarSrc}" class="player-avatar" alt="">`;
+
     const div = document.createElement("div");
     div.className = "player-entry";
 
     div.innerHTML = `
       <div class="player-name ${roleClass}">
-        ${adminIcon}${p.username}
+        ${avatarHTML}${adminIcon}${p.username}
       </div>
       <div class="player-buttons">
         <button class="small-btn" onclick="openInfo('${p.username}')">Info</button>
@@ -350,6 +354,23 @@ function openProfileModal() {
     document.getElementById("profileCountry").value = data.country || "";
     document.getElementById("profileAge").value =
       data.age ? String(data.age) : "";
+
+    // NEW: avatar fields
+    const avatarInput   = document.getElementById("profileAvatar");
+    const avatarPreview = document.getElementById("profileAvatarPreview");
+
+    if (avatarInput && avatarPreview) {
+      const chosen = data.profilePic || "avatars/default.png";
+      avatarInput.value = chosen;
+      avatarPreview.src = chosen;
+
+      const options = document.querySelectorAll(".avatar-option");
+      options.forEach(opt => {
+        const src = opt.getAttribute("data-avatar");
+        opt.classList.toggle("selected", src === chosen);
+      });
+    }
+
     profileModal.style.display = "flex";
   });
 }
@@ -363,9 +384,12 @@ function submitProfile() {
   const country  = document.getElementById("profileCountry").value;
   const age      = document.getElementById("profileAge").value;
 
+  const avatarInput = document.getElementById("profileAvatar");
+  const profilePic  = avatarInput ? avatarInput.value : "";
+
   socket.emit(
     "update_profile",
-    { realName, country, age },
+    { realName, country, age, profilePic },
     res => {
       if (!res || !res.ok) {
         alert(res && res.error ? res.error : "Error saving profile");
@@ -375,6 +399,30 @@ function submitProfile() {
     }
   );
 }
+
+/****************************************************
+ * AVATAR PICKER (EDIT PROFILE)
+ ****************************************************/
+function setupAvatarPicker() {
+  const options       = document.querySelectorAll(".avatar-option");
+  const avatarInput   = document.getElementById("profileAvatar");
+  const avatarPreview = document.getElementById("profileAvatarPreview");
+
+  if (!options.length || !avatarInput || !avatarPreview) return;
+
+  options.forEach(opt => {
+    opt.addEventListener("click", () => {
+      const src = opt.getAttribute("data-avatar");
+      avatarInput.value = src;
+      avatarPreview.src = src;
+
+      options.forEach(o => o.classList.remove("selected"));
+      opt.classList.add("selected");
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", setupAvatarPicker);
 
 /****************************************************
  * PASSWORD MODAL
