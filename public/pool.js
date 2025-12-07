@@ -39,6 +39,16 @@ class PoolGame {
     this.snd_rack.volume    = 0.6;
     this.snd_cushion.volume = 0.35;
 
+    // Sound hook — game.js can override this to send over socket
+    this.sendSound = (name) => {
+      // overridden in game.js (e.g. emit "game_sound" via socket)
+    };
+
+    // Aim hook — game.js can override this to send visual-only aim over socket
+    this.sendAimUpdate = (angle, power) => {
+      // overridden in game.js (emit "game_aim")
+    };
+
     this.lastCushionSoundTime = 0;
     this.cushionMinSpeed      = 0.4;
     this.cushionCooldownMs    = 80;
@@ -91,6 +101,11 @@ class PoolGame {
     // Predicted object-ball path from the guideline
     this.aimPrediction = null;
 
+    // Remote aim (opponent visual only)
+    this.remoteAimActive = false;
+    this.remoteAimAngle  = 0;
+    this.remoteAimPower  = 0;
+
     /*******************
      * UK POOL RULE STATE
      *******************/
@@ -111,6 +126,8 @@ class PoolGame {
     this.ballInHand      = false;
     this.ballInHandGhost = { x: 0, y: 0 };
     this.ballInHandMode  = "any"; // "any" or "baulk"
+    // only the owner of ball-in-hand is allowed to move/place locally
+    this.ballInHandInteractive = false;
 
     /*******************
      * AIM FREEZE VECTORS
@@ -144,6 +161,9 @@ class PoolGame {
       this.snd_cushion.currentTime = 0;
       this.snd_cushion.play();
     } catch (e) {}
+
+    // Broadcast to opponent (via game.js override)
+    this.sendSound("cushion");
   }
 
   /***************************************************
@@ -222,8 +242,11 @@ class PoolGame {
       this.snd_rack.play();
     } catch (e) {}
 
-    // Opening break: ball-in-hand behind the baulk line
-    this.enterBallInHandMode("baulk");
+    // Broadcast rack sound
+    this.sendSound("rack");
+
+    // IMPORTANT: do NOT automatically enter ball-in-hand here.
+    // game.js will explicitly call enterBallInHandMode("baulk") for the breaker only.
   }
 
   /***************************************************/
@@ -246,7 +269,7 @@ class PoolGame {
 
   insideCanvas(e) {
     const r = this.canvas.getBoundingClientRect();
-       const style = getComputedStyle(this.canvas);
+    const style = getComputedStyle(this.canvas);
 
     const borderL = parseFloat(style.borderLeftWidth)   || 0;
     const borderR = parseFloat(style.borderRightWidth)  || 0;
@@ -292,8 +315,9 @@ class PoolGame {
     if (!this.insideCanvas(e)) return;
     const m = this.mouseToCanvas(e);
 
-    // If ball-in-hand: clicking on the table will place/move the ghost cue ball
+    // If ball-in-hand: only the interactive owner can move the ghost
     if (this.ballInHand) {
+      if (!this.ballInHandInteractive) return;
       if (m.x >= this.sidebarWidth) {
         this.updateBallInHandGhost(m.x, m.y);
       }
@@ -341,6 +365,8 @@ class PoolGame {
       const t = 1 - (m.y - barY) / barH;
       this.power = Math.max(0, Math.min(this.maxPower, t * this.maxPower));
       this.render();
+      // optional: could sendAimUpdate here if you want power-bar sync
+      // this.sendAimUpdate(this.aimAngle, this.power);
     }
   }
 
@@ -360,6 +386,8 @@ class PoolGame {
 
     if (this.power > this.maxPower * 0.6) {
       try { this.snd_power.play(); } catch {}
+      // Broadcast "power" drag if desired (optional)
+      this.sendSound("power");
     }
 
     this.render();
@@ -404,6 +432,7 @@ class PoolGame {
 
     // Ball-in-hand: move the ghost cue ball inside allowed area
     if (this.ballInHand) {
+      if (!this.ballInHandInteractive) return;
       if (m.x >= this.sidebarWidth) {
         this.updateBallInHandGhost(m.x, m.y);
       }
@@ -424,17 +453,19 @@ class PoolGame {
 
     if (this.aiming) {
       this.updatePowerDrag(m);
+      this.sendAimUpdate(this.aimAngle, this.power);
     } else {
       this.lastMouse = m;
       const dx = m.x - cue.x;
       const dy = m.y - cue.y;
       this.aimAngle = Math.atan2(dy, dx);
       this.render();
+      this.sendAimUpdate(this.aimAngle, this.power);
     }
   }
 
   /***************************************************
-   * MOUSEUP → SHOOT OR PLACE BALL-IN-HAND
+   * MOUSEUP → SHOOT OR (IF BALL-IN-HAND) JUST VALIDATE
    ***************************************************/
   onMouseUp(e) {
     this.draggingSpin = false;
@@ -442,21 +473,17 @@ class PoolGame {
     if (!this.insideCanvas(e)) return;
     const m = this.mouseToCanvas(e);
 
-    // Commit ball-in-hand placement on mouseup
+    // Ball-in-hand: only owner interacts; mouseup does NOT commit,
+    // server/game.js will call exitBallInHandMode() via "cue_placed".
     if (this.ballInHand) {
+      if (!this.ballInHandInteractive) return;
       if (m.x >= this.sidebarWidth) {
         this.updateBallInHandGhost(m.x, m.y);
 
-        // Reject illegal placements (on balls or in pockets)
         if (!this.isBallInHandPlacementLegal()) {
           this.flashIllegalPlacement();
-          this.power = 0;
-          return;
         }
-
-        this.exitBallInHandMode();
       } else {
-        // Clicked outside table – just redraw ghost
         this.render();
       }
       this.power = 0;
@@ -508,6 +535,9 @@ class PoolGame {
       this.snd_shot.play();
     } catch (err) {}
 
+    // Broadcast shot sound
+    this.sendSound("shot");
+
     this.power = 0;
     this.startAnimation();
   }
@@ -522,6 +552,10 @@ class PoolGame {
     this.lastTime = performance.now();
     this.pocketedThisShot = [];
     this.firstContactBallNumber = null; // reset first-contact tracking
+
+    // shot is leaving the cue, remote aim overlay is no longer relevant
+    this.remoteAimActive = false;
+    this.remoteAimPower  = 0;
 
     requestAnimationFrame(t => this.step(t));
   }
@@ -686,6 +720,9 @@ class PoolGame {
             this.snd_hit.play();
           } catch {}
 
+          // Broadcast hit sound
+          this.sendSound("hit");
+
           if (a.number === 0 || b.number === 0) {
             this.applyPostImpactSpin();
           }
@@ -739,6 +776,9 @@ class PoolGame {
             this.snd_pocket.currentTime = 0;
             this.snd_pocket.play();
           } catch {}
+
+          // Broadcast pocket sound
+          this.sendSound("pocket");
 
           if (!this.pocketedThisShot.includes(b.number)) {
             this.pocketedThisShot.push(b.number);
@@ -1013,11 +1053,16 @@ class PoolGame {
     if (
       cue &&
       !cue.inPocket &&
-      this.inputEnabled &&
       !this.animating &&
       !this.ballInHand
     ) {
-      this.drawAimSystem(ctx, cue);
+      if (this.inputEnabled) {
+        // Local player aiming
+        this.drawAimSystem(ctx, cue);
+      } else if (this.remoteAimActive) {
+        // Waiting player seeing opponent's aim
+        this.drawRemoteAimSystem(ctx, cue);
+      }
     }
 
     // Draw ball-in-hand ghost (placement only)
@@ -1346,6 +1391,20 @@ class PoolGame {
     this.drawCue(ctx, cue);
   }
 
+  // Remote copy of the aim system, driven by opponent's angle/power
+  drawRemoteAimSystem(ctx, cue) {
+    const prevAngle = this.aimAngle;
+    const prevPower = this.power;
+
+    this.aimAngle = this.remoteAimAngle;
+    this.power    = this.remoteAimPower;
+
+    this.drawAimSystem(ctx, cue);
+
+    this.aimAngle = prevAngle;
+    this.power    = prevPower;
+  }
+
   // No-impact (fallback) — dotted line from cue to table edge
   drawNoImpactGuide(ctx, startX, startY, dx, dy) {
     const hit = this.rayToTableEdge(startX, startY, dx, dy);
@@ -1538,6 +1597,20 @@ class PoolGame {
     this.inputEnabled = !!f;
   }
 
+  // Opponent aim hooks (used by game.js)
+  setRemoteAim(angle, power) {
+    this.remoteAimActive = true;
+    this.remoteAimAngle  = typeof angle === "number" ? angle : 0;
+    this.remoteAimPower  = typeof power === "number" ? power : 0;
+    this.render();
+  }
+
+  clearRemoteAim() {
+    this.remoteAimActive = false;
+    this.remoteAimPower  = 0;
+    this.render();
+  }
+
   /***************************************************
    * UK RULES — PURE FLAGS (no turn flip here)
    ***************************************************/
@@ -1695,11 +1768,10 @@ class PoolGame {
     }
 
     // 3) Push away from balls and pockets so we can never sit on top
-    //    NOTE: large safety bubble so you can't squeeze into rack gaps.
-    const minBallDist   = this.ballRadius * 2.6;              // was ~2.0R
+    const minBallDist   = this.ballRadius * 2.6;
     const minPocketDist = this.pocketRadius + this.ballRadius * 0.2;
 
-    for (let iter = 0; iter < 6; iter++) {                    // a few more relax steps
+    for (let iter = 0; iter < 6; iter++) {
       // Away from balls
       for (const b of this.balls) {
         if (b.inPocket) continue;
@@ -1807,7 +1879,6 @@ class PoolGame {
     const gx = this.ballInHandGhost.x;
     const gy = this.ballInHandGhost.y;
 
-    // Match the safety bubble used in clampBallInHandPosition
     const minBallDist  = this.ballRadius * 2.6;
     const minBallDist2 = minBallDist * minBallDist;
 
@@ -1892,6 +1963,7 @@ class PoolGame {
 
     this.ballInHand = false;
     this.ballInHandMode = "any"; // reset for later fouls
+    this.ballInHandInteractive = false;
     this.render();
   }
 }

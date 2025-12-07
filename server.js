@@ -302,19 +302,18 @@ io.on("connection", socket => {
     u.country  = country;
     u.age      = age;
 
-  // update profile picture if provided
-  if (profilePic) {
-    u.profilePic = profilePic.slice(0, 200);
-  }
+    // update profile picture if provided
+    if (profilePic) {
+      u.profilePic = profilePic.slice(0, 200);
+    }
 
-  saveDB();
+    saveDB();
 
-  // NEW: push updated avatars to everyone immediately
-  sendPlayerList();
+    // NEW: push updated avatars to everyone immediately
+    sendPlayerList();
 
-  cb && cb({ ok: true });
-});
-
+    cb && cb({ ok: true });
+  });
 
   /***********************
    * CHANGE PASSWORD
@@ -647,6 +646,33 @@ io.on("connection", socket => {
     game.currentTurn = game.currentTurn === "p1" ? "p2" : "p1";
     io.to(msg.id).emit("turn", { current: game.currentTurn });
     saveDB();
+  });
+
+  /***********************
+   * AIM RELAY FOR GAME (visual-only)
+   ***********************/
+  socket.on("game_aim", ({ id, angle, power }) => {
+    const game = db.games[id];
+    if (!game || game.finished) return;
+    // Only in-game players may broadcast aim
+    if (socket.user !== game.p1 && socket.user !== game.p2) return;
+
+    socket.to(id).emit("game_aim", {
+      angle,
+      power
+    });
+  });
+
+  /***********************
+   * SOUND RELAY FOR GAME
+   ***********************/
+  socket.on("game_sound", ({ id, sound }) => {
+    const game = db.games[id];
+    if (!game || game.finished) return;
+    if (!sound) return;
+
+    // Send to all other sockets in the room (opponent + spectators)
+    socket.to(id).emit("game_sound", { sound });
   });
 
   /***********************
