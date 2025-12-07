@@ -1,0 +1,3 @@
+Increase shot power
+
+hitting black ball when colours arent selected doesnt cause a foul

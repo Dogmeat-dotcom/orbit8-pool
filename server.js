@@ -679,17 +679,48 @@ io.on("connection", socket => {
    * BALL-IN-HAND SERVER SIDE
    ***********************/
 
+  // Helper: who is allowed to control ball-in-hand (ghost + placement)?
+  function canControlBallInHand(game, user) {
+    if (!user) return false;
+    const isP1 = user === game.p1;
+    const isP2 = user === game.p2;
+
+    // Opening break: no state (or empty state) yet → currentTurn player
+    const noState =
+      !game.state ||
+      !Array.isArray(game.state.balls) ||
+      game.state.balls.length === 0;
+
+    if (noState) {
+      if (game.currentTurn === "p1" && isP1) return true;
+      if (game.currentTurn === "p2" && isP2) return true;
+    }
+
+    // Foul ball-in-hand: ballInHandFor indicates seat
+    if (game.ballInHandFor === "p1" && isP1) return true;
+    if (game.ballInHandFor === "p2" && isP2) return true;
+
+    return false;
+  }
+
   // Live ghost tracking – relay to the other clients only
   socket.on("cue_follow", ({ id, x, y }) => {
     const game = db.games[id];
     if (!game || game.finished) return;
+
+    // Only the proper player (break owner or ball-in-hand owner) can move ghost
+    if (!canControlBallInHand(game, socket.user)) return;
+
     socket.to(id).emit("cue_follow", { x, y });
   });
 
-  // Final cue-ball placement – always accept from in-game players
+  // Final cue-ball placement – restricted to the correct controller
   socket.on("attempt_place_cueball", ({ id, pos }) => {
     const game = db.games[id];
     if (!game || game.finished) return;
+
+    // Only the break player (pre-state) or ball-in-hand owner may place
+    if (!canControlBallInHand(game, socket.user)) return;
 
     // Ensure state and balls array exist
     if (!game.state || !Array.isArray(game.state.balls)) {

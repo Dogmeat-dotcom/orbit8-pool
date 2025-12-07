@@ -83,14 +83,16 @@ header {
   border-radius: 4px;
 }
 
-/* ---------- STATUS BAR ---------- */
+/* ---------- TURN STATUS (NOW IN SCOREBOARD) ---------- */
 #status {
-  padding: 6px;
+  padding: 4px 16px;
   font-size: 14px;
   text-align: center;
-  background: #000A00;
-  border-bottom: 2px solid var(--green-dark);
+  background: #001900;
+  border-radius: 16px;
+  border: 1px solid var(--green);
   color: var(--green-light);
+  min-width: 130px;
 }
 
 /* ---------- LAYOUT ---------- */
@@ -111,7 +113,7 @@ header {
   flex-direction: column;
 }
 
-/* ---------- SCOREBOARD (NEW) ---------- */
+/* ---------- SCOREBOARD ---------- */
 #scoreboard {
   display: flex;
   justify-content: space-between;
@@ -168,8 +170,6 @@ header {
 .score-ball.potted {
   opacity: 0.15;
 }
-
-
 
 /* ---------- POOL TABLE ---------- */
 #poolCanvas {
@@ -268,16 +268,20 @@ header {
   <button id="backBtn">Return to Lobby</button>
 </header>
 
-<div id="status">Loading game…</div>
+<!-- status bar removed from here to give more room -->
 
 <div id="layout">
   <div class="panel">
-    <!-- SCOREBOARD (NEW) -->
+    <!-- SCOREBOARD -->
     <div id="scoreboard">
       <div id="p1Panel" class="player-panel">
         <div id="p1NameLabel" class="player-name">Player 1</div>
         <div id="p1Balls" class="player-balls"></div>
       </div>
+
+      <!-- TURN STATUS NOW IN THE MIDDLE ABOVE THE TABLE -->
+      <div id="status">Loading game…</div>
+
       <div id="p2Panel" class="player-panel">
         <div id="p2NameLabel" class="player-name">Player 2</div>
         <div id="p2Balls" class="player-balls"></div>

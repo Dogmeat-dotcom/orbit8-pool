@@ -59,6 +59,7 @@ let IAmP2           = false;
 let placingCueBall  = false;   // "we are currently in placement stage" (all clients)
 let ballInHandOwner = null;    // "p1" | "p2"
 let ballInHandForMe = false;   // only true for the owner on this client
+let foulJustOccurred = false;  // NEW: track when a foul created ball-in-hand
 
 // Rematch / game-over state
 let gameOver        = false;
@@ -358,7 +359,11 @@ socket.on("game_msg", addChat);
  * TURN CONTROL
  *******************************************/
 function updateTurnStatus() {
-  if (!p1Name || !p2Name || !currentTurn) return;
+  if (!p1Name || !p2Name || !currentTurn || !poolGame) return;
+
+  // Reset status bar to default colours each time
+  elStatus.style.background = "#000A00"; // same as CSS
+  elStatus.style.color = "#33FF33";      // same as var(--green-light)
 
   const myTurn =
     (currentTurn === "p1" && USER === p1Name) ||
@@ -369,10 +374,26 @@ function updateTurnStatus() {
       (ballInHandOwner === "p1" && IAmP1) ||
       (ballInHandOwner === "p2" && IAmP2);
 
+    const ownerName  = ballInHandOwner === "p1" ? p1Name : p2Name;
+    const foulerName = ballInHandOwner === "p1" ? p2Name : p1Name;
+
     poolGame.setInputEnabled(ownerPlacing);
-    elStatus.textContent = ownerPlacing
-      ? "Place the cue ball…"
-      : "Opponent placing the cue ball…";
+
+    if (foulJustOccurred) {
+      // Foul highlight
+      elStatus.style.background = "#330000";
+      elStatus.style.color = "#FF6666";
+
+      if (ownerPlacing) {
+        elStatus.textContent = `Foul on ${foulerName || "opponent"} — you have ball in hand. Place the cue ball…`;
+      } else {
+        elStatus.textContent = `Foul — ${ownerName || "opponent"} has ball in hand. Placing the cue ball…`;
+      }
+    } else {
+      elStatus.textContent = ownerPlacing
+        ? "Place the cue ball…"
+        : `${ownerName || "Opponent"} is placing the cue ball…`;
+    }
     return;
   }
 
@@ -464,7 +485,8 @@ socket.on("ball_in_hand", payload => {
     (payload.player === "p1" && IAmP1) ||
     (payload.player === "p2" && IAmP2);
 
-  placingCueBall = true;
+  placingCueBall   = true;
+  foulJustOccurred = true; // NEW: mark that this ball-in-hand came from a foul
 
   if (poolGame) {
     poolGame.ballInHand = true;
@@ -487,6 +509,7 @@ socket.on("cue_place_rejected", () => {
 socket.on("cue_placed", state => {
   placingCueBall  = false;
   ballInHandForMe = false;
+  foulJustOccurred = false; // NEW: clear foul highlight once ball is placed
 
   if (poolGame) {
     // End ball-in-hand mode locally; use the ghost position we already have

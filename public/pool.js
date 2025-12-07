@@ -69,7 +69,8 @@ class PoolGame {
     /*******************
      * TABLE LAYOUT
      *******************/
-    this.sidebarWidth  = 100;
+    // Slimmer left UI
+    this.sidebarWidth  = 64;
     this.tableScale    = 0.90;
     this.tableInset    = 40;
     this.ballRadius    = 10;
@@ -78,11 +79,25 @@ class PoolGame {
     /*******************
      * SPIN WIDGET
      *******************/
-    this.spinBallSize = 60;
+    // Smaller, centred spin widget
+    this.spinBallSize = 48;
     this.spinDot = { x: 0, y: 0 };
     this.spinX   = 0;
     this.spinY   = 0;
     this.draggingSpin = false;
+
+    // Spin widget anchor (for render + hit detection)
+    this.spinCenterX = this.sidebarWidth / 2;
+    this.spinCenterY = 78;
+
+    /*******************
+     * POWER BAR GEOMETRY
+     *******************/
+    // Slim, tall, centred bar
+    this.powerBarX = this.sidebarWidth / 2 - 8;
+    this.powerBarY = 130;
+    this.powerBarW = 16;
+    this.powerBarH = 170;
 
     /*******************
      * SHOT STATE
@@ -352,12 +367,18 @@ class PoolGame {
    * SIDEBAR CLICK — SPIN + POWER
    ***************************************************/
   sidebarClick(m) {
+    // Spin hit-test is handled inside updateSpinFromPoint()
     if (this.updateSpinFromPoint(m)) {
       this.draggingSpin = true;
       return;
     }
 
-    const barX = 36, barY = 200, barW = 28, barH = 140;
+    // Power bar region (uses new slimmer geometry)
+    const barX = this.powerBarX;
+    const barY = this.powerBarY;
+    const barW = this.powerBarW;
+    const barH = this.powerBarH;
+
     if (
       m.x >= barX && m.x <= barX + barW &&
       m.y >= barY && m.y <= barY + barH
@@ -397,9 +418,16 @@ class PoolGame {
    * SPIN DOT UPDATE
    ***************************************************/
   updateSpinFromPoint(m) {
-    const cx = 50;
-    const cy = 90;
+    const cx = this.spinCenterX;
+    const cy = this.spinCenterY;
     const r  = this.spinBallSize / 2;
+
+    // quick hit test for the spin circle
+    const dxHit = m.x - cx;
+    const dyHit = m.y - cy;
+    if (dxHit * dxHit + dyHit * dyHit > (r + 8) * (r + 8)) {
+      return false;
+    }
 
     const dx = m.x - cx;
     const dy = m.y - cy;
@@ -1067,22 +1095,23 @@ class PoolGame {
 
     // Draw ball-in-hand ghost (placement only)
     if (this.ballInHand) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(
+      const ctx2 = this.ctx;
+      ctx2.save();
+      ctx2.beginPath();
+      ctx2.arc(
         this.ballInHandGhost.x,
         this.ballInHandGhost.y,
         this.ballRadius,
         0,
         Math.PI * 2
       );
-      ctx.fillStyle = "rgba(255,255,255,0.85)";
-      ctx.fill();
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(0,255,0,0.8)";
-      ctx.setLineDash([4, 4]);
-      ctx.stroke();
-      ctx.restore();
+      ctx2.fillStyle = "rgba(255,255,255,0.85)";
+      ctx2.fill();
+      ctx2.lineWidth = 2;
+      ctx2.strokeStyle = "rgba(0,255,0,0.8)";
+      ctx2.setLineDash([4, 4]);
+      ctx2.stroke();
+      ctx2.restore();
     }
   }
 
@@ -1092,105 +1121,94 @@ class PoolGame {
   renderSidebar(ctx) {
     ctx.save();
 
-    const bg = ctx.createLinearGradient(0, 0, 0, this.height);
-    bg.addColorStop(0, "#001900");
-    bg.addColorStop(1, "#000F00");
-    ctx.fillStyle = bg;
+    // Flat, dark background
+    ctx.fillStyle = "#000A00";
     ctx.fillRect(0, 0, this.sidebarWidth, this.height);
 
-    ctx.fillStyle = "rgba(0,255,100,0.25)";
-    ctx.fillRect(this.sidebarWidth - 2, 0, 2, this.height);
+    // Thin neon separator to table
+    ctx.fillStyle = "rgba(0,255,100,0.35)";
+    ctx.fillRect(this.sidebarWidth - 1, 0, 1, this.height);
 
+    // --- SPIN LABEL ---
     ctx.fillStyle = "#00FF66";
-    ctx.font = "16px Arial";
+    ctx.font = "11px Arial";
     ctx.textAlign = "center";
-    ctx.fillText("SPIN", 50, 28);
+    ctx.fillText("SPIN", this.sidebarWidth / 2, 18);
 
-    const cx = 50,
-      cy = 90,
-      r = this.spinBallSize / 2;
+    // --- SPIN BALL ---
+    const cx = this.spinCenterX;
+    const cy = this.spinCenterY;
+    const r  = this.spinBallSize / 2;
 
-    ctx.strokeStyle = "rgba(0,255,100,0.35)";
-    ctx.lineWidth = 4;
+    // Outer subtle glow ring
+    ctx.strokeStyle = "rgba(0,255,140,0.35)";
+    ctx.lineWidth   = 2;
     ctx.beginPath();
-    ctx.arc(cx, cy, r + 5, 0, Math.PI * 2);
+    ctx.arc(cx, cy, r + 4, 0, Math.PI * 2);
     ctx.stroke();
 
-    const ballGrad = ctx.createRadialGradient(cx - 5, cy - 5, 4, cx, cy, r);
+    // Ball body
+    const ballGrad = ctx.createRadialGradient(cx - 4, cy - 4, 3, cx, cy, r);
     ballGrad.addColorStop(0, "#FFFFFF");
-    ballGrad.addColorStop(1, "#CCCCCC");
+    ballGrad.addColorStop(1, "#BBBBBB");
     ctx.fillStyle = ballGrad;
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.strokeStyle = "#00FF66";
-    ctx.lineWidth = 2.5;
+    // Ball outline
+    ctx.strokeStyle = "rgba(0,255,140,0.9)";
+    ctx.lineWidth   = 2;
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.stroke();
 
+    // Spin dot
     const dotX = cx + this.spinDot.x * r;
     const dotY = cy + this.spinDot.y * r;
-    ctx.shadowColor = "rgba(255,50,50,0.9)";
+    ctx.shadowColor = "rgba(255,80,80,0.9)";
     ctx.shadowBlur  = 10;
-    ctx.fillStyle   = "#FF3333";
+    ctx.fillStyle   = "#FF4444";
     ctx.beginPath();
-    ctx.arc(dotX, dotY, 6, 0, Math.PI * 2);
+    ctx.arc(dotX, dotY, 4.5, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 
+    // --- POWER BAR ---
+    ctx.textAlign = "center";
     ctx.fillStyle = "#00FF66";
-    ctx.font = "13px Arial";
-    ctx.fillText("↑", cx, cy - r - 10);
-    ctx.fillText("↓", cx, cy + r + 16);
-    ctx.fillText("←", cx - r - 15, cy + 5);
-    ctx.fillText("→", cx + r + 16, cy + 5);
+    ctx.font = "11px Arial";
+    ctx.fillText("POWER", this.sidebarWidth / 2, this.powerBarY - 10);
 
-    ctx.fillStyle = "#00FF66";
-    ctx.font = "16px Arial";
-    ctx.fillText("POWER", 50, 180);
+    const barX = this.powerBarX;
+    const barY = this.powerBarY;
+    const barW = this.powerBarW;
+    const barH = this.powerBarH;
 
-    const barX = 36,
-      barY = 200,
-      barW = 28,
-      barH = 140;
-
-    ctx.strokeStyle = "#00FF66";
-    ctx.lineWidth   = 2;
+    // Outer frame
+    ctx.strokeStyle = "rgba(0,255,140,0.9)";
+    ctx.lineWidth   = 1.5;
     ctx.strokeRect(barX, barY, barW, barH);
 
-    const amt   = (this.power / this.maxPower) * barH;
-    const topY  = barY + (barH - amt);
+    // Filled portion
+    const amt  = (this.power / this.maxPower) * barH;
+    const topY = barY + (barH - amt);
 
     const grad = ctx.createLinearGradient(0, barY + barH, 0, barY);
-    grad.addColorStop(0, "#007700");
-    grad.addColorStop(0.5, "#00CC55");
+    grad.addColorStop(0, "#004400");
+    grad.addColorStop(0.6, "#00CC55");
     grad.addColorStop(1, "#00FFAA");
 
     ctx.fillStyle = grad;
     ctx.fillRect(barX, topY, barW, amt);
 
-    ctx.fillStyle = "rgba(255,255,255,0.15)";
-    ctx.fillRect(barX + 3, topY, barW - 6, amt * 0.25);
-
-    const pct = Math.round((this.power / this.maxPower) * 100);
-    ctx.fillStyle = "#00FFAA";
-    ctx.font = "15px Arial";
-    ctx.fillText(pct + "%", 50, barY + barH + 20);
-
-    if (pct === 100) {
-      ctx.fillStyle = "rgba(0,255,100,0.25)";
-      ctx.fillRect(0, 0, this.sidebarWidth, this.height);
+    // Inner gloss
+    if (amt > 0) {
+      ctx.fillStyle = "rgba(255,255,255,0.12)";
+      ctx.fillRect(barX + 2, topY, barW - 4, amt * 0.35);
     }
 
-    if (pct > 85) {
-      this.canvas.style.transform = `translateX(${
-        Math.sin(Date.now() / 40) * 2
-      }px)`;
-    } else {
-      this.canvas.style.transform = "";
-    }
+    // No percent text, no screen shake for a cleaner look
 
     ctx.restore();
   }
@@ -1617,6 +1635,11 @@ class PoolGame {
   processUKRules(pocketed, currentPlayerNum, firstContactNumber = null) {
     const r = this.rules;
 
+    // Snapshot whether the table was open at the START of the shot.
+    // This prevents "combo on open table" from being treated as a
+    // wrong-ball-first foul after we assign colours.
+    const wasOpenAtShotStart = r.openTable;
+
     r.currentPlayer = currentPlayerNum;
     r.foul          = false;
     r.turnContinues = false;
@@ -1640,6 +1663,8 @@ class PoolGame {
         r.playerColours[currentPlayerNum === 1 ? 2 : 1] = "red";
         r.openTable = false;
       }
+      // If both colours are potted on the same shot while open,
+      // we leave the table open and let later shots decide.
     }
 
     const playerColour = r.playerColours[currentPlayerNum];
@@ -1657,14 +1682,28 @@ class PoolGame {
         firstHitColour = "yellow";
     }
 
-    // If colours are assigned and you hit the opponent's colour first → foul
-    if (!r.openTable && playerColour && firstHitColour && firstHitColour !== playerColour) {
+    // NO OBJECT BALL HIT AT ALL → FOUL (applies open or closed table)
+    if (firstContactNumber === null) {
+      r.foul = true;
+    }
+
+    // If colours were already assigned at the START of the shot and
+    // you hit the opponent's colour first → foul.
+    // (On an open table, hitting either colour first is fine, even if
+    // this shot ends up assigning colours.)
+    if (
+      !wasOpenAtShotStart &&
+      playerColour &&
+      firstHitColour &&
+      firstHitColour !== playerColour
+    ) {
       r.foul = true;
     }
 
     // BLACK BALL
     if (black) {
       if (r.openTable) {
+        // 8 on an open table is loss
         r.gameOver = true;
         r.winner   = currentPlayerNum === 1 ? 2 : 1;
         return { ...r };
